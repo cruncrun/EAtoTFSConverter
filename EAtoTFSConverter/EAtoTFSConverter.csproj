@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\XMLParse\EAScenario.cs" />
+    <Compile Include="Data\XMLParse\Step.cs" />
+    <Compile Include="Data\XMLParse\UseCase.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
