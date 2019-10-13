@@ -10,8 +10,8 @@ namespace EAtoTFSConverter.Data.XMLParse
     {
         public Guid Id { get; set; }
         public Guid SubjectId { get; set; }
-        public string Name { get; set; }        
+        public string Name { get; set; }
         public int Level { get; set; }
-        public string Result { get; set; }        
+        public string Result { get; set; }
     }
 }

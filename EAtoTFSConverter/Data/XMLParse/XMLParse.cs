@@ -19,7 +19,7 @@ namespace EAtoTFSConverter.Data.XMLParse
                                                  Type = (string)ea.Attribute("type"), // przerzucić typy na enuma?
                                                  Description = (string)ea.Attribute("description"),
                                                  SubjectId = GetGuidFromEAIdentifier((string)ea.Attribute("subject")),
-                                                 XmiId = GetGuidFromEAIdentifier((string)ea.Attribute("xmi.id")),                                                 
+                                                 XmiId = GetGuidFromEAIdentifier((string)ea.Attribute("xmi.id")),
                                                  Steps = from s in ea.Descendants("step")
                                                          select new Step()
                                                          {
@@ -46,7 +46,7 @@ namespace EAtoTFSConverter.Data.XMLParse
             }
             else
             {
-
+                DataController.Analize(result);
                 // Insert into database...
             }
         }

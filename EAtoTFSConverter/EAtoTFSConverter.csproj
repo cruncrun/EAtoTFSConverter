@@ -67,6 +67,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Data\DataController.cs" />
+    <Compile Include="Data\DBOperations\DataMapper.cs" />
     <Compile Include="Data\XMLParse\EAScenario.cs" />
     <Compile Include="Data\XMLParse\Step.cs" />
     <Compile Include="Data\XMLParse\UseCase.cs" />
@@ -127,8 +129,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\SQL\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
