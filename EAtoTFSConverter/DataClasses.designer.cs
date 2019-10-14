@@ -30,12 +30,12 @@ namespace EAtoTFSConverter
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertStep(Step instance);
-    partial void UpdateStep(Step instance);
-    partial void DeleteStep(Step instance);
     partial void InsertEAScenario(EAScenario instance);
     partial void UpdateEAScenario(EAScenario instance);
     partial void DeleteEAScenario(EAScenario instance);
+    partial void InsertStep(Step instance);
+    partial void UpdateStep(Step instance);
+    partial void DeleteStep(Step instance);
     partial void InsertUseCase(UseCase instance);
     partial void UpdateUseCase(UseCase instance);
     partial void DeleteUseCase(UseCase instance);
@@ -71,19 +71,19 @@ namespace EAtoTFSConverter
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Step> Steps
-		{
-			get
-			{
-				return this.GetTable<Step>();
-			}
-		}
-		
 		public System.Data.Linq.Table<EAScenario> EAScenarios
 		{
 			get
 			{
 				return this.GetTable<EAScenario>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Step> Steps
+		{
+			get
+			{
+				return this.GetTable<Step>();
 			}
 		}
 		
@@ -96,23 +96,25 @@ namespace EAtoTFSConverter
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Step")]
-	public partial class Step : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EAScenario")]
+	public partial class EAScenario : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private System.Guid _Id;
 		
+		private string _SubjectId;
+		
 		private string _Name;
 		
-		private int _Level;
+		private string _Type;
 		
-		private string _Result;
+		private string _Description;
 		
-		private System.Guid _SubjectId;
+		private string _XmiId;
 		
-		private EntityRef<EAScenario> _EAScenario;
+		private System.Nullable<System.DateTime> _Timestamp;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -120,19 +122,22 @@ namespace EAtoTFSConverter
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
+    partial void OnSubjectIdChanging(string value);
+    partial void OnSubjectIdChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnLevelChanging(int value);
-    partial void OnLevelChanged();
-    partial void OnResultChanging(string value);
-    partial void OnResultChanged();
-    partial void OnSubjectIdChanging(System.Guid value);
-    partial void OnSubjectIdChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnXmiIdChanging(string value);
+    partial void OnXmiIdChanged();
+    partial void OnTimestampChanging(System.Nullable<System.DateTime> value);
+    partial void OnTimestampChanged();
     #endregion
 		
-		public Step()
+		public EAScenario()
 		{
-			this._EAScenario = default(EntityRef<EAScenario>);
 			OnCreated();
 		}
 		
@@ -152,6 +157,252 @@ namespace EAtoTFSConverter
 					this._Id = value;
 					this.SendPropertyChanged("Id");
 					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubjectId", DbType="NVarChar(64) NOT NULL", CanBeNull=false)]
+		public string SubjectId
+		{
+			get
+			{
+				return this._SubjectId;
+			}
+			set
+			{
+				if ((this._SubjectId != value))
+				{
+					this.OnSubjectIdChanging(value);
+					this.SendPropertyChanging();
+					this._SubjectId = value;
+					this.SendPropertyChanged("SubjectId");
+					this.OnSubjectIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(64) NOT NULL", CanBeNull=false)]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_XmiId", DbType="NVarChar(64) NOT NULL", CanBeNull=false)]
+		public string XmiId
+		{
+			get
+			{
+				return this._XmiId;
+			}
+			set
+			{
+				if ((this._XmiId != value))
+				{
+					this.OnXmiIdChanging(value);
+					this.SendPropertyChanging();
+					this._XmiId = value;
+					this.SendPropertyChanged("XmiId");
+					this.OnXmiIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Timestamp", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Timestamp
+		{
+			get
+			{
+				return this._Timestamp;
+			}
+			set
+			{
+				if ((this._Timestamp != value))
+				{
+					this.OnTimestampChanging(value);
+					this.SendPropertyChanging();
+					this._Timestamp = value;
+					this.SendPropertyChanged("Timestamp");
+					this.OnTimestampChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Step")]
+	public partial class Step : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Guid _Guid;
+		
+		private string _SubjectId;
+		
+		private string _Name;
+		
+		private int _Level;
+		
+		private string _Result;
+		
+		private System.Nullable<System.DateTime> _Timestamp;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnGuidChanging(System.Guid value);
+    partial void OnGuidChanged();
+    partial void OnSubjectIdChanging(string value);
+    partial void OnSubjectIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnLevelChanging(int value);
+    partial void OnLevelChanged();
+    partial void OnResultChanging(string value);
+    partial void OnResultChanged();
+    partial void OnTimestampChanging(System.Nullable<System.DateTime> value);
+    partial void OnTimestampChanged();
+    #endregion
+		
+		public Step()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Guid", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Guid
+		{
+			get
+			{
+				return this._Guid;
+			}
+			set
+			{
+				if ((this._Guid != value))
+				{
+					this.OnGuidChanging(value);
+					this.SendPropertyChanging();
+					this._Guid = value;
+					this.SendPropertyChanged("Guid");
+					this.OnGuidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubjectId", DbType="NVarChar(64) NOT NULL", CanBeNull=false)]
+		public string SubjectId
+		{
+			get
+			{
+				return this._SubjectId;
+			}
+			set
+			{
+				if ((this._SubjectId != value))
+				{
+					this.OnSubjectIdChanging(value);
+					this.SendPropertyChanging();
+					this._SubjectId = value;
+					this.SendPropertyChanged("SubjectId");
+					this.OnSubjectIdChanged();
 				}
 			}
 		}
@@ -216,60 +467,22 @@ namespace EAtoTFSConverter
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubjectId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SubjectId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Timestamp", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Timestamp
 		{
 			get
 			{
-				return this._SubjectId;
+				return this._Timestamp;
 			}
 			set
 			{
-				if ((this._SubjectId != value))
+				if ((this._Timestamp != value))
 				{
-					if (this._EAScenario.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSubjectIdChanging(value);
+					this.OnTimestampChanging(value);
 					this.SendPropertyChanging();
-					this._SubjectId = value;
-					this.SendPropertyChanged("SubjectId");
-					this.OnSubjectIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EAScenario_Step", Storage="_EAScenario", ThisKey="SubjectId", OtherKey="SubjectId", IsForeignKey=true)]
-		public EAScenario EAScenario
-		{
-			get
-			{
-				return this._EAScenario.Entity;
-			}
-			set
-			{
-				EAScenario previousValue = this._EAScenario.Entity;
-				if (((previousValue != value) 
-							|| (this._EAScenario.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EAScenario.Entity = null;
-						previousValue.Steps.Remove(this);
-					}
-					this._EAScenario.Entity = value;
-					if ((value != null))
-					{
-						value.Steps.Add(this);
-						this._SubjectId = value.SubjectId;
-					}
-					else
-					{
-						this._SubjectId = default(System.Guid);
-					}
-					this.SendPropertyChanged("EAScenario");
+					this._Timestamp = value;
+					this.SendPropertyChanged("Timestamp");
+					this.OnTimestampChanged();
 				}
 			}
 		}
@@ -292,220 +505,6 @@ namespace EAtoTFSConverter
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EAScenario")]
-	public partial class EAScenario : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _SubjectId;
-		
-		private string _Name;
-		
-		private string _Type;
-		
-		private string _Description;
-		
-		private System.Guid _XmiId;
-		
-		private EntitySet<Step> _Steps;
-		
-		private EntitySet<UseCase> _UseCases;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnSubjectIdChanging(System.Guid value);
-    partial void OnSubjectIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnTypeChanging(string value);
-    partial void OnTypeChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnXmiIdChanging(System.Guid value);
-    partial void OnXmiIdChanged();
-    #endregion
-		
-		public EAScenario()
-		{
-			this._Steps = new EntitySet<Step>(new Action<Step>(this.attach_Steps), new Action<Step>(this.detach_Steps));
-			this._UseCases = new EntitySet<UseCase>(new Action<UseCase>(this.attach_UseCases), new Action<UseCase>(this.detach_UseCases));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubjectId", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid SubjectId
-		{
-			get
-			{
-				return this._SubjectId;
-			}
-			set
-			{
-				if ((this._SubjectId != value))
-				{
-					this.OnSubjectIdChanging(value);
-					this.SendPropertyChanging();
-					this._SubjectId = value;
-					this.SendPropertyChanged("SubjectId");
-					this.OnSubjectIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(64) NOT NULL", CanBeNull=false)]
-		public string Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this.OnTypeChanging(value);
-					this.SendPropertyChanging();
-					this._Type = value;
-					this.SendPropertyChanged("Type");
-					this.OnTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_XmiId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid XmiId
-		{
-			get
-			{
-				return this._XmiId;
-			}
-			set
-			{
-				if ((this._XmiId != value))
-				{
-					this.OnXmiIdChanging(value);
-					this.SendPropertyChanging();
-					this._XmiId = value;
-					this.SendPropertyChanged("XmiId");
-					this.OnXmiIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EAScenario_Step", Storage="_Steps", ThisKey="SubjectId", OtherKey="SubjectId")]
-		public EntitySet<Step> Steps
-		{
-			get
-			{
-				return this._Steps;
-			}
-			set
-			{
-				this._Steps.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EAScenario_UseCase", Storage="_UseCases", ThisKey="SubjectId", OtherKey="SubjectId")]
-		public EntitySet<UseCase> UseCases
-		{
-			get
-			{
-				return this._UseCases;
-			}
-			set
-			{
-				this._UseCases.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Steps(Step entity)
-		{
-			this.SendPropertyChanging();
-			entity.EAScenario = this;
-		}
-		
-		private void detach_Steps(Step entity)
-		{
-			this.SendPropertyChanging();
-			entity.EAScenario = null;
-		}
-		
-		private void attach_UseCases(UseCase entity)
-		{
-			this.SendPropertyChanging();
-			entity.EAScenario = this;
-		}
-		
-		private void detach_UseCases(UseCase entity)
-		{
-			this.SendPropertyChanging();
-			entity.EAScenario = null;
 		}
 	}
 	
@@ -517,11 +516,13 @@ namespace EAtoTFSConverter
 		
 		private System.Guid _Id;
 		
+		private System.Guid _Guid;
+		
+		private string _SubjectId;
+		
 		private string _Name;
 		
-		private System.Guid _SubjectId;
-		
-		private EntityRef<EAScenario> _EAScenario;
+		private System.Nullable<System.DateTime> _Timestamp;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -529,15 +530,18 @@ namespace EAtoTFSConverter
     partial void OnCreated();
     partial void OnIdChanging(System.Guid value);
     partial void OnIdChanged();
+    partial void OnGuidChanging(System.Guid value);
+    partial void OnGuidChanged();
+    partial void OnSubjectIdChanging(string value);
+    partial void OnSubjectIdChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnSubjectIdChanging(System.Guid value);
-    partial void OnSubjectIdChanged();
+    partial void OnTimestampChanging(System.Nullable<System.DateTime> value);
+    partial void OnTimestampChanged();
     #endregion
 		
 		public UseCase()
 		{
-			this._EAScenario = default(EntityRef<EAScenario>);
 			OnCreated();
 		}
 		
@@ -561,6 +565,46 @@ namespace EAtoTFSConverter
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Guid", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Guid
+		{
+			get
+			{
+				return this._Guid;
+			}
+			set
+			{
+				if ((this._Guid != value))
+				{
+					this.OnGuidChanging(value);
+					this.SendPropertyChanging();
+					this._Guid = value;
+					this.SendPropertyChanged("Guid");
+					this.OnGuidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubjectId", DbType="NVarChar(64) NOT NULL", CanBeNull=false)]
+		public string SubjectId
+		{
+			get
+			{
+				return this._SubjectId;
+			}
+			set
+			{
+				if ((this._SubjectId != value))
+				{
+					this.OnSubjectIdChanging(value);
+					this.SendPropertyChanging();
+					this._SubjectId = value;
+					this.SendPropertyChanged("SubjectId");
+					this.OnSubjectIdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
 		public string Name
 		{
@@ -581,60 +625,22 @@ namespace EAtoTFSConverter
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubjectId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SubjectId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Timestamp", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Timestamp
 		{
 			get
 			{
-				return this._SubjectId;
+				return this._Timestamp;
 			}
 			set
 			{
-				if ((this._SubjectId != value))
+				if ((this._Timestamp != value))
 				{
-					if (this._EAScenario.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSubjectIdChanging(value);
+					this.OnTimestampChanging(value);
 					this.SendPropertyChanging();
-					this._SubjectId = value;
-					this.SendPropertyChanged("SubjectId");
-					this.OnSubjectIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EAScenario_UseCase", Storage="_EAScenario", ThisKey="SubjectId", OtherKey="SubjectId", IsForeignKey=true)]
-		public EAScenario EAScenario
-		{
-			get
-			{
-				return this._EAScenario.Entity;
-			}
-			set
-			{
-				EAScenario previousValue = this._EAScenario.Entity;
-				if (((previousValue != value) 
-							|| (this._EAScenario.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EAScenario.Entity = null;
-						previousValue.UseCases.Remove(this);
-					}
-					this._EAScenario.Entity = value;
-					if ((value != null))
-					{
-						value.UseCases.Add(this);
-						this._SubjectId = value.SubjectId;
-					}
-					else
-					{
-						this._SubjectId = default(System.Guid);
-					}
-					this.SendPropertyChanged("EAScenario");
+					this._Timestamp = value;
+					this.SendPropertyChanged("Timestamp");
+					this.OnTimestampChanged();
 				}
 			}
 		}

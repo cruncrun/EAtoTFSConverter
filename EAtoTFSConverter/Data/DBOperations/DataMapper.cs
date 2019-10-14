@@ -13,13 +13,47 @@ namespace EAtoTFSConverter.Data.DBOperations
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
 
-                /*
-                var query = from s in dataContext.EAScenarios
-                            where s.SubjectId == subjectId
-                            select s;
-                */
-            }
-            
+            }            
+        }
+
+        public static EAScenario MapEAScenario(XMLParse.EAScenario source)
+        {
+            return new EAScenario
+            {
+                Id = Guid.NewGuid(),
+                SubjectId = source.SubjectId,                
+                Name = source.Name,
+                Type = source.Type,
+                Description = source.Description,
+                XmiId = source.XmiId,
+                Timestamp = DateTime.Now
+            }; 
+        }
+
+        public static UseCase MapUseCase(XMLParse.UseCase source)
+        {
+            return new UseCase
+            {
+                Id = Guid.NewGuid(),
+                Guid = source.Guid,
+                SubjectId = source.SubjectId,
+                Name = source.Name,
+                Timestamp = DateTime.Now
+            };
+        }
+
+        public static Step MapStep(XMLParse.Step source)
+        {
+            return new Step
+            {
+                Id = Guid.NewGuid(),
+                Guid = source.Guid,
+                SubjectId = source.SubjectId,
+                Name = source.Name,
+                Level = source.Level,
+                Result = source.Result,
+                Timestamp = DateTime.Now
+            };
         }
     }
 }

@@ -3,54 +3,110 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using EAtoTFSConverter.Data.DBOperations;
 using EAtoTFSConverter.Data.XMLParse;
 
 namespace EAtoTFSConverter.Data
 {
-    static class DataController
+    public class DataController
     {
-        public static void Analize(IEnumerable<XMLParse.EAScenario> result)
-        {
-            /*  1.  Check if EAScenario exists (compare guid)
-             *      a.  Doesn't exist - insert
-             *      b.  Exists - update
-             *  2.  Check if UseCase exists
-             *      a.  Doesn't exist - insert
-             *      b.  Exists - update
-             *  3.  Check if Step exists
-             *      a.  Doesn't exist - insert
-             *      b.  Exists - update
-             *      
-             */
+        public List<EAScenario> Scenarios { get; set; } = new List<EAScenario>();
+        public List<UseCase> UseCases { get; set; } = new List<UseCase>();
+        public List<Step> Steps { get; set; } = new List<Step>();
 
+        public void PrepareData(IEnumerable<XMLParse.EAScenario> result)
+        {   
             foreach (XMLParse.EAScenario scenario in result)
             {
-                using (DataClassesDataContext dataContext = new DataClassesDataContext())
+                Scenarios.Add(DataMapper.MapEAScenario(scenario));
+
+                foreach (XMLParse.UseCase useCase in scenario.UseCase)
                 {
-                    EAScenario s = new EAScenario
-                    {
-                        SubjectId = scenario.SubjectId,
-                        XmiId = scenario.XmiId,
-                        Name = scenario.Name,
-                        Type = scenario.Type,   
-                        Description = scenario.Description
-                    };
-
-                    dataContext.EAScenarios.InsertOnSubmit(s);
-                    dataContext.EAScenarios.InsertOnSubmit(scenario);
-                    dataContext.SubmitChanges();
-
-                    /*
-                    var query = from s in dataContext.EAScenarios
-                                where s.SubjectId == subjectId
-                                select s;
-                    */
+                    UseCases.Add(DataMapper.MapUseCase(useCase));
                 }
-                DataMapper.CheckIfExists(scenario.SubjectId);
+                foreach (XMLParse.Step step in scenario.Steps)
+                {
+                    Steps.Add(DataMapper.MapStep(step));
+                }
+            }            
+            InsertData();
+        }
+
+        private void InsertData()
+        {
+            if (Scenarios.Any())
+            {
+                Insert(Scenarios);
+            }
+            if (UseCases.Any())
+            {
+                Insert(UseCases);
+            }
+            if (Steps.Any())
+            {
+                Insert(Steps);
             }
         }
 
-        
+        private void Insert(List<EAScenario> scenarios)
+        {
+            try
+            {
+                using (DataClassesDataContext dataContext = new DataClassesDataContext())
+                {                   
+                    dataContext.EAScenarios.InsertAllOnSubmit(scenarios);
+                    dataContext.SubmitChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
+            
+        }
+
+        private void Insert(List<UseCase> useCases)
+        {
+            try
+            {
+                using (DataClassesDataContext dataContext = new DataClassesDataContext())
+                {
+                    dataContext.UseCases.InsertAllOnSubmit(useCases);
+                    dataContext.SubmitChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
+            
+        }
+
+        private void Insert(List<Step> steps)
+        {
+            try
+            {
+                using (DataClassesDataContext dataContext = new DataClassesDataContext())
+                {
+                    dataContext.Steps.InsertAllOnSubmit(steps);
+                    dataContext.SubmitChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
+            
+        }
     }
 }
