@@ -16,17 +16,22 @@ namespace EAtoTFSConverter.Data
         public List<Step> Steps { get; set; } = new List<Step>();
 
         public void PrepareData(IEnumerable<XMLParse.EAScenario> result)
-        {   
+        {
+            DateTime currentDate = DateTime.Now;
+
             foreach (XMLParse.EAScenario scenario in result)
             {
+                scenario.Timestamp = currentDate;
                 Scenarios.Add(DataMapper.MapEAScenario(scenario));
 
                 foreach (XMLParse.UseCase useCase in scenario.UseCase)
                 {
+                    useCase.Timestamp = currentDate;
                     UseCases.Add(DataMapper.MapUseCase(useCase));
                 }
                 foreach (XMLParse.Step step in scenario.Steps)
                 {
+                    step.Timestamp = currentDate;
                     Steps.Add(DataMapper.MapStep(step));
                 }
             }            
@@ -35,17 +40,29 @@ namespace EAtoTFSConverter.Data
 
         private void InsertData()
         {
+            bool operation = false;
+
             if (Scenarios.Any())
             {
                 Insert(Scenarios);
+                operation = true;
             }
             if (UseCases.Any())
             {
                 Insert(UseCases);
+                operation = true;
             }
             if (Steps.Any())
             {
                 Insert(Steps);
+                operation = true;
+            }
+
+            if (operation == true)
+            {
+                MessageBox.Show(
+                   "Import danych z Enterprise Architect przebiegł pomyślnie!", "OK!",
+                   MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

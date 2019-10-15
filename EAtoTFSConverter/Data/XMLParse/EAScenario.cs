@@ -15,5 +15,6 @@ namespace EAtoTFSConverter.Data.XMLParse
         public string Description { get; set; }
         public IEnumerable<UseCase> UseCase { get; set; }
         public IEnumerable<Step> Steps { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

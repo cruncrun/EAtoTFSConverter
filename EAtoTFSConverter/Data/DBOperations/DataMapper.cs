@@ -21,12 +21,12 @@ namespace EAtoTFSConverter.Data.DBOperations
             return new EAScenario
             {
                 Id = Guid.NewGuid(),
-                SubjectId = source.SubjectId,                
+                SubjectId = source.SubjectId,
                 Name = source.Name,
                 Type = source.Type,
                 Description = source.Description,
                 XmiId = source.XmiId,
-                Timestamp = DateTime.Now
+                Timestamp = source.Timestamp
             }; 
         }
 
@@ -38,7 +38,7 @@ namespace EAtoTFSConverter.Data.DBOperations
                 Guid = source.Guid,
                 SubjectId = source.SubjectId,
                 Name = source.Name,
-                Timestamp = DateTime.Now
+                Timestamp = source.Timestamp
             };
         }
 
@@ -52,7 +52,7 @@ namespace EAtoTFSConverter.Data.DBOperations
                 Name = source.Name,
                 Level = source.Level,
                 Result = source.Result,
-                Timestamp = DateTime.Now
+                Timestamp = source.Timestamp
             };
         }
     }

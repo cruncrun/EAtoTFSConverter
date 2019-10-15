@@ -11,5 +11,6 @@ namespace EAtoTFSConverter.Data.XMLParse
         public Guid Guid { get; set; }
         public string SubjectId { get; set; }
         public string Name { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

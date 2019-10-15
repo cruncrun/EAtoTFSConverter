@@ -13,5 +13,6 @@ namespace EAtoTFSConverter.Data.XMLParse
         public string Name { get; set; }
         public int Level { get; set; }
         public string Result { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }
