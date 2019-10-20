@@ -1,13 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DataClasses">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 9.75" name="DataClasses">
   <DataContextMoniker Name="/DataClassesDataContext" />
   <nestedChildShapes>
-    <classShape Id="7bab50ba-7ff5-4355-8b36-68c7ee261d3a" absoluteBounds="0.75, 0.75, 2, 2.1554996744791666">
-      <DataClassMoniker Name="/DataClassesDataContext/EAScenario" />
-      <nestedChildShapes>
-        <elementListCompartment Id="b48f21fa-9cc9-431d-bfa8-9a05b158f03a" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="76ef26dd-4319-45d1-82cd-e312a606f01b" absoluteBounds="3.75, 0.75, 2, 2.1554996744791666">
       <DataClassMoniker Name="/DataClassesDataContext/Step" />
       <nestedChildShapes>
@@ -18,6 +12,18 @@
       <DataClassMoniker Name="/DataClassesDataContext/UseCase" />
       <nestedChildShapes>
         <elementListCompartment Id="7a85da2b-3cca-4cbd-be74-555f7a0fac09" absoluteBounds="0.765, 4.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5b92c924-715c-469b-9b10-af528af564fc" absoluteBounds="0.625, 8.25, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/DataClassesDataContext/Project" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cc579839-d198-4441-9916-58597783c361" absoluteBounds="0.63999999999999968, 8.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="eda6bab2-f04a-4fb5-82fd-c932875faff8" absoluteBounds="0.75, 0.625, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/DataClassesDataContext/EAScenario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bbb3a1fd-3dea-4a95-9e4c-c95367179f07" absoluteBounds="0.76499999999999968, 1.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

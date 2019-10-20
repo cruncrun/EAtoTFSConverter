@@ -10,13 +10,14 @@ namespace EAtoTFSConverter.Data.XMLParse
 {
     static class XMLParse
     {
-        public static void Parse(XDocument source)
+        public static void Parse(XDocument source, Project project)
         {
             IEnumerable<EAScenario> result = from ea in source.Descendants("EAScenario")
                                              select new EAScenario()
                                              {
                                                  XmiId = (string)ea.Attribute("xmi.id"),
                                                  SubjectId = (string)ea.Attribute("subject"),
+                                                 ProjectId = project.Id,
                                                  Name = (string)ea.Attribute("name"),
                                                  Type = (string)ea.Attribute("type"),
                                                  Description = (string)ea.Attribute("description"),                                                                                                 

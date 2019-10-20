@@ -22,6 +22,7 @@ namespace EAtoTFSConverter.Data.DBOperations
             {
                 Id = Guid.NewGuid(),
                 SubjectId = source.SubjectId,
+                ProjectId = source.ProjectId,
                 Name = source.Name,
                 Type = source.Type,
                 Description = source.Description,
@@ -53,6 +54,15 @@ namespace EAtoTFSConverter.Data.DBOperations
                 Level = source.Level,
                 Result = source.Result,
                 Timestamp = source.Timestamp
+            };
+        }
+
+        public static Project MapProject(EAtoTFSConverter.Project source)
+        {
+            return new Project
+            {
+                Id = source.Id,
+                Name = source.Name
             };
         }
     }

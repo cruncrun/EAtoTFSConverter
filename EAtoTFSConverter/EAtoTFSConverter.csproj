@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="Data\DataController.cs" />
     <Compile Include="Data\DBOperations\DataMapper.cs" />
+    <Compile Include="Data\Project.cs" />
     <Compile Include="Data\XMLParse\EAScenario.cs" />
     <Compile Include="Data\XMLParse\Step.cs" />
     <Compile Include="Data\XMLParse\UseCase.cs" />

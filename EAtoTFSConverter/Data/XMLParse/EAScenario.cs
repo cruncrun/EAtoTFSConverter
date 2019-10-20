@@ -10,6 +10,7 @@ namespace EAtoTFSConverter.Data.XMLParse
     {
         public string SubjectId { get; set; }
         public string XmiId { get; set; }
+        public Guid ProjectId { get; set; }
         public string Name { get; set; }   
         public string Type { get; set; }
         public string Description { get; set; }
