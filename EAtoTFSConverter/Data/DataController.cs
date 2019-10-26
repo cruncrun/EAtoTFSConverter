@@ -27,11 +27,13 @@ namespace EAtoTFSConverter.Data
                 foreach (XMLParse.UseCase useCase in scenario.UseCase)
                 {
                     useCase.Timestamp = currentDate;
+                    useCase.EAScenarioId = scenario.Id;
                     UseCases.Add(DataMapper.MapUseCase(useCase));
                 }
                 foreach (XMLParse.Step step in scenario.Steps)
                 {
                     step.Timestamp = currentDate;
+                    step.EAScenarioId = scenario.Id;
                     Steps.Add(DataMapper.MapStep(step));
                 }
             }            

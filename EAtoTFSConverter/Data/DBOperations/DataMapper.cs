@@ -20,7 +20,7 @@ namespace EAtoTFSConverter.Data.DBOperations
         {
             return new EAScenario
             {
-                Id = Guid.NewGuid(),
+                Id = source.Id,
                 SubjectId = source.SubjectId,
                 ProjectId = source.ProjectId,
                 Name = source.Name,
@@ -36,6 +36,7 @@ namespace EAtoTFSConverter.Data.DBOperations
             return new UseCase
             {
                 Id = Guid.NewGuid(),
+                EAScenarioId = source.EAScenarioId,
                 Guid = source.Guid,
                 SubjectId = source.SubjectId,
                 Name = source.Name,
@@ -49,6 +50,7 @@ namespace EAtoTFSConverter.Data.DBOperations
             {
                 Id = Guid.NewGuid(),
                 Guid = source.Guid,
+                EAScenarioId = source.EAScenarioId,
                 SubjectId = source.SubjectId,
                 Name = source.Name,
                 Level = source.Level,

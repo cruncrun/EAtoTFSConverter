@@ -8,6 +8,7 @@ namespace EAtoTFSConverter.Data.XMLParse
 {
     public class EAScenario
     {
+        public Guid Id { get; set; }
         public string SubjectId { get; set; }
         public string XmiId { get; set; }
         public Guid ProjectId { get; set; }

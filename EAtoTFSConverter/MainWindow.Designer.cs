@@ -31,6 +31,7 @@
             this.btn_load_EA_XML = new System.Windows.Forms.Button();
             this.cb_chooseProject = new System.Windows.Forms.ComboBox();
             this.label_chooseProject = new System.Windows.Forms.Label();
+            this.treeView_scenarios = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // btn_load_EA_XML
@@ -50,7 +51,7 @@
             this.cb_chooseProject.Name = "cb_chooseProject";
             this.cb_chooseProject.Size = new System.Drawing.Size(154, 21);
             this.cb_chooseProject.TabIndex = 1;
-            this.cb_chooseProject.SelectedIndexChanged += new System.EventHandler(this.cb_chooseProject_OnChanged);
+            this.cb_chooseProject.SelectedIndexChanged += new System.EventHandler(this.Cb_chooseProject_OnChanged);
             // 
             // label_chooseProject
             // 
@@ -61,11 +62,19 @@
             this.label_chooseProject.TabIndex = 2;
             this.label_chooseProject.Text = "Wybierz projekt:";
             // 
+            // treeView_scenarios
+            // 
+            this.treeView_scenarios.Location = new System.Drawing.Point(15, 41);
+            this.treeView_scenarios.Name = "treeView_scenarios";
+            this.treeView_scenarios.Size = new System.Drawing.Size(400, 447);
+            this.treeView_scenarios.TabIndex = 3;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(930, 641);
+            this.Controls.Add(this.treeView_scenarios);
             this.Controls.Add(this.label_chooseProject);
             this.Controls.Add(this.cb_chooseProject);
             this.Controls.Add(this.btn_load_EA_XML);
@@ -81,6 +90,7 @@
         private System.Windows.Forms.Button btn_load_EA_XML;
         private System.Windows.Forms.ComboBox cb_chooseProject;
         private System.Windows.Forms.Label label_chooseProject;
+        private System.Windows.Forms.TreeView treeView_scenarios;
     }
 }
 

@@ -9,6 +9,7 @@ namespace EAtoTFSConverter.Data.XMLParse
     public class UseCase
     {
         public Guid Guid { get; set; }
+        public Guid EAScenarioId { get; set; }
         public string SubjectId { get; set; }
         public string Name { get; set; }
         public DateTime Timestamp { get; set; }

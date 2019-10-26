@@ -15,6 +15,7 @@ namespace EAtoTFSConverter.Data.XMLParse
             IEnumerable<EAScenario> result = from ea in source.Descendants("EAScenario")
                                              select new EAScenario()
                                              {
+                                                 Id = Guid.NewGuid(),
                                                  XmiId = (string)ea.Attribute("xmi.id"),
                                                  SubjectId = (string)ea.Attribute("subject"),
                                                  ProjectId = project.Id,
@@ -24,7 +25,7 @@ namespace EAtoTFSConverter.Data.XMLParse
                                                  Steps = from s in ea.Descendants("step")
                                                          select new Step()
                                                          {
-                                                             Guid = (Guid)s.Attribute("guid"),
+                                                             Guid = (Guid)s.Attribute("guid"),                                                              
                                                              SubjectId = (string)ea.Attribute("subject"),
                                                              Name = (string)s.Attribute("name"),
                                                              Level = (int)s.Attribute("level"),
@@ -53,6 +54,6 @@ namespace EAtoTFSConverter.Data.XMLParse
 
         private static bool ValidateResult(IEnumerable<EAScenario> result) => result.Any();
 
-        private static Guid GetGuidFromEAIdentifier(string subject) => Guid.Parse(subject.Substring(5).Replace("_", "-").ToUpper());
+        //private static Guid GetGuidFromEAIdentifier(string subject) => Guid.Parse(subject.Substring(5).Replace("_", "-").ToUpper());
     }
 }
