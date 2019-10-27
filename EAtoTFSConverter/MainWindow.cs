@@ -1,5 +1,5 @@
 ﻿using EAtoTFSConverter.Data;
-using EAtoTFSConverter.Data.DBOperations;
+using EAtoTFSConverter.Data.Logic;
 using EAtoTFSConverter.Data.XMLParse;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace EAtoTFSConverter
     public partial class MainWindow : Form
     {
         private string filePath = string.Empty;
-        private Project selectedProject;
+        private Project selectedProject;        
 
         public MainWindow()
         {
@@ -37,34 +37,29 @@ namespace EAtoTFSConverter
 
         private void PopulateScenariosTree()
         {
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                var queryScenarios = from scenarios in dataContext.active_EAscenarios
-                                     where scenarios.ProjectId == selectedProject.Id
-                                     select scenarios;
-                var querySteps = from steps in dataContext.active_Steps                                 
-                                 select steps;
-
-                InitializeTreeView(queryScenarios, querySteps);
-            }
+            DatabaseOperations db = new DatabaseOperations();
+            var queryScenarios = db.GetActive_EAscenarios(selectedProject);            
+            InitializeTreeView(queryScenarios);            
         }
 
-        private void InitializeTreeView(IQueryable<active_EAscenario> queryScenarios, IQueryable<active_Step> querySteps)
+        private void InitializeTreeView(List<active_EAscenario> queryScenarios)
         {
             treeView_scenarios.BeginUpdate();
 
             foreach (var scenario in queryScenarios)
             {
-                var steps = from s in querySteps
-                            where s.EAScenarioId == scenario.Id
-                            select s;
-                TreeNode[] stepsArray = GenerateTreeNodes(steps);
+                DatabaseOperations db = new DatabaseOperations();
+                var steps = db.GetActive_Steps(scenario);
+                
+                TreeNode[] stepsArray = GenerateStepTreeNodes(steps);
                 TreeNode scenarioTreeNode = new TreeNode(scenario.Name, stepsArray);
-                treeView_scenarios.Nodes.Add(scenarioTreeNode);                
-            }            
+                treeView_scenarios.Nodes.Add(scenarioTreeNode); 
+                
+                // TODO: scenariusze są zdublowane
+            }
         }
 
-        private TreeNode[] GenerateTreeNodes(IQueryable<active_Step> steps)
+        private TreeNode[] GenerateStepTreeNodes(List<active_Step> steps)
         {
             List<TreeNode> treeNodesList = new List<TreeNode>();
             foreach (var s in steps)
@@ -107,7 +102,13 @@ namespace EAtoTFSConverter
         private void Cb_chooseProject_OnChanged(object sender, EventArgs e)
         {
             selectedProject = (Project)cb_chooseProject.SelectedItem;
+            treeView_scenarios.Nodes.Clear();
             PopulateScenariosTree();
+        }
+
+        private void Btn_sendToTFS_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

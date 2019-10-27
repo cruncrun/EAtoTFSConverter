@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EAtoTFSConverter.Data.DBOperations;
+using EAtoTFSConverter.Data.Logic;
 using EAtoTFSConverter.Data.XMLParse;
 
 namespace EAtoTFSConverter.Data
@@ -24,108 +24,52 @@ namespace EAtoTFSConverter.Data
                 scenario.Timestamp = currentDate;
                 Scenarios.Add(DataMapper.MapEAScenario(scenario));
 
-                foreach (XMLParse.UseCase useCase in scenario.UseCase)
+                foreach (UseCase useCase in scenario.UseCase)
                 {
+                    useCase.Id = Guid.NewGuid();
                     useCase.Timestamp = currentDate;
                     useCase.EAScenarioId = scenario.Id;
-                    UseCases.Add(DataMapper.MapUseCase(useCase));
+                    UseCases.Add(useCase);
                 }
-                foreach (XMLParse.Step step in scenario.Steps)
+                foreach (Step step in scenario.Steps)
                 {
+                    step.Id = Guid.NewGuid();
                     step.Timestamp = currentDate;
                     step.EAScenarioId = scenario.Id;
-                    Steps.Add(DataMapper.MapStep(step));
+                    Steps.Add(step);
                 }
             }            
-            InsertData();
+            InsertEAData();
         }
 
-        private void InsertData()
+        private void InsertEAData()
         {
             bool operation = false;
 
             if (Scenarios.Any())
             {
-                Insert(Scenarios);
+                DatabaseOperations db = new DatabaseOperations();
+                db.Insert(Scenarios);
                 operation = true;
             }
             if (UseCases.Any())
             {
-                Insert(UseCases);
+                DatabaseOperations db = new DatabaseOperations();
+                db.Insert(UseCases);
                 operation = true;
             }
             if (Steps.Any())
             {
-                Insert(Steps);
+                DatabaseOperations db = new DatabaseOperations();
+                db.Insert(Steps);
                 operation = true;
             }
-
             if (operation == true)
             {
                 MessageBox.Show(
                    "Import danych z Enterprise Architect przebiegł pomyślnie!", "OK!",
                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        private void Insert(List<EAScenario> scenarios)
-        {
-            try
-            {
-                using (DataClassesDataContext dataContext = new DataClassesDataContext())
-                {                   
-                    dataContext.EAScenarios.InsertAllOnSubmit(scenarios);
-                    dataContext.SubmitChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(
-                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                throw;
-            }
-            
-        }
-
-        private void Insert(List<UseCase> useCases)
-        {
-            try
-            {
-                using (DataClassesDataContext dataContext = new DataClassesDataContext())
-                {
-                    dataContext.UseCases.InsertAllOnSubmit(useCases);
-                    dataContext.SubmitChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(
-                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                throw;
-            }
-            
-        }
-
-        private void Insert(List<Step> steps)
-        {
-            try
-            {
-                using (DataClassesDataContext dataContext = new DataClassesDataContext())
-                {
-                    dataContext.Steps.InsertAllOnSubmit(steps);
-                    dataContext.SubmitChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(
-                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                throw;
-            }
-            
         }
     }
 }

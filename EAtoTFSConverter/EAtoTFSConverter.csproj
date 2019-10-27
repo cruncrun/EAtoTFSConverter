@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
@@ -69,11 +72,11 @@
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Data\DataController.cs" />
-    <Compile Include="Data\DBOperations\DataMapper.cs" />
-    <Compile Include="Data\Project.cs" />
+    <Compile Include="Data\Logic\DatabaseOperations.cs" />
+    <Compile Include="Data\Logic\DataMapper.cs" />
+    <Compile Include="Data\Logic\JSONSerialize.cs" />
+    <Compile Include="Data\Logic\WorkItemLogic.cs" />
     <Compile Include="Data\XMLParse\EAScenario.cs" />
-    <Compile Include="Data\XMLParse\Step.cs" />
-    <Compile Include="Data\XMLParse\UseCase.cs" />
     <Compile Include="Data\XMLParse\XMLParse.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -103,6 +106,7 @@
     <None Include="DataClasses.dbml.layout">
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -4,18 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EAtoTFSConverter.Data.DBOperations
+namespace EAtoTFSConverter.Data.Logic
 {
     static class DataMapper
-    {
-        public static void CheckIfExists(Guid subjectId)
-        {
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-
-            }            
-        }
-
+    {   
         public static EAScenario MapEAScenario(XMLParse.EAScenario source)
         {
             return new EAScenario
@@ -31,7 +23,7 @@ namespace EAtoTFSConverter.Data.DBOperations
             }; 
         }
 
-        public static UseCase MapUseCase(XMLParse.UseCase source)
+        public static UseCase MapUseCase(UseCase source)
         {
             return new UseCase
             {
@@ -44,7 +36,7 @@ namespace EAtoTFSConverter.Data.DBOperations
             };
         }
 
-        public static Step MapStep(XMLParse.Step source)
+        public static Step MapStep(Step source)
         {
             return new Step
             {
@@ -59,7 +51,7 @@ namespace EAtoTFSConverter.Data.DBOperations
             };
         }
 
-        public static Project MapProject(EAtoTFSConverter.Project source)
+        public static Project MapProject(Project source)
         {
             return new Project
             {
