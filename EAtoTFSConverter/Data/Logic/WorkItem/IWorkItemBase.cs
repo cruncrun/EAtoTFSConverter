@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic
 {
-    public class JSONSerialize
+    interface IWorkItemBase
     {
-
+        int WorkItemId { get; set; }
+        bool CheckIfExists(Project project);
     }
 }

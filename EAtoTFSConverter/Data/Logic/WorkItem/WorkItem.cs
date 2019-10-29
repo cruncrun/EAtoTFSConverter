@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic
 {
-    class WorkItemLogic
+    class WorkItem
     {
+
     }
 }

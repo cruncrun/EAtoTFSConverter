@@ -23,34 +23,6 @@ namespace EAtoTFSConverter.Data.Logic
             }; 
         }
 
-        public static UseCase MapUseCase(UseCase source)
-        {
-            return new UseCase
-            {
-                Id = Guid.NewGuid(),
-                EAScenarioId = source.EAScenarioId,
-                Guid = source.Guid,
-                SubjectId = source.SubjectId,
-                Name = source.Name,
-                Timestamp = source.Timestamp
-            };
-        }
-
-        public static Step MapStep(Step source)
-        {
-            return new Step
-            {
-                Id = Guid.NewGuid(),
-                Guid = source.Guid,
-                EAScenarioId = source.EAScenarioId,
-                SubjectId = source.SubjectId,
-                Name = source.Name,
-                Level = source.Level,
-                Result = source.Result,
-                Timestamp = source.Timestamp
-            };
-        }
-
         public static Project MapProject(Project source)
         {
             return new Project

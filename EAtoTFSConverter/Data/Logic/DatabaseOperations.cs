@@ -9,7 +9,7 @@ namespace EAtoTFSConverter.Data.Logic
 {
     public class DatabaseOperations
     {
-        public List<active_EAscenario> GetActive_EAscenarios(Project selectedProject)
+        internal List<active_EAscenario> GetActive_EAscenarios(Project selectedProject)
         {
             List<active_EAscenario> active_EAscenarios = new List<active_EAscenario>();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
@@ -21,7 +21,7 @@ namespace EAtoTFSConverter.Data.Logic
             return active_EAscenarios;
         }
 
-        public List<active_Step> GetActive_Steps(active_EAscenario eaScenario)
+        internal IEnumerable<active_Step> GetActive_Steps(active_EAscenario eaScenario)
         {
             List<active_Step> active_Steps = new List<active_Step>();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
@@ -33,7 +33,7 @@ namespace EAtoTFSConverter.Data.Logic
             return active_Steps;
         }
 
-        public List<active_Step> GetActive_Steps()
+        internal List<active_Step> GetActive_Steps()
         {
             List<active_Step> active_Steps = new List<active_Step>();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
@@ -44,8 +44,9 @@ namespace EAtoTFSConverter.Data.Logic
             return active_Steps;
         }
 
-        public void Insert(List<EAScenario> scenarios)
+        internal bool Insert(List<EAScenario> scenarios)
         {
+            bool result;
             try
             {
                 using (DataClassesDataContext dataContext = new DataClassesDataContext())
@@ -53,6 +54,7 @@ namespace EAtoTFSConverter.Data.Logic
                     dataContext.EAScenarios.InsertAllOnSubmit(scenarios);
                     dataContext.SubmitChanges();
                 }
+                result = true;
             }
             catch (Exception e)
             {
@@ -60,12 +62,13 @@ namespace EAtoTFSConverter.Data.Logic
                     "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 throw;
-            }
-
+            }             
+            return result;            
         }
 
-        public void Insert(List<UseCase> useCases)
+        internal bool Insert(List<UseCase> useCases)
         {
+            bool result;
             try
             {
                 using (DataClassesDataContext dataContext = new DataClassesDataContext())
@@ -73,6 +76,7 @@ namespace EAtoTFSConverter.Data.Logic
                     dataContext.UseCases.InsertAllOnSubmit(useCases);
                     dataContext.SubmitChanges();
                 }
+                result = true;
             }
             catch (Exception e)
             {
@@ -81,11 +85,12 @@ namespace EAtoTFSConverter.Data.Logic
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 throw;
             }
-
+            return result;
         }
 
-        public void Insert(List<Step> steps)
+        internal bool Insert(List<Step> steps)
         {
+            bool result;
             try
             {
                 using (DataClassesDataContext dataContext = new DataClassesDataContext())
@@ -93,6 +98,7 @@ namespace EAtoTFSConverter.Data.Logic
                     dataContext.Steps.InsertAllOnSubmit(steps);
                     dataContext.SubmitChanges();
                 }
+                result = true;
             }
             catch (Exception e)
             {
@@ -101,7 +107,7 @@ namespace EAtoTFSConverter.Data.Logic
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 throw;
             }
-
+            return result;
         }
     }
 }

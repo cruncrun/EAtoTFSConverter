@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic
 {
-    public class JSONSerialize
-    {
-
+    interface IWorkItemCreateLogic
+    {        
+        void CreateWorkItem();
     }
 }

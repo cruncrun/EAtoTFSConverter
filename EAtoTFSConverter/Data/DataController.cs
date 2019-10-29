@@ -44,25 +44,22 @@ namespace EAtoTFSConverter.Data
 
         private void InsertEAData()
         {
-            bool operation = false;
+            bool operation = true;
 
             if (Scenarios.Any())
             {
                 DatabaseOperations db = new DatabaseOperations();
-                db.Insert(Scenarios);
-                operation = true;
+                operation &= db.Insert(Scenarios);
             }
             if (UseCases.Any())
             {
                 DatabaseOperations db = new DatabaseOperations();
-                db.Insert(UseCases);
-                operation = true;
+                operation &= db.Insert(UseCases);                 
             }
             if (Steps.Any())
             {
                 DatabaseOperations db = new DatabaseOperations();
-                db.Insert(Steps);
-                operation = true;
+                operation &= db.Insert(Steps);                
             }
             if (operation == true)
             {

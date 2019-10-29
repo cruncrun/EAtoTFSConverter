@@ -42,26 +42,23 @@ namespace EAtoTFSConverter
             InitializeTreeView(queryScenarios);            
         }
 
-        private void InitializeTreeView(List<active_EAscenario> queryScenarios)
+        private void InitializeTreeView(IEnumerable<active_EAscenario> queryScenarios)
         {
             treeView_scenarios.BeginUpdate();
-
             foreach (var scenario in queryScenarios)
             {
                 DatabaseOperations db = new DatabaseOperations();
-                var steps = db.GetActive_Steps(scenario);
-                
+                var steps = db.GetActive_Steps(scenario);                
                 TreeNode[] stepsArray = GenerateStepTreeNodes(steps);
                 TreeNode scenarioTreeNode = new TreeNode(scenario.Name, stepsArray);
-                treeView_scenarios.Nodes.Add(scenarioTreeNode); 
-                
+                treeView_scenarios.Nodes.Add(scenarioTreeNode);                 
                 // TODO: scenariusze są zdublowane
             }
         }
 
-        private TreeNode[] GenerateStepTreeNodes(List<active_Step> steps)
+        private TreeNode[] GenerateStepTreeNodes(IEnumerable<active_Step> steps)
         {
-            List<TreeNode> treeNodesList = new List<TreeNode>();
+            IList<TreeNode> treeNodesList = new List<TreeNode>();
             foreach (var s in steps)
             {
                 treeNodesList.Add(new TreeNode(s.Name));
@@ -87,15 +84,12 @@ namespace EAtoTFSConverter
                 InitialDirectory = "C:\\",
                 Filter = "XML Files (*.xml)|*.xml|All files (*.*)|*.*"
             };
-
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 filePath = openFileDialog.FileName;
                 XDocument source = XDocument.Load(filePath);
-
                 XMLParse.Parse(source, DataMapper.MapProject(selectedProject));
             }
-
             openFileDialog.Dispose();
         }
 
@@ -108,7 +102,8 @@ namespace EAtoTFSConverter
 
         private void Btn_sendToTFS_Click(object sender, EventArgs e)
         {
-
+            WorkItemLogic workItemLogic = new WorkItemLogic();
+            workItemLogic.PrepareData(selectedProject);
         }
     }
 }
