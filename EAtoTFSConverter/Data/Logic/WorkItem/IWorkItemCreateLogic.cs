@@ -8,6 +8,6 @@ namespace EAtoTFSConverter.Data.Logic
 {
     interface IWorkItemCreateLogic
     {        
-        void CreateWorkItem();
+        
     }
 }

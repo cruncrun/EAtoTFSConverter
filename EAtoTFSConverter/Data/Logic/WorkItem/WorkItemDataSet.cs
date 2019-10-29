@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic
 {
-    interface IWorkItemBase
+    class WorkItemDataSet
     {
-        //bool Exists { get; set; }
-        int WorkItemId { get; set; }
-        //bool CheckIfExists(Project project);
+        public TestPlan TestPlan { get; set; }
+        //public IEnumerable<TestCase> TestCases { get; set; }
     }
 }

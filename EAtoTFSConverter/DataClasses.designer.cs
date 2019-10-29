@@ -118,6 +118,14 @@ namespace EAtoTFSConverter
 				return this.GetTable<active_Step>();
 			}
 		}
+		
+		public System.Data.Linq.Table<TestPlan> TestPlans
+		{
+			get
+			{
+				return this.GetTable<TestPlan>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Project")]
@@ -1090,6 +1098,69 @@ namespace EAtoTFSConverter
 				if ((this._Timestamp != value))
 				{
 					this._Timestamp = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TestPlan")]
+	public partial class TestPlan
+	{
+		
+		private System.Guid _Id;
+		
+		private System.Guid _ProjectId;
+		
+		private int _WorkItemId;
+		
+		public TestPlan()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ProjectId
+		{
+			get
+			{
+				return this._ProjectId;
+			}
+			set
+			{
+				if ((this._ProjectId != value))
+				{
+					this._ProjectId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkItemId", DbType="Int NOT NULL")]
+		public int WorkItemId
+		{
+			get
+			{
+				return this._WorkItemId;
+			}
+			set
+			{
+				if ((this._WorkItemId != value))
+				{
+					this._WorkItemId = value;
 				}
 			}
 		}

@@ -77,8 +77,8 @@
     <Compile Include="Data\Logic\WorkItem\IWorkItemBase.cs" />
     <Compile Include="Data\Logic\WorkItem\IWorkItemCreateLogic.cs" />
     <Compile Include="Data\Logic\JSONSerialize.cs" />
-    <Compile Include="Data\Logic\WorkItem\TestPlan.cs" />
     <Compile Include="Data\Logic\WorkItem\WorkItem.cs" />
+    <Compile Include="Data\Logic\WorkItem\WorkItemDataSet.cs" />
     <Compile Include="Data\Logic\WorkItem\WorkItemLogic.cs" />
     <Compile Include="Data\XMLParse\EAScenario.cs" />
     <Compile Include="Data\XMLParse\XMLParse.cs" />

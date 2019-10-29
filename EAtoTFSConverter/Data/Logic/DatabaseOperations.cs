@@ -9,7 +9,7 @@ namespace EAtoTFSConverter.Data.Logic
 {
     public class DatabaseOperations
     {
-        internal List<active_EAscenario> GetActive_EAscenarios(Project selectedProject)
+        internal IEnumerable<active_EAscenario> GetActive_EAscenarios(Project selectedProject)
         {
             List<active_EAscenario> active_EAscenarios = new List<active_EAscenario>();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
