@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,6 +25,7 @@ namespace EAtoTFSConverter.Data.Logic
 
         private TestPlan CreateNewTestPlan(Project project)
         {
+            var json = JsonConvert.SerializeObject(project, Formatting.Indented);
             /*  1.  Przygotowanie komunikatu do API
              *  2.  Wysyłka komnunikatu
              *  3.  Odebranie odpowiedzi
@@ -30,8 +33,22 @@ namespace EAtoTFSConverter.Data.Logic
              *  5.  Przygotowanie i zwrot obiektu.
              */
 
+            APICommunication api = new APICommunication();
+            api.Send(json, project);
+            //await Send(json);
+
             return new TestPlan();
         }
+
+        //private static async Task Send(string json)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        var content = new FormUrlEncodedContent(json);
+        //        var resposne = await client.PostAsync("https://dev.azure.com/{organization}/{project}/_apis/testplan/plans?api-version=5.1-preview.1", content);
+        //        var responseString = await response.Content.ReadAsStringAsync();
+        //    }
+        //}
 
         internal bool CheckIfExists(Project project)
         {
