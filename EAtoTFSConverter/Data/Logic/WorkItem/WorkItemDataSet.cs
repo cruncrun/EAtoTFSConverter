@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EAtoTFSConverter.Data.Logic
 {
     class WorkItemDataSet
-    {        public TestPlan TestPlan { get; set; }
-        //public IEnumerable<TestCase> TestCases { get; set; }
+    {    
+        public TestPlan TestPlan { get; set; }        
     }
 }

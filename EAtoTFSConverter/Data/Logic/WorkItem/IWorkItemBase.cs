@@ -8,8 +8,9 @@ namespace EAtoTFSConverter.Data.Logic
 {
     interface IWorkItemBase
     {
-        //bool Exists { get; set; }
-        int WorkItemId { get; set; }
-        //bool CheckIfExists(Project project);
+        string Name { get; set; }
+        string AreaPath { get; set; }
+        string Iteration { get; set; }
+        string Owner { get; set; }
     }
 }

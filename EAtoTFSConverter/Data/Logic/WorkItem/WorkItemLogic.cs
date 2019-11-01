@@ -15,6 +15,8 @@ namespace EAtoTFSConverter.Data.Logic
         {
             WorkItemDataSet workItemDataSet = new WorkItemDataSet();
             workItemDataSet.TestPlan = PrepareTestPlanData(project);
+
+            
         }
 
         private TestPlan PrepareTestPlanData(Project project)
@@ -25,30 +27,27 @@ namespace EAtoTFSConverter.Data.Logic
 
         private TestPlan CreateNewTestPlan(Project project)
         {
-            var json = JsonConvert.SerializeObject(project, Formatting.Indented);
-            /*  1.  Przygotowanie komunikatu do API
-             *  2.  Wysyłka komnunikatu
-             *  3.  Odebranie odpowiedzi
-             *  4.  Zapis danych z odpowiedzi do bazy
-             *  5.  Przygotowanie i zwrot obiektu.
-             */
+            // 1.  Przygotowanie komunikatu do API
+            var json = JsonConvert.SerializeObject(new TestPlanCreationData(), Formatting.Indented);
 
+            // 2.  Wysyłka komnunikatu
+            // 3.  Odebranie odpowiedzi
             APICommunication api = new APICommunication();
             api.Send(json, project);
-            //await Send(json);
+
+            
+
+            // 4.  Zapis danych z odpowiedzi do bazy
+
+            // 5.  Przygotowanie i zwrot obiektu.
+
+
+
+
+
 
             return new TestPlan();
         }
-
-        //private static async Task Send(string json)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        var content = new FormUrlEncodedContent(json);
-        //        var resposne = await client.PostAsync("https://dev.azure.com/{organization}/{project}/_apis/testplan/plans?api-version=5.1-preview.1", content);
-        //        var responseString = await response.Content.ReadAsStringAsync();
-        //    }
-        //}
 
         internal bool CheckIfExists(Project project)
         {
