@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic
 {
-    interface IWorkItemCreateLogic
-    {        
-        
+    interface IWorkItemReceivedData
+    {
     }
 }

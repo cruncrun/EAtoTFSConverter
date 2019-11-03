@@ -31,8 +31,7 @@ namespace EAtoTFSConverter
 
         private void PopulateLists()
         {
-            PopulateProjectsList();
-            PopulateScenariosTree();
+            PopulateProjectsList();            
         }
 
         private void PopulateScenariosTree()
@@ -51,9 +50,9 @@ namespace EAtoTFSConverter
                 var steps = db.GetActive_Steps(scenario);                
                 TreeNode[] stepsArray = GenerateStepTreeNodes(steps);
                 TreeNode scenarioTreeNode = new TreeNode(scenario.Name, stepsArray);
-                treeView_scenarios.Nodes.Add(scenarioTreeNode);                 
-                // TODO: scenariusze są zdublowane
+                treeView_scenarios.Nodes.Add(scenarioTreeNode);  
             }
+            treeView_scenarios.EndUpdate();
         }
 
         private TreeNode[] GenerateStepTreeNodes(IEnumerable<active_Step> steps)
@@ -97,7 +96,7 @@ namespace EAtoTFSConverter
         {
             selectedProject = (Project)cb_chooseProject.SelectedItem;
             treeView_scenarios.Nodes.Clear();
-            PopulateScenariosTree();
+            PopulateScenariosTree();            
         }
 
         private void Btn_sendToTFS_Click(object sender, EventArgs e)

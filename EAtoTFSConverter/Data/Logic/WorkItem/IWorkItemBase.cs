@@ -8,6 +8,7 @@ namespace EAtoTFSConverter.Data.Logic
 {
     interface IWorkItemBase
     {
+        int Id { get; set; }
         string Name { get; set; }
         string AreaPath { get; set; }
         string Iteration { get; set; }

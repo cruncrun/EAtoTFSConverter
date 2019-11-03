@@ -39,7 +39,9 @@ namespace EAtoTFSConverter.Data
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                 "Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", authorizationToken))));
             client.BaseAddress = address;            
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));            
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("User-Agent", "EAToTFSConverter");
+            client.DefaultRequestHeaders.Add("X-TFS-FedAuthRedirect", "Suppress");
             return client;
         }        
 

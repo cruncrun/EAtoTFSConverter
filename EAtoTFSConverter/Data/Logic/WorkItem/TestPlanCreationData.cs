@@ -8,6 +8,7 @@ namespace EAtoTFSConverter.Data.Logic
 {
     class TestPlanCreationData : IWorkItemBase
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string AreaPath { get; set; }
         public string Iteration { get; set; }

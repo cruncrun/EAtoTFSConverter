@@ -161,8 +161,8 @@
     <Compile Include="Data\Logic\DatabaseOperations.cs" />
     <Compile Include="Data\Logic\DataMapper.cs" />
     <Compile Include="Data\Logic\WorkItem\IWorkItemBase.cs" />
-    <Compile Include="Data\Logic\WorkItem\IWorkItemCreateLogic.cs" />
     <Compile Include="Data\Logic\JSONSerialize.cs" />
+    <Compile Include="Data\Logic\WorkItem\IWorkItemReceivedData.cs" />
     <Compile Include="Data\Logic\WorkItem\WorkItem.cs" />
     <Compile Include="Data\Logic\WorkItem\TestPlanCreationData.cs" />
     <Compile Include="Data\Logic\WorkItem\WorkItemDataSet.cs" />
