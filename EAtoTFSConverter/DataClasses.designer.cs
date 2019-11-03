@@ -71,14 +71,6 @@ namespace EAtoTFSConverter
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Project> Projects
-		{
-			get
-			{
-				return this.GetTable<Project>();
-			}
-		}
-		
 		public System.Data.Linq.Table<EAScenario> EAScenarios
 		{
 			get
@@ -126,49 +118,12 @@ namespace EAtoTFSConverter
 				return this.GetTable<TestPlan>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Project")]
-	public partial class Project
-	{
 		
-		private System.Guid _Id;
-		
-		private string _Name;
-		
-		public Project()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Id
+		public System.Data.Linq.Table<Project> Projects
 		{
 			get
 			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this._Name = value;
-				}
+				return this.GetTable<Project>();
 			}
 		}
 	}
@@ -1161,6 +1116,123 @@ namespace EAtoTFSConverter
 				if ((this._WorkItemId != value))
 				{
 					this._WorkItemId = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Project")]
+	public partial class Project
+	{
+		
+		private System.Guid _Id;
+		
+		private string _Name;
+		
+		private string _DevOpsProject;
+		
+		private string _DevOpsOrganization;
+		
+		private string _Address;
+		
+		private string _AuthorizationToken;
+		
+		public Project()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DevOpsProject", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string DevOpsProject
+		{
+			get
+			{
+				return this._DevOpsProject;
+			}
+			set
+			{
+				if ((this._DevOpsProject != value))
+				{
+					this._DevOpsProject = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DevOpsOrganization", DbType="NVarChar(MAX)")]
+		public string DevOpsOrganization
+		{
+			get
+			{
+				return this._DevOpsOrganization;
+			}
+			set
+			{
+				if ((this._DevOpsOrganization != value))
+				{
+					this._DevOpsOrganization = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NVarChar(MAX)")]
+		public string Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this._Address = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthorizationToken", DbType="NVarChar(MAX)")]
+		public string AuthorizationToken
+		{
+			get
+			{
+				return this._AuthorizationToken;
+			}
+			set
+			{
+				if ((this._AuthorizationToken != value))
+				{
+					this._AuthorizationToken = value;
 				}
 			}
 		}

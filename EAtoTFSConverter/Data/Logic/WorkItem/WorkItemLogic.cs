@@ -11,30 +11,34 @@ namespace EAtoTFSConverter.Data.Logic
 {
     class WorkItemLogic
     {
-        internal void PrepareData(Project project)
+        public Project Project { get; set; }
+
+        public WorkItemLogic(Project selectedProject)
+        {
+            Project = selectedProject;
+        }
+
+        internal void PrepareData()
         {
             WorkItemDataSet workItemDataSet = new WorkItemDataSet();
-            workItemDataSet.TestPlan = PrepareTestPlanData(project);
-
-
-            
+            workItemDataSet.TestPlan = PrepareTestPlanData();            
         }
 
-        private TestPlan PrepareTestPlanData(Project project)
+        private TestPlan PrepareTestPlanData()
         {       
-            bool exists = CheckIfExists(project);
-            return exists ? GetTestPlanData(project) : CreateNewTestPlan(project);            
+            bool exists = CheckIfExists();
+            return exists ? GetTestPlanData() : CreateNewTestPlan();            
         }
 
-        private TestPlan CreateNewTestPlan(Project project)
+        private TestPlan CreateNewTestPlan()
         {
             // 1.  Przygotowanie komunikatu do API
             var json = JsonConvert.SerializeObject(new TestPlanCreationData(), Formatting.Indented);
 
             // 2.  Wysyłka komnunikatu
             // 3.  Odebranie odpowiedzi
-            APICommunication api = new APICommunication();
-            api.Send(json, project);
+            APICommunication api = new APICommunication(Project);
+            api.Send(json, Project);
 
             
 
@@ -50,13 +54,13 @@ namespace EAtoTFSConverter.Data.Logic
             return new TestPlan();
         }
 
-        internal bool CheckIfExists(Project project)
+        internal bool CheckIfExists()
         {
             int result;
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 result = dataContext.TestPlans
-                    .Where(tp => tp.ProjectId == project.Id)
+                    .Where(tp => tp.ProjectId == Project.Id)
                     .Count();
             }
             if (result > 1)
@@ -69,13 +73,13 @@ namespace EAtoTFSConverter.Data.Logic
             return result == 1;
         }
 
-        internal TestPlan GetTestPlanData(Project project)
+        internal TestPlan GetTestPlanData()
         {
             TestPlan testPlan = new TestPlan();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 testPlan = dataContext.TestPlans
-                    .Where(tp => tp.ProjectId == project.Id)
+                    .Where(tp => tp.ProjectId == Project.Id)
                     .FirstOrDefault();
             }
             return testPlan;

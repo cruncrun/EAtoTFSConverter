@@ -101,8 +101,8 @@ namespace EAtoTFSConverter
 
         private void Btn_sendToTFS_Click(object sender, EventArgs e)
         {
-            WorkItemLogic workItemLogic = new WorkItemLogic();
-            workItemLogic.PrepareData(selectedProject);
+            WorkItemLogic workItemLogic = new WorkItemLogic(selectedProject);
+            workItemLogic.PrepareData();
         }
     }
 }

@@ -15,15 +15,23 @@ namespace EAtoTFSConverter.Data
 {
     public class APICommunication
     {
-        internal const string authorizationToken = "r76p6njjugy6he4kzaqsiaqjyhenmoola6pxfm7fpe5t6m5c32bq";
-        private static readonly Uri address = new Uri("https://dev.azure.com/crunchips/EA-TFS%20Conversion/");
+        public Project Project { get; set; }
+        public string AuthorizationToken { get; set; }
+        public Uri Address { get; set; }
 
-        internal async Task Send(string json, Project project)
+        public APICommunication(Project project)
+        {
+            Project = project;
+            AuthorizationToken = GetPersonalToken(Project);
+            Address = GetUriAddress(Project);
+        }
+
+        internal async Task Send(string json)
         {
             using (var client = GetConnection())
             {                
                 //HttpResponseMessage response = await client.GetAsync(address + $"_apis/testplan/plans?api-version=5.1-preview.1");
-                HttpResponseMessage response = await client.PostAsJsonAsync(address + $"_apis/testplan/plans?api-version=5.1-preview.1", json);
+                HttpResponseMessage response = await client.PostAsJsonAsync(Address + $"_apis/testplan/plans?api-version=5.1-preview.1", json);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
@@ -37,8 +45,8 @@ namespace EAtoTFSConverter.Data
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                "Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", authorizationToken))));
-            client.BaseAddress = address;            
+                "Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", AuthorizationToken))));
+            client.BaseAddress = Address;            
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", "EAToTFSConverter");
             client.DefaultRequestHeaders.Add("X-TFS-FedAuthRedirect", "Suppress");
@@ -47,8 +55,29 @@ namespace EAtoTFSConverter.Data
 
         private string GetPersonalToken(Project project)
         {
-            DatabaseOperations db = new DatabaseOperations();
-            return "token";
+            string authToken = null;
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                authToken = dataContext.Projects
+                    .Where(p => p.Id == project.Id)
+                    .Select(t => t.AuthorizationToken)
+                    .FirstOrDefault()
+                    .ToString();
+            }
+            return authToken;
+        }
+        private Uri GetUriAddress(Project project)
+        {
+            string address = null;
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                address = dataContext.Projects
+                    .Where(p => p.Id == project.Id)
+                    .Select(t => t.Address)
+                    .FirstOrDefault()
+                    .ToString();
+            }
+            return new Uri(address);
         }
     }
 }
