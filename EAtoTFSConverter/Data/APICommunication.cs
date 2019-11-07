@@ -31,7 +31,7 @@ namespace EAtoTFSConverter.Data
             using (var client = GetConnection())
             {                
                 //HttpResponseMessage response = await client.GetAsync(address + $"_apis/testplan/plans?api-version=5.1-preview.1");
-                HttpResponseMessage response = await client.PostAsJsonAsync(Address + $"_apis/testplan/plans?api-version=5.1-preview.1", json);
+                HttpResponseMessage response = await client.PostAsJsonAsync(Address + $"_apis/testplan/plans?api-version=5.1-preview.1", json);                
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
@@ -53,7 +53,7 @@ namespace EAtoTFSConverter.Data
             return client;
         }        
 
-        private string GetPersonalToken(Project project)
+        private static string GetPersonalToken(Project project)
         {
             string authToken = null;
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
@@ -61,7 +61,7 @@ namespace EAtoTFSConverter.Data
                 authToken = dataContext.Projects
                     .Where(p => p.Id == project.Id)
                     .Select(t => t.AuthorizationToken)
-                    .FirstOrDefault()
+                    .FirstOrDefault()?
                     .ToString();
             }
             return authToken;
@@ -74,7 +74,7 @@ namespace EAtoTFSConverter.Data
                 address = dataContext.Projects
                     .Where(p => p.Id == project.Id)
                     .Select(t => t.Address)
-                    .FirstOrDefault()
+                    .FirstOrDefault()?
                     .ToString();
             }
             return new Uri(address);

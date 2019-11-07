@@ -35,10 +35,10 @@ namespace EAtoTFSConverter.Data.Logic
             // 1.  Przygotowanie komunikatu do API
             var json = JsonConvert.SerializeObject(new TestPlanCreationData(), Formatting.Indented);
 
-            // 2.  Wysyłka komnunikatu
+            // 2.  Wysyłka komunikatu
             // 3.  Odebranie odpowiedzi
             APICommunication api = new APICommunication(Project);
-            api.Send(json, Project);
+            api.Send(json);
 
             
 
@@ -79,8 +79,7 @@ namespace EAtoTFSConverter.Data.Logic
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 testPlan = dataContext.TestPlans
-                    .Where(tp => tp.ProjectId == Project.Id)
-                    .FirstOrDefault();
+                    .FirstOrDefault(tp => tp.ProjectId == Project.Id);
             }
             return testPlan;
         }
