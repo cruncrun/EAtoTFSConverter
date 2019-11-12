@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.Services.Common;
 using EAtoTFSConverter.Data.Logic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
 
 namespace EAtoTFSConverter.Data
 {
@@ -17,25 +18,20 @@ namespace EAtoTFSConverter.Data
     {
         public Project Project { get; set; }
         public string AuthorizationToken { get; set; }
-        public Uri Address { get; set; }
+        public Uri BaseAddress { get; set; }
 
         public APICommunication(Project project)
         {
             Project = project;
             AuthorizationToken = GetPersonalToken(Project);
-            Address = GetUriAddress(Project);
+            BaseAddress = GetUriAddress(Project);
         }
 
         internal async Task Send(string json)
         {
             using (var client = GetConnection())
             {                
-                //HttpResponseMessage response = await client.GetAsync(address + $"_apis/testplan/plans?api-version=5.1-preview.1");
-                HttpResponseMessage response = await client.PostAsJsonAsync(Address + $"_apis/testplan/plans?api-version=5.1-preview.1", json);                
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsStringAsync();
-                }
+                
             }            
         }
 
@@ -46,7 +42,7 @@ namespace EAtoTFSConverter.Data
             client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                 "Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", AuthorizationToken))));
-            client.BaseAddress = Address;            
+            client.BaseAddress = BaseAddress;            
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", "EAToTFSConverter");
             client.DefaultRequestHeaders.Add("X-TFS-FedAuthRedirect", "Suppress");

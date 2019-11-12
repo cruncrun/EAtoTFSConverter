@@ -14,14 +14,15 @@ using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using EAtoTFSConverter.Data.Logic.WorkItem;
 using TreeNode = System.Windows.Forms.TreeNode;
 
 namespace EAtoTFSConverter
 {
     public partial class MainWindow : Form
     {
-        private string filePath = string.Empty;
-        private Project selectedProject;        
+        private string _filePath = string.Empty;
+        private Project _selectedProject;        
 
         public MainWindow()
         {
@@ -37,7 +38,7 @@ namespace EAtoTFSConverter
         private void PopulateScenariosTree()
         {
             DatabaseOperations db = new DatabaseOperations();
-            var queryScenarios = db.GetActive_EAscenarios(selectedProject);            
+            var queryScenarios = db.GetActive_EAscenarios(_selectedProject);            
             InitializeTreeView(queryScenarios);            
         }
 
@@ -85,23 +86,23 @@ namespace EAtoTFSConverter
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                filePath = openFileDialog.FileName;
-                XDocument source = XDocument.Load(filePath);
-                XMLParse.Parse(source, DataMapper.MapProject(selectedProject));
+                _filePath = openFileDialog.FileName;
+                XDocument source = XDocument.Load(_filePath);
+                XMLParse.Parse(source, DataMapper.MapProject(_selectedProject));
             }
             openFileDialog.Dispose();
         }
 
         private void Cb_chooseProject_OnChanged(object sender, EventArgs e)
         {
-            selectedProject = (Project)cb_chooseProject.SelectedItem;
+            _selectedProject = (Project)cb_chooseProject.SelectedItem;
             treeView_scenarios.Nodes.Clear();
             PopulateScenariosTree();            
         }
 
         private void Btn_sendToTFS_Click(object sender, EventArgs e)
         {
-            WorkItemLogic workItemLogic = new WorkItemLogic(selectedProject);
+            WorkItemLogic workItemLogic = new WorkItemLogic(_selectedProject);
             workItemLogic.PrepareData();
         }
     }

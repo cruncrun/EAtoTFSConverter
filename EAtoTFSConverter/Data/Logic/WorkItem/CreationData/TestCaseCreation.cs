@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EAtoTFSConverter.Data.Logic
+namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
 {
-    class WorkItem
+    class TestCaseCreation : ICreatable
     {
-
     }
 }

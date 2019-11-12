@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
 
-namespace EAtoTFSConverter.Data.Logic
+namespace EAtoTFSConverter.Data.Logic.WorkItem
 {
     class WorkItemDataSet
     {    
-        public TestPlan TestPlan { get; set; }
+        public TestPlanCreation TestPlan { get; set; }
+        public IEnumerable<TestCaseCreation> TestCases { get; set; }   
     }
 }
