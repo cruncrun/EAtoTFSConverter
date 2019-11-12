@@ -11,7 +11,7 @@ namespace EAtoTFSConverter.Data.Logic
     {
         internal IEnumerable<active_EAscenario> GetActive_EAscenarios(Project selectedProject)
         {
-            List<active_EAscenario> active_EAscenarios = new List<active_EAscenario>();
+            IEnumerable<active_EAscenario> active_EAscenarios = new List<active_EAscenario>();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 active_EAscenarios = dataContext.active_EAscenarios
@@ -23,7 +23,7 @@ namespace EAtoTFSConverter.Data.Logic
 
         internal IEnumerable<active_Step> GetActive_Steps(active_EAscenario eaScenario)
         {
-            List<active_Step> active_Steps = new List<active_Step>();
+            IEnumerable<active_Step> active_Steps = new List<active_Step>();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 active_Steps = dataContext.active_Steps
@@ -33,9 +33,9 @@ namespace EAtoTFSConverter.Data.Logic
             return active_Steps;
         }
 
-        internal List<active_Step> GetActive_Steps()
+        internal IEnumerable<active_Step> GetActive_Steps()
         {
-            List<active_Step> active_Steps = new List<active_Step>();
+            IEnumerable<active_Step> active_Steps = new List<active_Step>();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 active_Steps = dataContext.active_Steps
