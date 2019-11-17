@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
 {
-    class TestCaseCreation : ICreatable
+    class TestSuiteCreation : ICreatable
     {
         public bool Exists { get; set; }
         public IWorkItemBase CreationData { get; set; }

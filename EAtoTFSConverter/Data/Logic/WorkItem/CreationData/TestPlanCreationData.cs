@@ -20,6 +20,9 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
         [JsonProperty("owner")]
         public string Owner { get; set; }
 
+        public string Value { get; set; }
+        public string ApiAddress { get; set; }
+
         public TestPlanCreationData()
         {
             Name = "Plan Testów";

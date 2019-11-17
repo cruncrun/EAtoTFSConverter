@@ -9,10 +9,11 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
     internal interface ICreatable
     {
         bool Exists { get; set; }
-        string JsonToSend { get; set; }
-
+        IWorkItemBase CreationData { get; set; }
+        Task Prepare();
         bool CheckIfExists();
         bool Compare();
-        ICreatable GetLocalData();
+        string CreateMessage();
+        IComparable GetLocalData();
     }
 }

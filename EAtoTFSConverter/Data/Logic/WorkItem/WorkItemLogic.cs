@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
 using Newtonsoft.Json;
@@ -14,11 +15,16 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             Project = selectedProject;
         }
 
-        internal void PrepareData()
+        internal async Task PrepareData()
         {
-            WorkItemDataSet workItemDataSet = new WorkItemDataSet();
-            workItemDataSet.TestPlan = new TestPlanCreation();
-            workItemDataSet.TestCases = null;
+            WorkItemDataSet workItemDataSet = new WorkItemDataSet
+            {
+                Project = Project,
+                TestPlan = new TestPlanCreation(Project),
+                TestCases = null
+            };
+
+            await workItemDataSet.TestPlan.Prepare();
         } 
     }
 }
