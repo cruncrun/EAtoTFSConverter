@@ -22,6 +22,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
 
         public string Value { get; set; }
         public string ApiAddress { get; set; }
+        public int WorkItemId { get; set; }
 
         public TestPlanCreationData()
         {

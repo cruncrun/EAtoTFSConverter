@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.Services.Common;
 using EAtoTFSConverter.Data.Logic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using EAtoTFSConverter.Data.Logic.WorkItem;
 using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
 
 namespace EAtoTFSConverter.Data
@@ -27,7 +28,7 @@ namespace EAtoTFSConverter.Data
             BaseAddress = GetUriAddress(Project);
         }
 
-        internal async Task Send(string json)
+        internal async Task Send(IWorkItemBase workItemBase)
         {
             using (var client = GetConnection())
             {                

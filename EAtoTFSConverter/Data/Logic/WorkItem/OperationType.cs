@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItem
 {
-    public enum WorkItemType
+    public enum OperationType
     {
-        TestPlan, 
-        TestSuite,
-        TestCase
+        UseExisting,
+        Update,
+        CreateNew,
+        Delete
     }
 }

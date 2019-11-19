@@ -8,5 +8,8 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.ReceivedData
 {
     class TestPlanReceivedData : IReceiveable
     {
+        public int WorkItemId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

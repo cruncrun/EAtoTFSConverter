@@ -9,6 +9,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
     class TestCaseCreation : ICreatable
     {
         public bool Exists { get; set; }
+        public WorkItemType WorkItemType { get; set; }
         public IWorkItemBase CreationData { get; set; }
         public Task Prepare()
         {

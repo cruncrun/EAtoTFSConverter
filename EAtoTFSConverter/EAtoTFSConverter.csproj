@@ -170,6 +170,8 @@
     <Compile Include="Data\Logic\WorkItem\CreationData\TestSuiteCreation.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\TestSuiteCreationData.cs" />
     <Compile Include="Data\Logic\WorkItem\IComparable.cs" />
+    <Compile Include="Data\Logic\WorkItem\MessageFactory.cs" />
+    <Compile Include="Data\Logic\WorkItem\OperationType.cs" />
     <Compile Include="Data\Logic\WorkItem\ReceivedData\IReceiveable.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\TestPlanCreation.cs" />
     <Compile Include="Data\Logic\WorkItem\ReceivedData\TestCaseReceivedData.cs" />

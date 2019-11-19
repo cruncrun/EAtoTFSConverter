@@ -58,11 +58,7 @@ namespace EAtoTFSConverter
 
         private TreeNode[] GenerateStepTreeNodes(IEnumerable<active_Step> steps)
         {
-            IList<TreeNode> treeNodesList = new List<TreeNode>();
-            foreach (var s in steps)
-            {
-                treeNodesList.Add(new TreeNode(s.Name));
-            }
+            IList<TreeNode> treeNodesList = steps.Select(s => new TreeNode(s.Name)).ToList();
             return treeNodesList.ToArray();
         }
 

@@ -111,19 +111,19 @@ namespace EAtoTFSConverter
 			}
 		}
 		
-		public System.Data.Linq.Table<TestPlan> TestPlans
-		{
-			get
-			{
-				return this.GetTable<TestPlan>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Project> Projects
 		{
 			get
 			{
 				return this.GetTable<Project>();
+			}
+		}
+		
+		public System.Data.Linq.Table<WorkItem> WorkItems
+		{
+			get
+			{
+				return this.GetTable<WorkItem>();
 			}
 		}
 	}
@@ -1058,69 +1058,6 @@ namespace EAtoTFSConverter
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TestPlan")]
-	public partial class TestPlan
-	{
-		
-		private System.Guid _Id;
-		
-		private System.Guid _ProjectId;
-		
-		private int _WorkItemId;
-		
-		public TestPlan()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ProjectId
-		{
-			get
-			{
-				return this._ProjectId;
-			}
-			set
-			{
-				if ((this._ProjectId != value))
-				{
-					this._ProjectId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkItemId", DbType="Int NOT NULL")]
-		public int WorkItemId
-		{
-			get
-			{
-				return this._WorkItemId;
-			}
-			set
-			{
-				if ((this._WorkItemId != value))
-				{
-					this._WorkItemId = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Project")]
 	public partial class Project
 	{
@@ -1233,6 +1170,159 @@ namespace EAtoTFSConverter
 				if ((this._AuthorizationToken != value))
 				{
 					this._AuthorizationToken = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WorkItem")]
+	public partial class WorkItem
+	{
+		
+		private System.Guid _Id;
+		
+		private System.Nullable<System.Guid> _EAId;
+		
+		private System.Guid _ProjectId;
+		
+		private int _WorkItemId;
+		
+		private short _WorkItemType;
+		
+		private string _Name;
+		
+		private string _Description;
+		
+		private string _Value;
+		
+		public WorkItem()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EAId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> EAId
+		{
+			get
+			{
+				return this._EAId;
+			}
+			set
+			{
+				if ((this._EAId != value))
+				{
+					this._EAId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ProjectId
+		{
+			get
+			{
+				return this._ProjectId;
+			}
+			set
+			{
+				if ((this._ProjectId != value))
+				{
+					this._ProjectId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkItemId", DbType="Int NOT NULL")]
+		public int WorkItemId
+		{
+			get
+			{
+				return this._WorkItemId;
+			}
+			set
+			{
+				if ((this._WorkItemId != value))
+				{
+					this._WorkItemId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkItemType", DbType="SmallInt NOT NULL")]
+		public short WorkItemType
+		{
+			get
+			{
+				return this._WorkItemType;
+			}
+			set
+			{
+				if ((this._WorkItemType != value))
+				{
+					this._WorkItemType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this._Value = value;
 				}
 			}
 		}

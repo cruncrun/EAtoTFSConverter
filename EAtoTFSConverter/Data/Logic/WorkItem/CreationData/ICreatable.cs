@@ -8,12 +8,16 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
 {
     internal interface ICreatable
     {
-        bool Exists { get; set; }
+        Project Project { get; set; }
+        WorkItemType WorkItemType { get; set; }
+        OperationType OperationType { get; set; }
         IWorkItemBase CreationData { get; set; }
-        Task Prepare();
+        void Prepare();
         bool CheckIfExists();
         bool Compare();
-        string CreateMessage();
+        Task Send();
+        OperationType GetOperationType();
+        string CreateMessage(OperationType operationType);
         IComparable GetLocalData();
     }
 }

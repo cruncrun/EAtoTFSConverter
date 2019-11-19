@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EAtoTFSConverter.Data.Logic.WorkItem;
+using Microsoft.TeamFoundation.TestManagement.WebApi;
+using IComparable = System.IComparable;
 
 namespace EAtoTFSConverter.Data.Logic
 {
@@ -42,6 +45,53 @@ namespace EAtoTFSConverter.Data.Logic
                     .ToList();
             }
             return active_Steps;
+        }
+
+        internal ComparsionDataSet GetWorkItem()
+        {
+            ComparsionDataSet comparsionDataSet = new ComparsionDataSet();
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                
+            }
+
+            return comparsionDataSet;
+        }
+
+        internal ComparsionDataSet GetWorkItem(Guid projectId, Guid eaGuid, WorkItemType workItemType)
+        {
+            ComparsionDataSet comparsionDataSet = new ComparsionDataSet();
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                var result = dataContext.WorkItems
+                    .Where(w => w.ProjectId == projectId);
+            }
+
+            return comparsionDataSet;
+        }
+
+        internal bool CheckWorkItem(Guid projectId, WorkItemType workItemType)
+        {
+            bool result;
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                result = dataContext.WorkItems
+                    .Count(w => w.ProjectId == projectId && w.WorkItemType == (int) WorkItemType.TestPlan) > 0;
+            }
+            return result;
+        }
+
+        internal int GetWorkItemId(Guid projectId, WorkItemType workItemType)
+        {
+            int result;
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                result = dataContext.WorkItems
+                    .Where(w => w.ProjectId == projectId && w.WorkItemType == (int) WorkItemType.TestPlan)
+                    .Select(i => i.WorkItemId)
+                    .FirstOrDefault();
+            }
+            return result;
         }
 
         internal bool Insert(List<EAScenario> scenarios)

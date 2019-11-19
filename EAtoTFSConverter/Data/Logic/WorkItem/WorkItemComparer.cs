@@ -24,6 +24,13 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             ComparsionResult = Compare(LocalDataSet, SourceDataSet);
         }
 
+        public WorkItemComparer()
+        {
+            LocalDataSet = localData;
+            SourceDataSet = sourceData;
+            ComparsionResult = Compare(LocalDataSet, SourceDataSet);
+        }
+
         private bool Compare(IComparable localDataSet, IComparable sourceDataSet)
         {
             return true;

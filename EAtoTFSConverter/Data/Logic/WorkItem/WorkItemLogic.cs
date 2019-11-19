@@ -24,7 +24,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
                 TestCases = null
             };
 
-            await workItemDataSet.TestPlan.Prepare();
+            workItemDataSet.TestPlan.Prepare();
         } 
     }
 }
