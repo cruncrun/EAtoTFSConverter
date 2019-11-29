@@ -1,20 +1,20 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
 {
-    internal class TestPlanCreation : ICreatable
+    internal class WorkItemCreationLogic : ICreatable
     {
         public Project Project { get; set; }
         public WorkItemType WorkItemType { get; set; }
         public OperationType OperationType { get; set; }
         public IWorkItemBase CreationData { get; set; }
-
-
-        public TestPlanCreation(Project project)
+        
+        public WorkItemCreationLogic(Project project, WorkItemType workItemType)
         {
             Project = project;
-            WorkItemType = WorkItemType.TestPlan;
+            WorkItemType = workItemType;
         }
 
         public async void Prepare()
@@ -23,7 +23,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
             if (OperationType == OperationType.UseExisting)
             {
                 var db = new DatabaseOperations();
-                CreationData.WorkItemId = db.GetWorkItemId(Project.Id, WorkItemType);
+                CreationData.WorkItemId = db.GetWorkItem(Project.Id, WorkItemType);
             }
 
             else 
@@ -40,15 +40,18 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
 
         public bool Compare()
         {
-            WorkItemComparer workItemComparer = new WorkItemComparer();
+            //WorkItemComparer workItemComparer = new WorkItemComparer();
 
-            return workItemComparer.ComparsionResult;
+            //return workItemComparer.ComparsionResult;
+
+            return true;
         }
 
         public async Task Send()
         {
-            APICommunication api = new APICommunication(Project);
-            await api.Send(CreationData);
+            var api = new APICommunication(Project);
+            var message = MessageFactory.BuildMessage(WorkItemType, OperationType, CreationData);
+            await api.Send(message);
         }
         public OperationType GetOperationType() =>
             CheckIfExists()

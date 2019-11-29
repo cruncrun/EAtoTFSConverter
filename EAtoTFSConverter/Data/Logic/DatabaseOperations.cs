@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EAtoTFSConverter.Data.Logic.WorkItem;
+using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
 using Microsoft.TeamFoundation.TestManagement.WebApi;
 using IComparable = System.IComparable;
 
@@ -12,6 +13,7 @@ namespace EAtoTFSConverter.Data.Logic
 {
     public class DatabaseOperations
     {
+        private static DataClassesDataContext _dataContext = new DataClassesDataContext();
         internal IEnumerable<active_EAscenario> GetActive_EAscenarios(Project selectedProject)
         {
             IEnumerable<active_EAscenario> active_EAscenarios = new List<active_EAscenario>();
@@ -64,7 +66,7 @@ namespace EAtoTFSConverter.Data.Logic
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 var result = dataContext.WorkItems
-                    .Where(w => w.ProjectId == projectId);
+                    .Where(w => w.ProjectId == projectId && w.WorkItemType == (int) workItemType);
             }
 
             return comparsionDataSet;
@@ -76,14 +78,20 @@ namespace EAtoTFSConverter.Data.Logic
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 result = dataContext.WorkItems
-                    .Count(w => w.ProjectId == projectId && w.WorkItemType == (int) WorkItemType.TestPlan) > 0;
+                    .Count(w => w.ProjectId == projectId && w.WorkItemType == (int) workItemType) > 0;
             }
             return result;
         }
 
-        internal int GetWorkItemId(Guid projectId, WorkItemType workItemType)
+        internal int GetWorkItem(Guid projectId, WorkItemType workItemType)
         {
-            int result;
+            var result = _dataContext.WorkItems
+                .Where(w => w.ProjectId == projectId && w.WorkItemType == (int)WorkItemType.TestPlan)
+                .Select(i => i.WorkItemId)
+                .FirstOrDefault();
+            return result;
+
+            /*
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 result = dataContext.WorkItems
@@ -92,6 +100,7 @@ namespace EAtoTFSConverter.Data.Logic
                     .FirstOrDefault();
             }
             return result;
+            */
         }
 
         internal bool Insert(List<EAScenario> scenarios)

@@ -47,7 +47,7 @@ namespace EAtoTFSConverter.Data.XMLParse
             }
             else
             {
-                DataController dc = new DataController();
+                DataController dc = new DataController(project);
                 dc.PrepareData(result);
             }
         }

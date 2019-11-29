@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem.ReceivedData
+namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 {
-    interface IReceiveable
+    class ComparerFactory
     {
-        int WorkItemId { get; set; }
     }
 }

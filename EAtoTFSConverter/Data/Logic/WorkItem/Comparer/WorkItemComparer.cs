@@ -1,15 +1,4 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
-using EAtoTFSConverter.Data.Logic.WorkItem.ReceivedData;
-
-
-namespace EAtoTFSConverter.Data.Logic.WorkItem
+﻿namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 {
     class WorkItemComparer
     {
@@ -24,12 +13,12 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             ComparsionResult = Compare(LocalDataSet, SourceDataSet);
         }
 
-        public WorkItemComparer()
-        {
-            LocalDataSet = localData;
-            SourceDataSet = sourceData;
-            ComparsionResult = Compare(LocalDataSet, SourceDataSet);
-        }
+        //public WorkItemComparer()
+        //{
+        //    LocalDataSet = localData;
+        //    SourceDataSet = sourceData;
+        //    ComparsionResult = Compare(LocalDataSet, SourceDataSet);
+        //}
 
         private bool Compare(IComparable localDataSet, IComparable sourceDataSet)
         {

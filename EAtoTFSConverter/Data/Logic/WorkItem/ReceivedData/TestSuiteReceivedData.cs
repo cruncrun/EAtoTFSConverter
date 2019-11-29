@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItem.ReceivedData
 {
-    class TestSuiteReceivedData
+    class TestSuiteReceivedData : IReceiveable
     {
-
+        public int WorkItemId { get; set; }
     }
 }

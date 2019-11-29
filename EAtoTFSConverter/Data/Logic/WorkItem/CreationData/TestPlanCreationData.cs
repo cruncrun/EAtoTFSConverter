@@ -31,5 +31,10 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
             Iteration = "EA-TFS Conversion";
             Owner = null;
         }
+
+        public TestPlanCreationData(int existingItemId)
+        {
+            WorkItemId = existingItemId;
+        }
     }
 }

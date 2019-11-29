@@ -6,7 +6,8 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
     class WorkItemDataSet
     {
         public Project Project { get; set; }
-        public TestPlanCreation TestPlan { get; set; }
-        public IEnumerable<TestCaseCreation> TestCases { get; set; }   
+        public ICreatable TestPlan { get; set; }
+        public ICreatable TestSuite { get; set; }
+        public IEnumerable<ICreatable> TestCases { get; set; }
     }
 }

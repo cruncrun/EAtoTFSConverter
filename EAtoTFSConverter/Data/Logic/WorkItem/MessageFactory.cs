@@ -9,58 +9,69 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
 {
     public static class MessageFactory
     {
-        public static IWorkItemBase BuildMessage(WorkItemType workItemType, OperationType operationType)
+        public static IWorkItemBase BuildMessage(WorkItemType workItemType, OperationType operationType, IWorkItemBase CreationData)
         {
             switch (workItemType)
             {
                 case WorkItemType.TestPlan:
-                    switch (operationType)
-                    {
-                        case OperationType.UseExisting:
-                            return new TestPlanCreationData();
-                        case OperationType.CreateNew:
-                            return new TestPlanCreationData(); 
-                        case OperationType.Update:
-                            return new TestPlanCreationData();
-                        case OperationType.Delete:
-                            return new TestPlanCreationData();
-                        default:
-                            return null;
-                    }
+                    return BuildTestPlanMessage(operationType, CreationData);
                     
                 case WorkItemType.TestSuite:
-                    switch (operationType)
-                    {
-                        case OperationType.UseExisting:
-                            return new TestSuiteCreationData();
-                        case OperationType.CreateNew:
-                            return new TestSuiteCreationData();
-                        case OperationType.Update:
-                            return new TestSuiteCreationData();
-                        case OperationType.Delete:
-                            return new TestSuiteCreationData();
-                        default:
-                            return null;
-                    }
+                    return BuildTestSuiteMessage(operationType, CreationData);
 
                 case WorkItemType.TestCase:
-                    switch (operationType)
-                    {
-                        case OperationType.UseExisting:
-                            return new TestCaseCreationData();
-                        case OperationType.CreateNew:
-                            return new TestCaseCreationData();
-                        case OperationType.Update:
-                            return new TestCaseCreationData();
-                        case OperationType.Delete:
-                            return new TestCaseCreationData();
-                        default:
-                            return null;
-                    }
+                    return BuildTestCaseMessage(operationType, CreationData);
 
                 default:
                     return null;
+            }
+        }
 
+        private static IWorkItemBase BuildTestCaseMessage(OperationType operationType, IWorkItemBase CreationData)
+        {
+            switch (operationType)
+            {
+                case OperationType.UseExisting:
+                    return new TestCaseCreationData();
+                case OperationType.CreateNew:
+                    return new TestCaseCreationData();
+                case OperationType.Update:
+                    return new TestCaseCreationData();
+                case OperationType.Delete:
+                    return new TestCaseCreationData();
+                default:
+                    return null;
+            }
+        }
+
+        private static IWorkItemBase BuildTestSuiteMessage(OperationType operationType, IWorkItemBase CreationData)
+        {
+            switch (operationType)
+            {
+                case OperationType.CreateNew:
+                    return new TestSuiteCreationData();
+                case OperationType.Update:
+                case OperationType.UseExisting:
+                case OperationType.Delete:
+                    throw new InvalidOperationException();
+                default:
+                    return null;
+            }
+        }
+
+        private static IWorkItemBase BuildTestPlanMessage(OperationType operationType, IWorkItemBase CreationData)
+        {
+            switch (operationType)
+            {
+                case OperationType.UseExisting:
+                    return new TestPlanCreationData(CreationData.WorkItemId);
+                case OperationType.CreateNew:
+                    return new TestPlanCreationData();
+                case OperationType.Update:
+                case OperationType.Delete:
+                    throw new InvalidOperationException();
+                default:
+                    return null;
             }
         }
     }

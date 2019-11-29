@@ -14,6 +14,12 @@ namespace EAtoTFSConverter.Data
         public List<EAScenario> Scenarios { get; set; } = new List<EAScenario>();
         public List<UseCase> UseCases { get; set; } = new List<UseCase>();
         public List<Step> Steps { get; set; } = new List<Step>();
+        public Project Project { get; set; }
+
+        public DataController(Project project)
+        {
+            Project = project;
+        }
 
         public void PrepareData(IEnumerable<XMLParse.EAScenario> result)
         {
@@ -21,7 +27,14 @@ namespace EAtoTFSConverter.Data
 
             foreach (XMLParse.EAScenario scenario in result)
             {
+                DatabaseOperations db = new DatabaseOperations();
+
                 scenario.Timestamp = currentDate;
+                scenario.PreviousVersionId = db.GetActive_EAscenarios(Project)
+                    .Where(s => s.ProjectId == scenario.ProjectId && s.XmiId == scenario.XmiId)
+                    .Select(s => s.Id)
+                    .FirstOrDefault();
+
                 Scenarios.Add(DataMapper.MapEAScenario(scenario));
 
                 foreach (UseCase useCase in scenario.UseCase)
@@ -36,6 +49,10 @@ namespace EAtoTFSConverter.Data
                     step.Id = Guid.NewGuid();
                     step.Timestamp = currentDate;
                     step.EAScenarioId = scenario.Id;
+                    step.PreviousVersionId = db.GetActive_Steps()
+                        .Where(s => s.EAScenarioId == scenario.Id && s.Guid == step.Id)
+                        .Select(s => s.Id)
+                        .FirstOrDefault();
                     Steps.Add(step);
                 }
             }            

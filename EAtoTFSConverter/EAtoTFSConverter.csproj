@@ -151,6 +151,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataClasses.cs">
+      <DependentUpon>DataClasses.dbml</DependentUpon>
+    </Compile>
     <Compile Include="DataClasses.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -160,7 +163,8 @@
     <Compile Include="Data\DataController.cs" />
     <Compile Include="Data\Logic\DatabaseOperations.cs" />
     <Compile Include="Data\Logic\DataMapper.cs" />
-    <Compile Include="Data\Logic\WorkItem\ComparsionDataSet.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\ComparerFactory.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionDataSet.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\ICreatable.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\TestCaseCreation.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\TestCaseCreationData.cs" />
@@ -169,15 +173,16 @@
     <Compile Include="Data\Logic\JSONSerialize.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\TestSuiteCreation.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\TestSuiteCreationData.cs" />
-    <Compile Include="Data\Logic\WorkItem\IComparable.cs" />
+    <Compile Include="Data\Logic\WorkItem\CreationData\WorkItemCreationData.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\IComparable.cs" />
     <Compile Include="Data\Logic\WorkItem\MessageFactory.cs" />
     <Compile Include="Data\Logic\WorkItem\OperationType.cs" />
+    <Compile Include="Data\Logic\WorkItem\CreationData\WorkItemCreationLogic.cs" />
     <Compile Include="Data\Logic\WorkItem\ReceivedData\IReceiveable.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\TestPlanCreation.cs" />
     <Compile Include="Data\Logic\WorkItem\ReceivedData\TestCaseReceivedData.cs" />
     <Compile Include="Data\Logic\WorkItem\ReceivedData\TestPlanReceivedData.cs" />
     <Compile Include="Data\Logic\WorkItem\ReceivedData\TestSuiteReceivedData.cs" />
-    <Compile Include="Data\Logic\WorkItem\WorkItemComparer.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\WorkItemComparer.cs" />
     <Compile Include="Data\Logic\WorkItem\WorkItemDataSet.cs" />
     <Compile Include="Data\Logic\WorkItem\WorkItemLogic.cs" />
     <Compile Include="Data\Logic\WorkItem\WorkItemType.cs" />
