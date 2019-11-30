@@ -2,32 +2,29 @@
 {
     class WorkItemComparer
     {
-        public IComparable LocalDataSet { get; set; }
-        public IComparable SourceDataSet { get; set; }
+        public IComparable ActiveEntity { get; set; }
+        public IComparable PreviousEntity { get; set; }
         public bool ComparsionResult { get; set; }
+        public OperationType OperationType { get; set; }
 
-        public WorkItemComparer(IComparable localData, IComparable sourceData)
+        public WorkItemComparer(IComparable activeEntity, IComparable previousEntity)
         {
-            LocalDataSet = localData;
-            SourceDataSet = sourceData;
-            ComparsionResult = Compare(LocalDataSet, SourceDataSet);
+            ActiveEntity = activeEntity;
+            PreviousEntity = previousEntity;
+            ComparsionResult = Compare(ActiveEntity, PreviousEntity);
         }
 
-        //public WorkItemComparer()
-        //{
-        //    LocalDataSet = localData;
-        //    SourceDataSet = sourceData;
-        //    ComparsionResult = Compare(LocalDataSet, SourceDataSet);
-        //}
-
-        private bool Compare(IComparable localDataSet, IComparable sourceDataSet)
+        private bool Compare(IComparable activeEntity, IComparable previousEntity)
         {
-            return true;
+            return CompareValues(activeEntity?.Name, previousEntity?.Name) &&
+                   CompareValues(activeEntity?.Description, previousEntity?.Description) &&
+                   CompareValues(activeEntity?.Level, previousEntity?.Level) &&
+                   CompareValues(activeEntity?.Result, previousEntity?.Result);
         }
 
-        private bool CompareValues<T>(T local, T source)
+        private bool CompareValues<T>(T active, T previous)
         {
-            return false;
+            return active?.ToString() == previous?.ToString();
         }
     }
 }

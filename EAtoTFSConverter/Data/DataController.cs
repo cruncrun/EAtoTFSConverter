@@ -78,7 +78,7 @@ namespace EAtoTFSConverter.Data
                 DatabaseOperations db = new DatabaseOperations();
                 operation &= db.Insert(Steps);                
             }
-            if (operation == true)
+            if (operation)
             {
                 MessageBox.Show(
                    "Import danych z Enterprise Architect przebiegł pomyślnie!", "OK!",

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
 
 namespace EAtoTFSConverter.Data.Logic
 {
@@ -29,6 +30,25 @@ namespace EAtoTFSConverter.Data.Logic
             {
                 Id = source.Id,
                 Name = source.Name
+            };
+        }
+
+        public static ComparsionEntity MapToComparsionEntity(EAScenario source)
+        {
+            return new ComparsionEntity()
+            {
+                Name = source.Name,
+                Description = source.Description
+            };
+        }
+
+        public static ComparsionEntity MapToComparsionEntity(Step source)
+        {
+            return new ComparsionEntity()
+            {
+                Name = source.Name,
+                Level = source.Level,
+                Result = source.Result
             };
         }
     }

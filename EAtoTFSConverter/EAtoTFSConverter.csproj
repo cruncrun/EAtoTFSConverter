@@ -163,8 +163,12 @@
     <Compile Include="Data\DataController.cs" />
     <Compile Include="Data\Logic\DatabaseOperations.cs" />
     <Compile Include="Data\Logic\DataMapper.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\ComparerFactory.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionDataSet.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\ComparedDataSet.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\ComparerItemsFactory.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionEntity.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionResult.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionScenario.cs" />
+    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionStep.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\ICreatable.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\TestCaseCreation.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\TestCaseCreationData.cs" />

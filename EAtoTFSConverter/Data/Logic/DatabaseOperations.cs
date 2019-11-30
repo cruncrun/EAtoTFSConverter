@@ -13,7 +13,7 @@ namespace EAtoTFSConverter.Data.Logic
 {
     public class DatabaseOperations
     {
-        private static DataClassesDataContext _dataContext = new DataClassesDataContext();
+        private static readonly DataClassesDataContext _dataContext = new DataClassesDataContext();
         internal IEnumerable<active_EAscenario> GetActive_EAscenarios(Project selectedProject)
         {
             IEnumerable<active_EAscenario> active_EAscenarios = new List<active_EAscenario>();
@@ -24,6 +24,40 @@ namespace EAtoTFSConverter.Data.Logic
                     .ToList();
             }
             return active_EAscenarios;
+        }
+
+        internal IEnumerable<EAScenario> getAllEAscenarios(Project selectedProject)
+        {
+            IEnumerable<EAScenario> active_EAscenarios = new List<EAScenario>();
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                active_EAscenarios = dataContext.EAScenarios
+                    .Where(s => s.ProjectId == selectedProject.Id)
+                    .ToList();
+            }
+            return active_EAscenarios;
+        }
+
+        internal ComparsionEntity getEAscenario(Project selectedProject)
+        {
+            ComparsionEntity ce = null;
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                ce = DataMapper.MapToComparsionEntity(_dataContext.EAScenarios
+                    .First(s => s.ProjectId == selectedProject.Id));
+            }
+            return ce;
+        }
+
+        internal EAScenario getEAscenario(Guid guid)
+        {
+            EAScenario eaScenario = null;
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                eaScenario = _dataContext.EAScenarios
+                    .FirstOrDefault(s => s.Id == guid);
+            }
+            return eaScenario;
         }
 
         internal IEnumerable<active_Step> GetActive_Steps(active_EAscenario eaScenario)
@@ -49,27 +83,38 @@ namespace EAtoTFSConverter.Data.Logic
             return active_Steps;
         }
 
-        internal ComparsionDataSet GetWorkItem()
+        internal IEnumerable<Step> GetAllSteps()
         {
-            ComparsionDataSet comparsionDataSet = new ComparsionDataSet();
+            IEnumerable<Step> active_Steps = new List<Step>();
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                active_Steps = dataContext.Steps
+                    .ToList();
+            }
+            return active_Steps;
+        }
+
+        internal ComparsionEntity GetWorkItem()
+        {
+            ComparsionEntity comparsionEntity = new ComparsionEntity();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 
             }
 
-            return comparsionDataSet;
+            return comparsionEntity;
         }
 
-        internal ComparsionDataSet GetWorkItem(Guid projectId, Guid eaGuid, WorkItemType workItemType)
+        internal ComparsionEntity GetWorkItem(Guid projectId, Guid eaGuid, WorkItemType workItemType)
         {
-            ComparsionDataSet comparsionDataSet = new ComparsionDataSet();
+            ComparsionEntity comparsionEntity = new ComparsionEntity();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 var result = dataContext.WorkItems
                     .Where(w => w.ProjectId == projectId && w.WorkItemType == (int) workItemType);
             }
 
-            return comparsionDataSet;
+            return comparsionEntity;
         }
 
         internal bool CheckWorkItem(Guid projectId, WorkItemType workItemType)
