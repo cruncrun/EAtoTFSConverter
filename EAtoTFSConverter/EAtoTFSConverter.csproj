@@ -163,10 +163,8 @@
     <Compile Include="Data\DataController.cs" />
     <Compile Include="Data\Logic\DatabaseOperations.cs" />
     <Compile Include="Data\Logic\DataMapper.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\ComparedDataSet.cs" />
     <Compile Include="Data\Logic\WorkItem\Comparer\ComparerItemsFactory.cs" />
     <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionEntity.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionResult.cs" />
     <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionScenario.cs" />
     <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionStep.cs" />
     <Compile Include="Data\Logic\WorkItem\CreationData\ICreatable.cs" />
@@ -212,6 +210,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="DataClasses.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>DataClasses.designer.cs</LastGenOutput>

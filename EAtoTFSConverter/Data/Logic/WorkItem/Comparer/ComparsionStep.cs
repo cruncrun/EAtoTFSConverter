@@ -8,7 +8,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 {
     class ComparsionStep : ComparsionEntity
     {
-        public Guid Guid { get; set; }
-        public Guid EAScenarioId { get; set; }
+        public Guid? Guid { get; set; }
+        public Guid? EAScenarioId { get; set; }
     }
 }

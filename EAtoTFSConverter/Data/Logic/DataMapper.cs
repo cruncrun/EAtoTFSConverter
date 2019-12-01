@@ -32,24 +32,5 @@ namespace EAtoTFSConverter.Data.Logic
                 Name = source.Name
             };
         }
-
-        public static ComparsionEntity MapToComparsionEntity(EAScenario source)
-        {
-            return new ComparsionEntity()
-            {
-                Name = source.Name,
-                Description = source.Description
-            };
-        }
-
-        public static ComparsionEntity MapToComparsionEntity(Step source)
-        {
-            return new ComparsionEntity()
-            {
-                Name = source.Name,
-                Level = source.Level,
-                Result = source.Result
-            };
-        }
     }
 }

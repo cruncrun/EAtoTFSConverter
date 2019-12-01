@@ -37,24 +37,24 @@ namespace EAtoTFSConverter.Data.Logic
             }
             return active_EAscenarios;
         }
-
-        internal ComparsionEntity getEAscenario(Project selectedProject)
-        {
-            ComparsionEntity ce = null;
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                ce = DataMapper.MapToComparsionEntity(_dataContext.EAScenarios
-                    .First(s => s.ProjectId == selectedProject.Id));
-            }
-            return ce;
-        }
-
-        internal EAScenario getEAscenario(Guid guid)
+        
+        internal EAScenario getEAscenario(Guid? guid)
         {
             EAScenario eaScenario = null;
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 eaScenario = _dataContext.EAScenarios
+                    .FirstOrDefault(s => s.Id == guid);
+            }
+            return eaScenario;
+        }
+
+        internal Step getStep(Guid? guid)
+        {
+            Step eaScenario = null;
+            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            {
+                eaScenario = _dataContext.Steps
                     .FirstOrDefault(s => s.Id == guid);
             }
             return eaScenario;

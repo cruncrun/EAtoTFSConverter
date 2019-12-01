@@ -10,10 +10,11 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
         private Project Project { get; }
         private ComparerItemsFactory ComparerItemsFactory { get; set; }
         private DatabaseOperations DbOperations { get; set; }
-        private IEnumerable<active_EAscenario> _activeEAscenarios = new List<active_EAscenario>();
-        private IEnumerable<active_Step> _activeSteps = new List<active_Step>();
+        private IEnumerable<active_EAscenario> _activeEAscenarios;
+        private IEnumerable<active_Step> _activeSteps;
 
-        private ComparedDataSet activeItemsDataSet = new ComparedDataSet();
+        private List<WorkItemComparer> compares = new List<WorkItemComparer>();
+        private List<IWorkItemBase> messages = new List<IWorkItemBase>();
 
         public WorkItemLogic(Project selectedProject)
         {
@@ -26,9 +27,26 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
 
         internal void PrepareData()
         {
-            activeItemsDataSet = ComparerItemsFactory.CreateDataSet(_activeEAscenarios, _activeSteps);
-            
+            foreach (var scenario in _activeEAscenarios)
+            {
+                compares.Add(new WorkItemComparer(
+                    ComparerItemsFactory.MapToComparsionEntity(scenario),
+                    ComparerItemsFactory.MapToComparsionEntity(DbOperations.getEAscenario(scenario.PreviousVersionId)),
+                    WorkItemType.TestCase));
+            }
 
+            foreach (var step in _activeSteps)
+            {
+                compares.Add(new WorkItemComparer(
+                    ComparerItemsFactory.MapToComparsionEntity(step),
+                    ComparerItemsFactory.MapToComparsionEntity(DbOperations.getStep(step.PreviousVersionId)),
+                    WorkItemType.TestStep));
+            }
+
+            foreach (var item in compares)
+            {
+                MessageFactory.BuildMessage(item.WorkItemType, item.OperationType);
+            }
 
             WorkItemDataSet workItemDataSet = new WorkItemDataSet
             {

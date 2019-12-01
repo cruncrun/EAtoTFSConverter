@@ -27,6 +27,24 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             }
         }
 
+        public static IWorkItemBase BuildMessage(WorkItemType workItemType, OperationType operationType)
+        {
+            switch (workItemType)
+            {
+                case WorkItemType.TestPlan:
+                    //return BuildTestPlanMessage(operationType);
+
+                case WorkItemType.TestSuite:
+                    //return BuildTestSuiteMessage(operationType);
+
+                case WorkItemType.TestCase:
+                    //return BuildTestCaseMessage(operationType);
+
+                default:
+                    return null;
+            }
+        }
+
         private static IWorkItemBase BuildTestCaseMessage(OperationType operationType, IWorkItemBase CreationData)
         {
             switch (operationType)

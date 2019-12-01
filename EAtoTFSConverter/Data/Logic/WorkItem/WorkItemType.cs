@@ -10,6 +10,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
     {
         TestPlan, 
         TestSuite,
-        TestCase
+        TestCase,
+        TestStep
     }
 }

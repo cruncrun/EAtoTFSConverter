@@ -3,53 +3,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.Services.Common;
+using Microsoft.VisualStudio.Services.WebApi;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 {
     class ComparerItemsFactory
     {
-        private ComparedDataSet dataSet = new ComparedDataSet();
-
-        public ComparedDataSet CreateDataSet(IEnumerable<active_EAscenario> scenarios, IEnumerable<active_Step> steps)
+        internal ComparsionStep MapToComparsionEntity(active_Step source)
         {
-            dataSet.ComparedScenarios = PrepareScenarios(scenarios);
-            dataSet.ComparedSteps = PrepareSteps(steps);
-            return dataSet;
-        }
-
-        private IEnumerable<ComparsionStep> PrepareSteps(IEnumerable<active_Step> activeSteps)
-        {
-            var steps = new List<ComparsionStep>();
-            foreach (var step in activeSteps)
+            return new ComparsionStep
             {
-                steps.Add(new ComparsionStep
-                {
-                    Name = step.Name,
-                    Description = null,
-                    Level = step.Level,
-                    Result = step.Result,
-                    Guid = step.Id,
-                    EAScenarioId = step.EAScenarioId
-                });
-            }
-            return steps;
+                Name = source.Name,
+                Description = null,
+                Level = source.Level,
+                Result = source.Result,
+                Guid = source.Id,
+                EAScenarioId = source.EAScenarioId
+            };
         }
 
-        private IEnumerable<ComparsionScenario> PrepareScenarios(IEnumerable<active_EAscenario> activeEAscenarios)
+        internal ComparsionScenario MapToComparsionEntity(active_EAscenario source)
         {
-            var scenarios = new List<ComparsionScenario>();
-            foreach (var scenario in activeEAscenarios)
+            return new ComparsionScenario
             {
-                scenarios.Add(new ComparsionScenario
-                {
-                    Name = scenario.Name,
-                    Description = scenario.Description,
-                    Level = 0,
-                    Result = null,
-                    Guid = scenario.Id
-                });
-            }
-            return scenarios;
+                Name = source.Name,
+                Description = source.Description,
+                Level = null,
+                Result = null,
+                Guid = source.Id
+            };
         }
+
+        internal ComparsionScenario MapToComparsionEntity(EAScenario source)
+        {
+            return new ComparsionScenario()
+            {
+                Name = source?.Name,
+                Description = source?.Description,
+                Level = null,
+                Result = null,
+                Guid = source?.Id
+            };
+        }
+
+        internal ComparsionStep MapToComparsionEntity(Step source)
+        {
+            return new ComparsionStep()
+            {
+                Name = source?.Name,
+                Level = source?.Level,
+                Result = source?.Result,
+                Guid = source?.Id,
+                EAScenarioId = source?.EAScenarioId,
+                Description = null
+            };
+        }
+
+        
     }
 }
