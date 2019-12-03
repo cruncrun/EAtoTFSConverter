@@ -2,53 +2,79 @@
 
 namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 {
-    class WorkItemComparer
+    public class WorkItemComparer
     {
-        public IComparable ActiveEntity { get; set; }
-        public IComparable PreviousEntity { get; set; }
-        public bool ComparsionResult { get; set; }
-        public OperationType OperationType { get; set; }
-        public WorkItemType WorkItemType { get; set; }
+        private IComparable ActiveEntity { get; set; }
+        private IComparable PreviousEntity { get; set; }
+        public ComparsionResult Result { get; set; }
 
         public WorkItemComparer(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
         {
             ActiveEntity = activeEntity;
             PreviousEntity = previousEntity;
-            WorkItemType = workItemType;
-            ComparsionResult = Compare(ActiveEntity, PreviousEntity);
+            Result = new ComparsionResult(workItemType);
         }
 
-        private bool Compare(IComparable activeEntity, IComparable previousEntity)
+        public WorkItemComparer()
         {
-            bool comparsionResult;
+                
+        }
+
+        public ComparsionResult GetComparsionResult()
+        {
+            //Compare(ActiveEntity, PreviousEntity);
+            return Result;
+        }
+
+        public ComparsionResult GetComparsionResult(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
+        {
+            return Compare(activeEntity, previousEntity, workItemType);
+        }
+
+        private ComparsionResult Compare(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
+        {
             if (activeEntity == null && previousEntity != null)
             {
-                OperationType = OperationType.Delete;
-                comparsionResult = false;
-                return comparsionResult;
+                return new ComparsionResult
+                {
+                    WorkItemType = workItemType,
+                    OperationType = OperationType.Delete,
+                    Result = false
+                };
             }
 
             if (activeEntity != null && previousEntity == null)
             {
-                OperationType = OperationType.CreateNew;
-                comparsionResult = false;
-                return comparsionResult;
+                return new ComparsionResult
+                {
+                    WorkItemType = workItemType,
+                    OperationType = OperationType.CreateNew,
+                    Result = false
+                };
             }
 
-            comparsionResult = CompareValues(activeEntity?.Name, previousEntity?.Name) &&
-                               CompareValues(activeEntity?.Description, previousEntity?.Description) &&
-                               CompareValues(activeEntity?.Level, previousEntity?.Level) &&
-                               CompareValues(activeEntity?.Result, previousEntity?.Result);
+            var comparsionResult = CompareValues(activeEntity?.Name, previousEntity?.Name) &&
+                                   CompareValues(activeEntity?.Description, previousEntity?.Description) &&
+                                   CompareValues(activeEntity?.Level, previousEntity?.Level) &&
+                                   CompareValues(activeEntity?.Result, previousEntity?.Result);
 
             if (comparsionResult)
             {
-                OperationType = OperationType.UseExisting;
-                return comparsionResult;
+                return new ComparsionResult
+                {
+                    WorkItemType = workItemType,
+                    OperationType = OperationType.UseExisting,
+                    Result = true
+                };
             }
             else
             {
-                OperationType = OperationType.Update;
-                return comparsionResult;
+                return new ComparsionResult
+                {
+                    WorkItemType = workItemType,
+                    OperationType = OperationType.Update,
+                    Result = false
+                };
             }
         }
 

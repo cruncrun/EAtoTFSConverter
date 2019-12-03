@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
 using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
@@ -10,11 +11,11 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
         private Project Project { get; }
         private ComparerItemsFactory ComparerItemsFactory { get; set; }
         private DatabaseOperations DbOperations { get; set; }
-        private IEnumerable<active_EAscenario> _activeEAscenarios;
-        private IEnumerable<active_Step> _activeSteps;
 
-        private List<WorkItemComparer> compares = new List<WorkItemComparer>();
-        private List<IWorkItemBase> messages = new List<IWorkItemBase>();
+        private readonly IEnumerable<active_EAscenario> _activeEAscenarios;
+        private readonly IEnumerable<active_Step> _activeSteps;
+        private readonly List<ComparsionResult> _newWorkItems = new List<ComparsionResult>();
+        private readonly List<IWorkItemBase> messages = new List<IWorkItemBase>();
 
         public WorkItemLogic(Project selectedProject)
         {
@@ -27,26 +28,9 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
 
         internal void PrepareData()
         {
-            foreach (var scenario in _activeEAscenarios)
-            {
-                compares.Add(new WorkItemComparer(
-                    ComparerItemsFactory.MapToComparsionEntity(scenario),
-                    ComparerItemsFactory.MapToComparsionEntity(DbOperations.getEAscenario(scenario.PreviousVersionId)),
-                    WorkItemType.TestCase));
-            }
+            Compare();
+            CreateMessageDrafts();
 
-            foreach (var step in _activeSteps)
-            {
-                compares.Add(new WorkItemComparer(
-                    ComparerItemsFactory.MapToComparsionEntity(step),
-                    ComparerItemsFactory.MapToComparsionEntity(DbOperations.getStep(step.PreviousVersionId)),
-                    WorkItemType.TestStep));
-            }
-
-            foreach (var item in compares)
-            {
-                MessageFactory.BuildMessage(item.WorkItemType, item.OperationType);
-            }
 
             WorkItemDataSet workItemDataSet = new WorkItemDataSet
             {
@@ -56,6 +40,70 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             };
 
             workItemDataSet.TestPlan.Prepare();
-        } 
+        }
+
+        private void CreateMessageDrafts()
+        {
+            foreach (var item in _newWorkItems)
+            {
+                messages.Add(MessageFactory.BuildMessage(item.WorkItemType, item.OperationType));
+            }
+        }
+
+        private void Compare()
+        {
+            foreach (var scenario in _activeEAscenarios)
+            {
+                var stepsResult = new List<ComparsionResult>();
+                WorkItemComparer comparer = new WorkItemComparer();
+                
+                var scenarioResult = comparer.GetComparsionResult(
+                    ComparerItemsFactory.MapToComparsionEntity(scenario),
+                    ComparerItemsFactory.MapToComparsionEntity(DbOperations.getEAscenario(scenario.PreviousVersionId)),
+                    WorkItemType.TestCase);
+
+                var scenarioSteps = GetStepsForScenario(scenario);
+
+                foreach (var step in scenarioSteps)
+                {
+                    stepsResult.Add(comparer.GetComparsionResult(
+                        ComparerItemsFactory.MapToComparsionEntity(step),
+                        ComparerItemsFactory.MapToComparsionEntity(DbOperations.getEAscenario(step.PreviousVersionId)),
+                        WorkItemType.TestStep));
+                }
+
+                scenarioResult = ComparsionAnalysis(scenarioResult, stepsResult);
+
+                if (!scenarioResult.Result)
+                {
+                    _newWorkItems.Add(scenarioResult);
+                }
+            }
+        }
+
+        private IOrderedEnumerable<active_Step> GetStepsForScenario(active_EAscenario scenario)
+        {
+            return _activeSteps
+                .Where(w => scenario.Id == w.EAScenarioId)
+                .Select(s => s)
+                .OrderBy(o => o.Level);
+        }
+
+        private ComparsionResult ComparsionAnalysis(ComparsionResult scenarioResult, List<ComparsionResult> stepsResult)
+        {
+            if (scenarioResult.Result && stepsResult.All(s => s.Result))
+            {
+                return scenarioResult;
+            }
+
+            if (scenarioResult.Result && stepsResult.Any(s => !s.Result))
+            {
+                scenarioResult.Result = false;
+                scenarioResult.OperationType = OperationType.Update;
+                return scenarioResult;
+            }
+
+            return scenarioResult;
+        }
     }
 }

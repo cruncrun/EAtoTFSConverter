@@ -1,6 +1,8 @@
-﻿namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
+﻿using System;
+
+namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 {
-    class ComparsionEntity : IComparable
+    public class ComparsionEntity : IComparable
     {
         public string Name { get; set; }
         public string Description { get; set; }
