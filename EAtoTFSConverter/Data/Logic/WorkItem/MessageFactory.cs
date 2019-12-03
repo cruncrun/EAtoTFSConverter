@@ -1,51 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
+﻿using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
+using System;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItem
 {
     public static class MessageFactory
     {
-        public static IWorkItemBase BuildMessage(WorkItemType workItemType, OperationType operationType, IWorkItemBase CreationData)
-        {
-            switch (workItemType)
-            {
-                case WorkItemType.TestPlan:
-                    return BuildTestPlanMessage(operationType, CreationData);
-                    
-                case WorkItemType.TestSuite:
-                    return BuildTestSuiteMessage(operationType, CreationData);
-
-                case WorkItemType.TestCase:
-                    return BuildTestCaseMessage(operationType, CreationData);
-
-                default:
-                    return null;
-            }
-        }
-
         public static IWorkItemBase BuildMessage(WorkItemType workItemType, OperationType operationType)
         {
             switch (workItemType)
             {
                 case WorkItemType.TestPlan:
-                    //return BuildTestPlanMessage(operationType);
+                    return BuildTestPlanMessage(operationType);
 
                 case WorkItemType.TestSuite:
-                    //return BuildTestSuiteMessage(operationType);
+                    return BuildTestSuiteMessage(operationType);
 
                 case WorkItemType.TestCase:
-                    //return BuildTestCaseMessage(operationType);
+                    return BuildTestCaseMessage(operationType);
 
                 default:
                     return null;
             }
         }
 
-        private static IWorkItemBase BuildTestCaseMessage(OperationType operationType, IWorkItemBase CreationData)
+        private static IWorkItemBase BuildTestCaseMessage(OperationType operationType)
         {
             switch (operationType)
             {
@@ -62,7 +40,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             }
         }
 
-        private static IWorkItemBase BuildTestSuiteMessage(OperationType operationType, IWorkItemBase CreationData)
+        private static IWorkItemBase BuildTestSuiteMessage(OperationType operationType)
         {
             switch (operationType)
             {
@@ -77,12 +55,12 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             }
         }
 
-        private static IWorkItemBase BuildTestPlanMessage(OperationType operationType, IWorkItemBase CreationData)
+        private static IWorkItemBase BuildTestPlanMessage(OperationType operationType)
         {
             switch (operationType)
             {
                 case OperationType.UseExisting:
-                    return new TestPlanCreationData(CreationData.WorkItemId);
+                    return new TestPlanCreationData();
                 case OperationType.CreateNew:
                     return new TestPlanCreationData();
                 case OperationType.Update:

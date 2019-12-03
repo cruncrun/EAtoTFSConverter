@@ -1,6 +1,4 @@
-﻿using System.Web.Compilation;
-
-namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
+﻿namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 {
     public class WorkItemComparer
     {
@@ -17,7 +15,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 
         public WorkItemComparer()
         {
-                
+
         }
 
         public ComparsionResult GetComparsionResult()

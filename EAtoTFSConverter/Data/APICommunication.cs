@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EAtoTFSConverter.Data.Logic.WorkItem;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.Services.Client;
-using Microsoft.VisualStudio.Services.WebApi;
-using Microsoft.TeamFoundation.Core.WebApi;
-using Microsoft.VisualStudio.Services.Common;
-using EAtoTFSConverter.Data.Logic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using EAtoTFSConverter.Data.Logic.WorkItem;
-using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data
 {
@@ -31,9 +24,9 @@ namespace EAtoTFSConverter.Data
         internal async Task Send(IWorkItemBase workItemBase)
         {
             using (var client = GetConnection())
-            {                
-                
-            }            
+            {
+
+            }
         }
 
         private HttpClient GetConnection()
@@ -43,12 +36,12 @@ namespace EAtoTFSConverter.Data
             client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                 "Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", AuthorizationToken))));
-            client.BaseAddress = BaseAddress;            
+            client.BaseAddress = BaseAddress;
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", "EAToTFSConverter");
             client.DefaultRequestHeaders.Add("X-TFS-FedAuthRedirect", "Suppress");
             return client;
-        }        
+        }
 
         private static string GetPersonalToken(Project project)
         {

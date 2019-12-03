@@ -1,13 +1,8 @@
-﻿using System;
+﻿using EAtoTFSConverter.Data.Logic.WorkItem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using EAtoTFSConverter.Data.Logic.WorkItem;
-using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
-using Microsoft.TeamFoundation.TestManagement.WebApi;
-using IComparable = System.IComparable;
 
 namespace EAtoTFSConverter.Data.Logic
 {
@@ -24,40 +19,6 @@ namespace EAtoTFSConverter.Data.Logic
                     .ToList();
             }
             return active_EAscenarios;
-        }
-
-        internal IEnumerable<EAScenario> getAllEAscenarios(Project selectedProject)
-        {
-            IEnumerable<EAScenario> active_EAscenarios = new List<EAScenario>();
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                active_EAscenarios = dataContext.EAScenarios
-                    .Where(s => s.ProjectId == selectedProject.Id)
-                    .ToList();
-            }
-            return active_EAscenarios;
-        }
-        
-        internal EAScenario getEAscenario(Guid? guid)
-        {
-            EAScenario eaScenario = null;
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                eaScenario = _dataContext.EAScenarios
-                    .FirstOrDefault(s => s.Id == guid);
-            }
-            return eaScenario;
-        }
-
-        internal Step getStep(Guid? guid)
-        {
-            Step eaScenario = null;
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                eaScenario = _dataContext.Steps
-                    .FirstOrDefault(s => s.Id == guid);
-            }
-            return eaScenario;
         }
 
         internal IEnumerable<active_Step> GetActive_Steps(active_EAscenario eaScenario)
@@ -83,38 +44,26 @@ namespace EAtoTFSConverter.Data.Logic
             return active_Steps;
         }
 
-        internal IEnumerable<Step> GetAllSteps()
+        internal EAScenario getEAscenario(Guid? guid)
         {
-            IEnumerable<Step> active_Steps = new List<Step>();
+            EAScenario eaScenario = null;
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
-                active_Steps = dataContext.Steps
-                    .ToList();
+                eaScenario = _dataContext.EAScenarios
+                    .FirstOrDefault(s => s.Id == guid);
             }
-            return active_Steps;
+            return eaScenario;
         }
 
-        internal ComparsionEntity GetWorkItem()
+        internal Step getStep(Guid? guid)
         {
-            ComparsionEntity comparsionEntity = new ComparsionEntity();
+            Step eaScenario = null;
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
-                
+                eaScenario = _dataContext.Steps
+                    .FirstOrDefault(s => s.Id == guid);
             }
-
-            return comparsionEntity;
-        }
-
-        internal ComparsionEntity GetWorkItem(Guid projectId, Guid eaGuid, WorkItemType workItemType)
-        {
-            ComparsionEntity comparsionEntity = new ComparsionEntity();
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                var result = dataContext.WorkItems
-                    .Where(w => w.ProjectId == projectId && w.WorkItemType == (int) workItemType);
-            }
-
-            return comparsionEntity;
+            return eaScenario;
         }
 
         internal bool CheckWorkItem(Guid projectId, WorkItemType workItemType)
@@ -123,7 +72,7 @@ namespace EAtoTFSConverter.Data.Logic
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 result = dataContext.WorkItems
-                    .Count(w => w.ProjectId == projectId && w.WorkItemType == (int) workItemType) > 0;
+                    .Count(w => w.ProjectId == projectId && w.WorkItemType == (int)workItemType) > 0;
             }
             return result;
         }
@@ -135,17 +84,6 @@ namespace EAtoTFSConverter.Data.Logic
                 .Select(i => i.WorkItemId)
                 .FirstOrDefault();
             return result;
-
-            /*
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                result = dataContext.WorkItems
-                    .Where(w => w.ProjectId == projectId && w.WorkItemType == (int) WorkItemType.TestPlan)
-                    .Select(i => i.WorkItemId)
-                    .FirstOrDefault();
-            }
-            return result;
-            */
         }
 
         internal bool Insert(List<EAScenario> scenarios)
@@ -166,8 +104,8 @@ namespace EAtoTFSConverter.Data.Logic
                     "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 throw;
-            }             
-            return result;            
+            }
+            return result;
         }
 
         internal bool Insert(List<UseCase> useCases)

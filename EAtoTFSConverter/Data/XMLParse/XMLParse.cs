@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -21,11 +19,11 @@ namespace EAtoTFSConverter.Data.XMLParse
                                                  ProjectId = project.Id,
                                                  Name = (string)ea.Attribute("name"),
                                                  Type = (string)ea.Attribute("type"),
-                                                 Description = (string)ea.Attribute("description"),                                                                                                 
+                                                 Description = (string)ea.Attribute("description"),
                                                  Steps = from s in ea.Descendants("step")
                                                          select new Step()
                                                          {
-                                                             Guid = (Guid)s.Attribute("guid"),                                                              
+                                                             Guid = (Guid)s.Attribute("guid"),
                                                              SubjectId = (string)ea.Attribute("subject"),
                                                              Name = (string)s.Attribute("name"),
                                                              Level = (int)s.Attribute("level"),
@@ -36,7 +34,7 @@ namespace EAtoTFSConverter.Data.XMLParse
                                                            {
                                                                Guid = (Guid)uc.Attribute("guid"),
                                                                SubjectId = (string)ea.Attribute("subject"),
-                                                               Name = (string)uc.Attribute("oldname")                                                               
+                                                               Name = (string)uc.Attribute("oldname")
                                                            },
                                              };
             if (!ValidateResult(result))

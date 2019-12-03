@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
-
-namespace EAtoTFSConverter.Data.Logic
+﻿namespace EAtoTFSConverter.Data.Logic
 {
     static class DataMapper
-    {   
+    {
         public static EAScenario MapEAScenario(XMLParse.EAScenario source)
         {
             return new EAScenario
@@ -21,7 +14,7 @@ namespace EAtoTFSConverter.Data.Logic
                 Description = source.Description,
                 XmiId = source.XmiId,
                 Timestamp = source.Timestamp
-            }; 
+            };
         }
 
         public static Project MapProject(Project source)

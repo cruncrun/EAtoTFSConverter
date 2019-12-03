@@ -1,8 +1,7 @@
-﻿using System;
+﻿using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
+using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
 using System.Collections.Generic;
 using System.Linq;
-using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
-using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItem
 {
@@ -56,7 +55,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             {
                 var stepsResult = new List<ComparsionResult>();
                 WorkItemComparer comparer = new WorkItemComparer();
-                
+
                 var scenarioResult = comparer.GetComparsionResult(
                     ComparerItemsFactory.MapToComparsionEntity(scenario),
                     ComparerItemsFactory.MapToComparsionEntity(DbOperations.getEAscenario(scenario.PreviousVersionId)),

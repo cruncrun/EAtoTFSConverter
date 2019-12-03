@@ -1,11 +1,8 @@
-﻿using System;
+﻿using EAtoTFSConverter.Data.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using EAtoTFSConverter.Data.Logic;
-using EAtoTFSConverter.Data.XMLParse;
 
 namespace EAtoTFSConverter.Data
 {
@@ -55,7 +52,7 @@ namespace EAtoTFSConverter.Data
                         .FirstOrDefault();
                     Steps.Add(step);
                 }
-            }            
+            }
             InsertEAData();
         }
 
@@ -71,12 +68,12 @@ namespace EAtoTFSConverter.Data
             if (UseCases.Any())
             {
                 DatabaseOperations db = new DatabaseOperations();
-                operation &= db.Insert(UseCases);                 
+                operation &= db.Insert(UseCases);
             }
             if (Steps.Any())
             {
                 DatabaseOperations db = new DatabaseOperations();
-                operation &= db.Insert(Steps);                
+                operation &= db.Insert(Steps);
             }
             if (operation)
             {

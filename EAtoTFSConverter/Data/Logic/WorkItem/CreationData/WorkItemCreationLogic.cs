@@ -1,6 +1,5 @@
-﻿using System.Net.Http;
+﻿using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
 using System.Threading.Tasks;
-using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
 {
@@ -10,7 +9,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
         public WorkItemType WorkItemType { get; set; }
         public OperationType OperationType { get; set; }
         public IWorkItemBase CreationData { get; set; }
-        
+
         public WorkItemCreationLogic(Project project, WorkItemType workItemType)
         {
             Project = project;
@@ -26,7 +25,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
                 CreationData.WorkItemId = db.GetWorkItem(Project.Id, WorkItemType);
             }
 
-            else 
+            else
             {
                 await Send();
             }
@@ -50,8 +49,8 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
         public async Task Send()
         {
             var api = new APICommunication(Project);
-            var message = MessageFactory.BuildMessage(WorkItemType, OperationType, CreationData);
-            await api.Send(message);
+            //var message = MessageFactory.BuildMessage(WorkItemType, OperationType, CreationData);
+            //await api.Send(message);
         }
         public OperationType GetOperationType() =>
             CheckIfExists()

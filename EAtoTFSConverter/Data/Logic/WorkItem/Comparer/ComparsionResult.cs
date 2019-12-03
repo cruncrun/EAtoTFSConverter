@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
+﻿namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 {
     public class ComparsionResult
     {
@@ -19,7 +13,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
 
         public ComparsionResult()
         {
-            
+
         }
     }
 }

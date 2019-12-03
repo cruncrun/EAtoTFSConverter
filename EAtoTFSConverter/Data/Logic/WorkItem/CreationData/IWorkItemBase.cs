@@ -9,5 +9,5 @@
         string Value { get; set; }
         string ApiAddress { get; set; }
         int WorkItemId { get; set; }
-}
+    }
 }
