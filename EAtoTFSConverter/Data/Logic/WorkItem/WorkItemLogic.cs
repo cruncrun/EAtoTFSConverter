@@ -1,5 +1,6 @@
 ﻿using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
 using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,6 +30,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
         {
             Compare();
             CreateMessageDrafts();
+            SendMessages();
 
 
             WorkItemDataSet workItemDataSet = new WorkItemDataSet
@@ -39,6 +41,15 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             };
 
             workItemDataSet.TestPlan.Prepare();
+        }
+
+        private async void SendMessages()
+        {
+            APICommunication api = new APICommunication(Project);
+            foreach (var message in messages)
+            {
+                await api.SendAsync(message);
+            }
         }
 
         private void CreateMessageDrafts()
@@ -67,7 +78,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
                 {
                     stepsResult.Add(comparer.GetComparsionResult(
                         ComparerItemsFactory.MapToComparsionEntity(step),
-                        ComparerItemsFactory.MapToComparsionEntity(DbOperations.getEAscenario(step.PreviousVersionId)),
+                        ComparerItemsFactory.MapToComparsionEntity(DbOperations.getStep(step.PreviousVersionId)),
                         WorkItemType.TestStep));
                 }
 
@@ -96,6 +107,13 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
             }
 
             if (scenarioResult.Result && stepsResult.Any(s => !s.Result))
+            {
+                scenarioResult.Result = false;
+                scenarioResult.OperationType = OperationType.Update;
+                return scenarioResult;
+            }
+
+            if (!scenarioResult.Result && stepsResult.Any(s => s.Result))
             {
                 scenarioResult.Result = false;
                 scenarioResult.OperationType = OperationType.Update;

@@ -1,4 +1,8 @@
-﻿namespace EAtoTFSConverter.Data.Logic
+﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace EAtoTFSConverter.Data.Logic
 {
     static class DataMapper
     {
@@ -24,6 +28,12 @@
                 Id = source.Id,
                 Name = source.Name
             };
+        }
+
+        internal static object MapResponse(Task<string> responseBody)
+        {
+            // TODO: Mapowanie response na workitem
+            return new Object();
         }
     }
 }

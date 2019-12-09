@@ -51,7 +51,5 @@ namespace EAtoTFSConverter.Data.XMLParse
         }
 
         private static bool ValidateResult(IEnumerable<EAScenario> result) => result.Any();
-
-        //private static Guid GetGuidFromEAIdentifier(string subject) => Guid.Parse(subject.Substring(5).Replace("_", "-").ToUpper());
     }
 }

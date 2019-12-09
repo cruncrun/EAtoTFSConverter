@@ -42,7 +42,7 @@ namespace EAtoTFSConverter.Data.Logic
                     .ToList();
             }
             return active_Steps;
-        }
+        }        
 
         internal EAScenario getEAscenario(Guid? guid)
         {
@@ -150,6 +150,10 @@ namespace EAtoTFSConverter.Data.Logic
                 throw;
             }
             return result;
+        }
+        internal void Insert(object workItem)
+        {
+            throw new NotImplementedException();
         }
     }
 }

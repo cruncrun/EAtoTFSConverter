@@ -1,4 +1,5 @@
-﻿using EAtoTFSConverter.Data.Logic.WorkItem;
+﻿using EAtoTFSConverter.Data.Logic;
+using EAtoTFSConverter.Data.Logic.WorkItem;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -11,8 +12,8 @@ namespace EAtoTFSConverter.Data
     public class APICommunication
     {
         public Project Project { get; set; }
-        public string AuthorizationToken { get; set; }
-        public Uri BaseAddress { get; set; }
+        private string AuthorizationToken { get; set; }
+        private Uri BaseAddress { get; set; }
 
         public APICommunication(Project project)
         {
@@ -21,12 +22,25 @@ namespace EAtoTFSConverter.Data
             BaseAddress = GetUriAddress(Project);
         }
 
-        internal async Task Send(IWorkItemBase workItemBase)
+        internal async Task SendAsync(IWorkItemBase message)
         {
             using (var client = GetConnection())
             {
-
+                var response = await client.PostAsync(message.ApiAddress, message.content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseBody = response.Content.ReadAsStringAsync();
+                    StoreResponse(responseBody);
+                }
+                // send and store response to database
             }
+        }
+
+        private void StoreResponse(Task<string> responseBody)
+        {
+            var workItem = DataMapper.MapResponse(responseBody);
+            DatabaseOperations db = new DatabaseOperations();
+            db.Insert(workItem);
         }
 
         private HttpClient GetConnection()
