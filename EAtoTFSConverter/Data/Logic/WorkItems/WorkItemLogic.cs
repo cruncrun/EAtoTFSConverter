@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+﻿using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
@@ -13,8 +13,8 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private readonly IEnumerable<active_EAscenario> _activeEAscenarios;
         private readonly IEnumerable<active_Step> _activeSteps;
-        private readonly List<ComparsionResult> _newWorkItems = new List<ComparsionResult>();
-        private readonly List<IWorkItemBase> messages = new List<IWorkItemBase>();
+        private readonly List<ComparisionResult> _newWorkItems = new List<ComparisionResult>();
+        private readonly List<IWorkItemBase> _messages = new List<IWorkItemBase>();
 
         public WorkItemLogic(Project selectedProject)
         {
@@ -45,7 +45,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         private async void SendMessages()
         {
             APICommunication api = new APICommunication(Project);
-            foreach (var message in messages)
+            foreach (var message in _messages)
             {
                 await api.SendAsync(message);
             }
@@ -55,7 +55,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             foreach (var item in _newWorkItems)
             {
-                messages.Add(MessageFactory.BuildMessage(item.WorkItemType, item.OperationType));
+                _messages.Add(MessageFactory.BuildMessage(item.WorkItemType, item.OperationType));
             }
         }
 
@@ -63,9 +63,9 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             foreach (var scenario in _activeEAscenarios)
             {
-                var stepsResult = new List<ComparsionResult>();
+                var stepsResult = new List<ComparisionResult>();
                 WorkItemComparer comparer = new WorkItemComparer();
-
+                
                 var scenarioResult = comparer.GetComparsionResult(
                     ComparerItemsFactory.MapToComparsionEntity(scenario),
                     ComparerItemsFactory.MapToComparsionEntity(DbOperations.getEAscenario(scenario.PreviousVersionId)),
@@ -98,7 +98,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                 .OrderBy(o => o.Level);
         }
 
-        private ComparsionResult ComparsionAnalysis(ComparsionResult scenarioResult, List<ComparsionResult> stepsResult)
+        private ComparisionResult ComparsionAnalysis(ComparisionResult scenarioResult, List<ComparisionResult> stepsResult)
         {
             if (scenarioResult.Result && stepsResult.All(s => s.Result))
             {

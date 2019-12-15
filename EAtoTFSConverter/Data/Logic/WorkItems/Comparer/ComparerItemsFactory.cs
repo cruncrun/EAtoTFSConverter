@@ -2,9 +2,9 @@
 {
     class ComparerItemsFactory
     {
-        internal ComparsionStep MapToComparsionEntity(active_Step source)
+        internal ComparisionStep MapToComparsionEntity(active_Step source)
         {
-            return new ComparsionStep
+            return new ComparisionStep
             {
                 Name = source.Name,
                 Description = null,
@@ -15,9 +15,9 @@
             };
         }
 
-        internal ComparsionScenario MapToComparsionEntity(active_EAscenario source)
+        internal ComparisionScenario MapToComparsionEntity(active_EAscenario source)
         {
-            return new ComparsionScenario
+            return new ComparisionScenario
             {
                 Name = source.Name,
                 Description = source.Description,
@@ -27,9 +27,9 @@
             };
         }
 
-        internal ComparsionScenario MapToComparsionEntity(EAScenario source)
+        internal ComparisionScenario MapToComparsionEntity(EAScenario source)
         {
-            return new ComparsionScenario()
+            return new ComparisionScenario()
             {
                 Name = source?.Name,
                 Description = source?.Description,
@@ -39,9 +39,9 @@
             };
         }
 
-        internal ComparsionStep MapToComparsionEntity(Step source)
+        internal ComparisionStep MapToComparsionEntity(Step source)
         {
-            return new ComparsionStep()
+            return new ComparisionStep()
             {
                 Name = source?.Name,
                 Level = source?.Level,

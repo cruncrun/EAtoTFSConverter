@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using EAtoTFSConverter.Data.Logic.WorkItem;
 using IComparable = EAtoTFSConverter.Data.Logic.WorkItems.Comparer.IComparable;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData

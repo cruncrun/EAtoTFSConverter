@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic
@@ -30,12 +29,10 @@ namespace EAtoTFSConverter.Data.Logic
             };
         }
 
-        internal static EAtoTFSConverter.WorkItem MapResponse(Task<string> responseBody)
+        internal static WorkItem MapResponse(Task<string> responseBody)
         {
             // TODO: Mapowanie response na workitem
-            return new EAtoTFSConverter.WorkItem
-                ( 
-                );
+            return JsonConvert.DeserializeObject<WorkItem>(responseBody.ToString());
         }
     }
 }

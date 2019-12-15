@@ -164,10 +164,10 @@
     <Compile Include="Data\Logic\DatabaseOperations.cs" />
     <Compile Include="Data\Logic\DataMapper.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\ComparerItemsFactory.cs" />
-    <Compile Include="Data\Logic\WorkItems\Comparer\ComparsionEntity.cs" />
-    <Compile Include="Data\Logic\WorkItems\Comparer\ComparsionResult.cs" />
-    <Compile Include="Data\Logic\WorkItems\Comparer\ComparsionScenario.cs" />
-    <Compile Include="Data\Logic\WorkItems\Comparer\ComparsionStep.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionEntity.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionResult.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionScenario.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionStep.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\ICreatable.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\TestCaseCreation.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\TestCaseCreationData.cs" />
@@ -176,6 +176,7 @@
     <Compile Include="Data\Logic\JSONSerialize.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\TestSuiteCreation.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\TestSuiteCreationData.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\WorkItemBaseData.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\WorkItemCreationData.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\IComparable.cs" />
     <Compile Include="Data\Logic\WorkItems\MessageFactory.cs" />

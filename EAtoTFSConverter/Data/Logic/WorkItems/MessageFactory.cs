@@ -1,5 +1,5 @@
-﻿using System;
-using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
+﻿using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
+using System;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {

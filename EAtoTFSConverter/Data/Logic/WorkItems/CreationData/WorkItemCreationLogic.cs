@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+﻿using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {

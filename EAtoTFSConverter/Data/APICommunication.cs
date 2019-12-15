@@ -1,12 +1,11 @@
 ﻿using EAtoTFSConverter.Data.Logic;
-using EAtoTFSConverter.Data.Logic.WorkItem;
+using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 
 namespace EAtoTFSConverter.Data
 {

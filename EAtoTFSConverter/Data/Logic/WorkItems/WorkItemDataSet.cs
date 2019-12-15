@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
+﻿using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
+using System.Collections.Generic;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {

@@ -1,4 +1,3 @@
-using EAtoTFSConverter.Data.Logic.WorkItem;
 using EAtoTFSConverter.Data.Logic.WorkItems;
 using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 using Xunit;
@@ -10,7 +9,7 @@ namespace EAtoTFSConverter.Tests
         [Fact]
         public void ScenarioUpdate()
         {
-            ComparsionEntity activeScenario = new ComparsionScenario()
+            ComparisionEntity activeScenario = new ComparisionScenario()
             {
                 Description = "aaa",
                 Guid = null,
@@ -18,7 +17,7 @@ namespace EAtoTFSConverter.Tests
                 Name = "Scenariusz 1",
                 Result = null
             };
-            ComparsionEntity previouScenario = new ComparsionScenario()
+            ComparisionEntity previouScenario = new ComparisionScenario()
             {
                 Description = "bbb",
                 Guid = null,
@@ -29,8 +28,8 @@ namespace EAtoTFSConverter.Tests
 
             WorkItemComparer wic = new WorkItemComparer(activeScenario, previouScenario, WorkItemType.TestCase);
 
-            ComparsionResult receivedResult = wic.GetComparsionResult();
-            ComparsionResult expectedResult = new ComparsionResult();
+            ComparisionResult receivedResult = wic.GetComparsionResult();
+            ComparisionResult expectedResult = new ComparisionResult();
             expectedResult.OperationType = OperationType.Update;
             expectedResult.Result = false;
             expectedResult.WorkItemType = WorkItemType.TestCase;
@@ -43,7 +42,7 @@ namespace EAtoTFSConverter.Tests
         [Fact]
         public void ScenarioUseExisting()
         {
-            ComparsionEntity activeScenario = new ComparsionScenario()
+            ComparisionEntity activeScenario = new ComparisionScenario()
             {
                 Description = "aaa",
                 Guid = null,
@@ -51,7 +50,7 @@ namespace EAtoTFSConverter.Tests
                 Name = "Scenariusz 1",
                 Result = null
             };
-            ComparsionEntity previouScenario = new ComparsionScenario()
+            ComparisionEntity previouScenario = new ComparisionScenario()
             {
                 Description = "aaa",
                 Guid = null,
@@ -62,8 +61,8 @@ namespace EAtoTFSConverter.Tests
 
             WorkItemComparer wic = new WorkItemComparer(activeScenario, previouScenario, WorkItemType.TestCase);
 
-            ComparsionResult receivedResult = wic.GetComparsionResult();
-            ComparsionResult expectedResult = new ComparsionResult();
+            ComparisionResult receivedResult = wic.GetComparsionResult();
+            ComparisionResult expectedResult = new ComparisionResult();
             expectedResult.OperationType = OperationType.UseExisting;
             expectedResult.Result = true;
             expectedResult.WorkItemType = WorkItemType.TestCase;
@@ -76,8 +75,8 @@ namespace EAtoTFSConverter.Tests
         [Fact]
         public void ScenarioDelete()
         {
-            ComparsionEntity activeScenario = null;
-            ComparsionEntity previouScenario = new ComparsionScenario()
+            ComparisionEntity activeScenario = null;
+            ComparisionEntity previouScenario = new ComparisionScenario()
             {
                 Description = "aaa",
                 Guid = null,
@@ -88,8 +87,8 @@ namespace EAtoTFSConverter.Tests
 
             WorkItemComparer wic = new WorkItemComparer(activeScenario, previouScenario, WorkItemType.TestCase);
 
-            ComparsionResult receivedResult = wic.GetComparsionResult();
-            ComparsionResult expectedResult = new ComparsionResult();
+            ComparisionResult receivedResult = wic.GetComparsionResult();
+            ComparisionResult expectedResult = new ComparisionResult();
             expectedResult.OperationType = OperationType.Delete;
             expectedResult.Result = false;
             expectedResult.WorkItemType = WorkItemType.TestCase;
@@ -102,7 +101,7 @@ namespace EAtoTFSConverter.Tests
         [Fact]
         public void ScenarioCreateNew()
         {
-            ComparsionEntity activeScenario = new ComparsionScenario()
+            ComparisionEntity activeScenario = new ComparisionScenario()
             {
                 Description = "aaa",
                 Guid = null,
@@ -110,12 +109,12 @@ namespace EAtoTFSConverter.Tests
                 Name = "Scenariusz 1",
                 Result = null
             };
-            ComparsionEntity previouScenario = null;
+            ComparisionEntity previouScenario = null;
 
             WorkItemComparer wic = new WorkItemComparer(activeScenario, previouScenario, WorkItemType.TestCase);
 
-            ComparsionResult receivedResult = wic.GetComparsionResult();
-            ComparsionResult expectedResult = new ComparsionResult();
+            ComparisionResult receivedResult = wic.GetComparsionResult();
+            ComparisionResult expectedResult = new ComparisionResult();
             expectedResult.OperationType = OperationType.CreateNew;
             expectedResult.Result = false;
             expectedResult.WorkItemType = WorkItemType.TestCase;

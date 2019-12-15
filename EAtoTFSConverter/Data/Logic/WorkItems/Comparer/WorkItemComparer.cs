@@ -4,13 +4,13 @@
     {
         private IComparable ActiveEntity { get; set; }
         private IComparable PreviousEntity { get; set; }
-        public ComparsionResult Result { get; set; }
+        public ComparisionResult Result { get; set; }
 
         public WorkItemComparer(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
         {
             ActiveEntity = activeEntity;
             PreviousEntity = previousEntity;
-            Result = new ComparsionResult(workItemType);
+            Result = new ComparisionResult(workItemType);
         }
 
         public WorkItemComparer()
@@ -18,68 +18,58 @@
 
         }
 
-        public ComparsionResult GetComparsionResult()
+        public ComparisionResult GetComparsionResult()
         {
             //Compare(ActiveEntity, PreviousEntity);
             return Result;
         }
 
-        public ComparsionResult GetComparsionResult(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
+        public ComparisionResult GetComparsionResult(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
         {
             return Compare(activeEntity, previousEntity, workItemType);
         }
 
-        private ComparsionResult Compare(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
+        private ComparisionResult Compare(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
         {
+            var comparisionResult = new ComparisionResult(workItemType);
+
             if (activeEntity == null && previousEntity != null)
             {
-                return new ComparsionResult
-                {
-                    WorkItemType = workItemType,
-                    OperationType = OperationType.Delete,
-                    Result = false
-                };
+                comparisionResult.OperationType = OperationType.Delete;
+                comparisionResult.Result = false;
+                return comparisionResult;
             }
 
             if (activeEntity != null && previousEntity == null)
             {
-                return new ComparsionResult
-                {
-                    WorkItemType = workItemType,
-                    OperationType = OperationType.CreateNew,
-                    Result = false
-                };
+                comparisionResult.OperationType = OperationType.CreateNew;
+                comparisionResult.Result = false;
+                return comparisionResult;
             }
 
-            bool comparsionResult;
-            comparsionResult = CompareValues(activeEntity?.Name, previousEntity?.Name) &&
-                               CompareValues(activeEntity?.Description, previousEntity?.Description) &&
-                               CompareValues(activeEntity?.Level, previousEntity?.Level) &&
-                               CompareValues(activeEntity?.Result, previousEntity?.Result);
+            if (CompareData(activeEntity, previousEntity))
+            {
+                comparisionResult.OperationType = OperationType.UseExisting;
+                comparisionResult.Result = true;
+                return comparisionResult;
+            }
 
-            if (comparsionResult)
+            return new ComparisionResult
             {
-                return new ComparsionResult
-                {
-                    WorkItemType = workItemType,
-                    OperationType = OperationType.UseExisting,
-                    Result = true
-                };
-            }
-            else
-            {
-                return new ComparsionResult
-                {
-                    WorkItemType = workItemType,
-                    OperationType = OperationType.Update,
-                    Result = false
-                };
-            }
+                WorkItemType = workItemType,
+                OperationType = OperationType.Update,
+                Result = false
+            };
         }
 
-        private bool CompareValues<T>(T active, T previous)
+        private bool CompareData(IComparable activeEntity, IComparable previousEntity)
         {
-            return active?.ToString() == previous?.ToString();
+            return CompareValues(activeEntity?.Name, previousEntity?.Name)
+                         && CompareValues(activeEntity?.Description, previousEntity?.Description)
+                         && CompareValues(activeEntity?.Level, previousEntity?.Level)
+                         && CompareValues(activeEntity?.Result, previousEntity?.Result);
         }
+
+        private bool CompareValues<T>(T active, T previous) => active?.ToString() == previous?.ToString();
     }
 }

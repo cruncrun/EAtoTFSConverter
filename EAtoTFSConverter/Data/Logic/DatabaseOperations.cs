@@ -1,8 +1,8 @@
-﻿using System;
+﻿using EAtoTFSConverter.Data.Logic.WorkItems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using EAtoTFSConverter.Data.Logic.WorkItems;
 
 namespace EAtoTFSConverter.Data.Logic
 {
@@ -42,7 +42,7 @@ namespace EAtoTFSConverter.Data.Logic
                     .ToList();
             }
             return active_Steps;
-        }        
+        }
 
         internal EAScenario getEAscenario(Guid? guid)
         {
@@ -80,7 +80,7 @@ namespace EAtoTFSConverter.Data.Logic
         internal int GetWorkItem(Guid projectId, WorkItemType workItemType)
         {
             var result = _dataContext.WorkItems
-                .Where(w => w.ProjectId == projectId && w.WorkItemType == (int)WorkItemType.TestPlan)
+                .Where(w => w.ProjectId == projectId && w.WorkItemType == (int)workItemType)
                 .Select(i => i.WorkItemId)
                 .FirstOrDefault();
             return result;
