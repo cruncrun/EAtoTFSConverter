@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
+namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
-    class TestSuiteCreationData : IWorkItemBase
+    class TestCaseCreationData : IWorkItemBase
     {
         public string Name { get; set; }
         public string AreaPath { get; set; }
@@ -11,6 +11,6 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
         public string Value { get; set; }
         public string ApiAddress { get; set; }
         public int WorkItemId { get; set; }
-        public HttpContent content { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public HttpContent Content { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
     }
 }

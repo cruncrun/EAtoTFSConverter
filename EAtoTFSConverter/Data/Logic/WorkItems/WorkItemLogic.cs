@@ -1,10 +1,9 @@
-﻿using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
-using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem
+namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
     class WorkItemLogic
     {

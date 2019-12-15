@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using IComparable = EAtoTFSConverter.Data.Logic.WorkItem.Comparer.IComparable;
+using IComparable = EAtoTFSConverter.Data.Logic.WorkItems.Comparer.IComparable;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
+namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
     class TestCaseCreation : ICreatable
     {

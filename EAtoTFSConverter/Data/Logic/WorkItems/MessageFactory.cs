@@ -1,7 +1,7 @@
-﻿using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
-using System;
+﻿using System;
+using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem
+namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
     public static class MessageFactory
     {

@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="EAtoTFSConverter.Data.APICommunication">
+    <Position X="18.75" Y="13.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AABACAAAAAAAAAAAAAAACAAGAAAAAAABAAAAABQAAAA=</HashCode>
+      <FileName>Data\APICommunication.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.DataController">
+    <Position X="21" Y="4" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAEAAAAAAAAAACACAAAAAAAAAAAAAAAAAAACAI=</HashCode>
+      <FileName>Data\DataController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Project" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.DatabaseOperations">
+    <Position X="11.75" Y="0.5" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAEAEAAAAAAQAAAAEAAAQAAAAAAQABAAAAAAAAAAAg=</HashCode>
+      <FileName>Data\Logic\DatabaseOperations.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_dataContext" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.DataMapper">
+    <Position X="15.5" Y="4" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAABAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\DataMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.JSONSerialize">
+    <Position X="6.5" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\JSONSerialize.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.ComparerItemsFactory">
+    <Position X="21" Y="7" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\Comparer\ComparerItemsFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.ComparsionEntity">
+    <Position X="21" Y="9.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\Comparer\ComparsionEntity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.ComparsionResult">
+    <Position X="7.75" Y="7" Width="3.5" />
+    <AssociationLine Name="OperationType" Type="EAtoTFSConverter.Data.Logic.WorkItem.OperationType" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.312" Y="8.747" />
+        <Point X="8.312" Y="9.089" />
+        <Point X="6.75" Y="9.089" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAQAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\Comparer\ComparsionResult.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OperationType" />
+      <Property Name="WorkItemType" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.ComparsionScenario">
+    <Position X="25" Y="11.5" Width="2.5" />
+    <InheritanceLine Type="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.ComparsionEntity" FixedToPoint="true">
+      <Path>
+        <Point X="22.125" Y="11.18" />
+        <Point X="22.125" Y="12.188" />
+        <Point X="25" Y="12.188" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\Comparer\ComparsionScenario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.ComparsionStep">
+    <Position X="25" Y="9.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\Comparer\ComparsionStep.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.WorkItemComparer">
+    <Position X="11.75" Y="9.75" Width="7.75" />
+    <AssociationLine Name="ActiveEntity" Type="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.IComparable" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.75" Y="11.127" />
+        <Point X="10.572" Y="11.127" />
+        <Point X="10.572" Y="13.75" />
+        <Point X="7" Y="13.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="PreviousEntity" Type="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.IComparable" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.75" Y="10.501" />
+        <Point X="9.94" Y="10.501" />
+        <Point X="9.94" Y="13.188" />
+        <Point X="7" Y="13.188" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAIAAAAAAAAAAAAAQAAAAAAAAAABBQAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\Comparer\WorkItemComparer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ActiveEntity" />
+      <Property Name="PreviousEntity" />
+      <Property Name="Result" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.CreationData.TestCaseCreation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.25" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgBACAAAAAAAQAAAAEQACAAAAAAAAACAAABAAAEAgAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\CreationData\TestCaseCreation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.CreationData.TestCaseCreationData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19" Y="20" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAACAAgAAAAQAAAAAAAQAAAAAAAAABAAgEAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\CreationData\TestCaseCreationData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.CreationData.TestPlanCreationData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.5" Y="20" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAECAACAAgAAAAQAAAAAAAQAAAAAAAAABAAgEAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\CreationData\TestPlanCreationData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.CreationData.TestSuiteCreation" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="8.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>QgBACAAAAAAAQAAAAEAACAAAAAAAAACAAABAAAEAgAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\CreationData\TestSuiteCreation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CreationData" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.CreationData.TestSuiteCreationData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.25" Y="21" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAACAAgAAAAQAAAAAAAQAAAAAAAAABAAgEAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\CreationData\TestSuiteCreationData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.CreationData.WorkItemCreationData" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="13.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAACAAgAAAAQAAAAAAAQAAAAAAAAABAAgEAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\CreationData\WorkItemCreationData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.CreationData.WorkItemCreationLogic" BaseTypeListCollapsed="true">
+    <Position X="9" Y="20" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>QgBACAAAAAAAQAAAAEAACAAAAAAAAACAAABAAAAAgAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\CreationData\WorkItemCreationLogic.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.MessageFactory">
+    <Position X="12.25" Y="13.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAABCAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\MessageFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.WorkItemDataSet" Collapsed="true">
+    <Position X="19" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAACAAAAAQAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\WorkItemDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.WorkItemLogic">
+    <Position X="12" Y="6" Width="7" />
+    <AssociationLine Name="Project" Type="EAtoTFSConverter.Project" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.362" Y="6" />
+        <Point X="12.362" Y="4.438" />
+        <Point X="10.75" Y="4.438" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAGAAAAABAAAAIAAACAICQAAAAAAAAABAABQAIAACAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\WorkItemLogic.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ComparerItemsFactory" />
+      <Property Name="DbOperations" />
+      <Property Name="Project" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.ReceivedData.TestCaseReceivedData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.75" Y="20" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\ReceivedData\TestCaseReceivedData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.ReceivedData.TestPlanReceivedData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.25" Y="20" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\ReceivedData\TestPlanReceivedData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.Logic.WorkItem.ReceivedData.TestSuiteReceivedData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19" Y="21" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\ReceivedData\TestSuiteReceivedData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.XMLParse.EAScenario" Collapsed="true">
+    <Position X="22.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAkAAgAAAAAAACAAQABAAAAAEAAQAAAAACAAA=</HashCode>
+      <FileName>Data\XMLParse\EAScenario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Data.XMLParse.XMLParse">
+    <Position X="7.5" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\XMLParse\XMLParse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.DataClassesDataContext" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABBBAIAEAAACAEAABAAAAAAACCAECAAAAAgACAAIAwA=</HashCode>
+      <FileName>DataClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.WorkItem" Collapsed="true">
+    <Position X="22.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAACAAgABAAAAAAIgQBBAAAAgAEBAAgAEAEAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.EAScenario" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAABkgMkAABAUEECIAQBjCKAQgEEQUQBAAAUjAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.UseCase" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAABkAIACAAAUEECIAQBjCKARAIAQUAFAAAeAhA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.Step" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAQIBkAIACAAAUEECIAQRjCKARAIBQ0AlAAAeAhI=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EAtoTFSConverter.active_EAscenario" Collapsed="true">
+    <Position X="21" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAkAIgAAAAEAACIAQABAAAAgEEQQAAAAAEhAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.active_Step" Collapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAQAAkAIACAAAEAACIAQAAAAABAIBQAAAAAAEAgI=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Project">
+    <Position X="8" Y="2" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAAAAAABAAAAACAIEQAAAAAAAACAAAAIAAkAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.MainWindow">
+    <Position X="2.5" Y="2" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAASADAAIAAAAAHCCAQCAIAEAAAAAAAAAAAIAAg=</HashCode>
+      <FileName>MainWindow.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_selectedProject" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EAtoTFSConverter.Program">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Properties.Resources" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EAtoTFSConverter.Properties.Settings" Collapsed="true">
+    <Position X="18.75" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABACAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="EAtoTFSConverter.Data.Logic.WorkItem.Comparer.IComparable">
+    <Position X="5.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\Comparer\IComparable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EAtoTFSConverter.Data.Logic.WorkItem.CreationData.ICreatable">
+    <Position X="17.25" Y="23.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgBACAAAAAAAQAAAAEAACAAAAAAAAACAAABAAAAAgAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\CreationData\ICreatable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EAtoTFSConverter.Data.Logic.WorkItem.IWorkItemBase">
+    <Position X="20.75" Y="23.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAACAAgAAAAQAAAAAAAQAAAAAAAAABAAgEAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\CreationData\IWorkItemBase.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EAtoTFSConverter.Data.Logic.WorkItem.ReceivedData.IReceiveable">
+    <Position X="19" Y="23.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\ReceivedData\IReceiveable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="EAtoTFSConverter.Data.Logic.WorkItem.OperationType">
+    <Position X="5.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\OperationType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EAtoTFSConverter.Data.Logic.WorkItem.WorkItemType">
+    <Position X="5.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAIAAAAAAAAAAAQAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Logic\WorkItem\WorkItemType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

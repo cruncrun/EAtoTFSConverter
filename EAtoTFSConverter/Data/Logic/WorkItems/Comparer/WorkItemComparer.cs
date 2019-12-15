@@ -1,4 +1,4 @@
-﻿namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
+﻿namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
     public class WorkItemComparer
     {
@@ -51,10 +51,11 @@
                 };
             }
 
-            var comparsionResult = CompareValues(activeEntity?.Name, previousEntity?.Name) &&
-                                   CompareValues(activeEntity?.Description, previousEntity?.Description) &&
-                                   CompareValues(activeEntity?.Level, previousEntity?.Level) &&
-                                   CompareValues(activeEntity?.Result, previousEntity?.Result);
+            bool comparsionResult;
+            comparsionResult = CompareValues(activeEntity?.Name, previousEntity?.Name) &&
+                               CompareValues(activeEntity?.Description, previousEntity?.Description) &&
+                               CompareValues(activeEntity?.Level, previousEntity?.Level) &&
+                               CompareValues(activeEntity?.Result, previousEntity?.Result);
 
             if (comparsionResult)
             {

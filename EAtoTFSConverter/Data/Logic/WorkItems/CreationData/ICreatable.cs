@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
-using IComparable = EAtoTFSConverter.Data.Logic.WorkItem.Comparer.IComparable;
+using EAtoTFSConverter.Data.Logic.WorkItem;
+using IComparable = EAtoTFSConverter.Data.Logic.WorkItems.Comparer.IComparable;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
+namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
     internal interface ICreatable
     {

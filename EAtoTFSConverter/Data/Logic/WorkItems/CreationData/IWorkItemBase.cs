@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem
+namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
     public interface IWorkItemBase
     {
@@ -10,7 +10,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItem
         string Owner { get; set; }
         string Value { get; set; }
         string ApiAddress { get; set; }
-        HttpContent content { get; set; }
+        HttpContent Content { get; set; }
         int WorkItemId { get; set; }
     }
 }

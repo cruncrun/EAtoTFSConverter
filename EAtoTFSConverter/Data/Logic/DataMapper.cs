@@ -30,10 +30,12 @@ namespace EAtoTFSConverter.Data.Logic
             };
         }
 
-        internal static object MapResponse(Task<string> responseBody)
+        internal static EAtoTFSConverter.WorkItem MapResponse(Task<string> responseBody)
         {
             // TODO: Mapowanie response na workitem
-            return new Object();
+            return new EAtoTFSConverter.WorkItem
+                ( 
+                );
         }
     }
 }

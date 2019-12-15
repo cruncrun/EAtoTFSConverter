@@ -1,4 +1,4 @@
-﻿namespace EAtoTFSConverter.Data.Logic.WorkItem
+﻿namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
     public enum WorkItemType
     {

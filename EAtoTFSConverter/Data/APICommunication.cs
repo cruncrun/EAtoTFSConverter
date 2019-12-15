@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 
 namespace EAtoTFSConverter.Data
 {
@@ -26,7 +27,7 @@ namespace EAtoTFSConverter.Data
         {
             using (var client = GetConnection())
             {
-                var response = await client.PostAsync(message.ApiAddress, message.content);
+                var response = await client.PostAsync(message.ApiAddress, message.Content);
                 if (response.IsSuccessStatusCode)
                 {
                     var responseBody = response.Content.ReadAsStringAsync();
@@ -38,9 +39,8 @@ namespace EAtoTFSConverter.Data
 
         private void StoreResponse(Task<string> responseBody)
         {
-            var workItem = DataMapper.MapResponse(responseBody);
             DatabaseOperations db = new DatabaseOperations();
-            db.Insert(workItem);
+            db.Insert(DataMapper.MapResponse(responseBody));
         }
 
         private HttpClient GetConnection()

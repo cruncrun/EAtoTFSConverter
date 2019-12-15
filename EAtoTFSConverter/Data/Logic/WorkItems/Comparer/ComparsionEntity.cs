@@ -1,4 +1,4 @@
-﻿namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
+﻿namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
     public class ComparsionEntity : IComparable
     {

@@ -1,7 +1,7 @@
-﻿using EAtoTFSConverter.Data.Logic.WorkItem.CreationData;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem
+namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
     class WorkItemDataSet
     {

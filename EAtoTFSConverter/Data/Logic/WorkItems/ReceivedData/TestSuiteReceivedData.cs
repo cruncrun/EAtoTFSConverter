@@ -1,4 +1,4 @@
-﻿namespace EAtoTFSConverter.Data.Logic.WorkItem.ReceivedData
+﻿namespace EAtoTFSConverter.Data.Logic.WorkItems.ReceivedData
 {
     class TestSuiteReceivedData : IReceiveable
     {

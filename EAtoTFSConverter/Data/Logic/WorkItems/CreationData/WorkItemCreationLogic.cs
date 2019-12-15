@@ -1,7 +1,7 @@
-﻿using EAtoTFSConverter.Data.Logic.WorkItem.Comparer;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem.CreationData
+namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
     internal class WorkItemCreationLogic : ICreatable
     {

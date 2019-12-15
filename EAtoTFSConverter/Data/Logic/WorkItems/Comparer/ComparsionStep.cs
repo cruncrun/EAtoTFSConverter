@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EAtoTFSConverter.Data.Logic.WorkItem.Comparer
+namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
     public class ComparsionStep : ComparsionEntity
     {

@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using EAtoTFSConverter.Data.Logic.WorkItems;
 using TreeNode = System.Windows.Forms.TreeNode;
 
 namespace EAtoTFSConverter

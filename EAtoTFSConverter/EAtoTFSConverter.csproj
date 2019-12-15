@@ -163,32 +163,32 @@
     <Compile Include="Data\DataController.cs" />
     <Compile Include="Data\Logic\DatabaseOperations.cs" />
     <Compile Include="Data\Logic\DataMapper.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\ComparerItemsFactory.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionEntity.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionResult.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionScenario.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\ComparsionStep.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\ICreatable.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\TestCaseCreation.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\TestCaseCreationData.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\TestPlanCreationData.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\IWorkItemBase.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\ComparerItemsFactory.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\ComparsionEntity.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\ComparsionResult.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\ComparsionScenario.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\ComparsionStep.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\ICreatable.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\TestCaseCreation.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\TestCaseCreationData.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\TestPlanCreationData.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\IWorkItemBase.cs" />
     <Compile Include="Data\Logic\JSONSerialize.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\TestSuiteCreation.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\TestSuiteCreationData.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\WorkItemCreationData.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\IComparable.cs" />
-    <Compile Include="Data\Logic\WorkItem\MessageFactory.cs" />
-    <Compile Include="Data\Logic\WorkItem\OperationType.cs" />
-    <Compile Include="Data\Logic\WorkItem\CreationData\WorkItemCreationLogic.cs" />
-    <Compile Include="Data\Logic\WorkItem\ReceivedData\IReceiveable.cs" />
-    <Compile Include="Data\Logic\WorkItem\ReceivedData\TestCaseReceivedData.cs" />
-    <Compile Include="Data\Logic\WorkItem\ReceivedData\TestPlanReceivedData.cs" />
-    <Compile Include="Data\Logic\WorkItem\ReceivedData\TestSuiteReceivedData.cs" />
-    <Compile Include="Data\Logic\WorkItem\Comparer\WorkItemComparer.cs" />
-    <Compile Include="Data\Logic\WorkItem\WorkItemDataSet.cs" />
-    <Compile Include="Data\Logic\WorkItem\WorkItemLogic.cs" />
-    <Compile Include="Data\Logic\WorkItem\WorkItemType.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\TestSuiteCreation.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\TestSuiteCreationData.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\WorkItemCreationData.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\IComparable.cs" />
+    <Compile Include="Data\Logic\WorkItems\MessageFactory.cs" />
+    <Compile Include="Data\Logic\WorkItems\OperationType.cs" />
+    <Compile Include="Data\Logic\WorkItems\CreationData\WorkItemCreationLogic.cs" />
+    <Compile Include="Data\Logic\WorkItems\ReceivedData\IReceiveable.cs" />
+    <Compile Include="Data\Logic\WorkItems\ReceivedData\TestCaseReceivedData.cs" />
+    <Compile Include="Data\Logic\WorkItems\ReceivedData\TestPlanReceivedData.cs" />
+    <Compile Include="Data\Logic\WorkItems\ReceivedData\TestSuiteReceivedData.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\WorkItemComparer.cs" />
+    <Compile Include="Data\Logic\WorkItems\WorkItemDataSet.cs" />
+    <Compile Include="Data\Logic\WorkItems\WorkItemLogic.cs" />
+    <Compile Include="Data\Logic\WorkItems\WorkItemType.cs" />
     <Compile Include="Data\XMLParse\EAScenario.cs" />
     <Compile Include="Data\XMLParse\XMLParse.cs" />
     <Compile Include="MainWindow.cs">
@@ -211,6 +211,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram.cd" />
     <None Include="DataClasses.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>DataClasses.designer.cs</LastGenOutput>
