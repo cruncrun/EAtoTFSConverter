@@ -151,7 +151,7 @@ namespace EAtoTFSConverter.Data.Logic
             }
             return result;
         }
-        internal void Insert(object workItem)
+        internal bool Insert(WorkItem workItem)
         {
             throw new NotImplementedException();
         }

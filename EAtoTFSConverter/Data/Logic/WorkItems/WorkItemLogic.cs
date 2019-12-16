@@ -47,7 +47,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             APICommunication api = new APICommunication(Project);
             foreach (var message in _messages)
             {
-                await api.SendAsync(message);
+                await api.SendMessage(message);
             }
         }
 
@@ -55,30 +55,36 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             foreach (var item in _newWorkItems)
             {
-                _messages.Add(MessageFactory.BuildMessage(item.WorkItemType, item.OperationType));
+                _messages.Add(MessageFactory.BuildMessage(item));
             }
         }
 
         private void Compare()
         {
+            var workItemsComparisionResults = new List<WorkItemComparisionResult>();
+
             foreach (var scenario in _activeEAscenarios)
             {
                 var stepsResult = new List<ComparisionResult>();
                 WorkItemComparer comparer = new WorkItemComparer();
                 
-                var scenarioResult = comparer.GetComparsionResult(
+                var scenarioResult = comparer.GetComparisionResult(
                     ComparerItemsFactory.MapToComparsionEntity(scenario),
                     ComparerItemsFactory.MapToComparsionEntity(DbOperations.getEAscenario(scenario.PreviousVersionId)),
-                    WorkItemType.TestCase);
+                    WorkItemType.TestCase,
+                    scenario.Id);
 
                 var scenarioSteps = GetStepsForScenario(scenario);
 
                 foreach (var step in scenarioSteps)
                 {
-                    stepsResult.Add(comparer.GetComparsionResult(
+                    var result = comparer.GetComparisionResult(
                         ComparerItemsFactory.MapToComparsionEntity(step),
                         ComparerItemsFactory.MapToComparsionEntity(DbOperations.getStep(step.PreviousVersionId)),
-                        WorkItemType.TestStep));
+                        WorkItemType.TestStep,
+                        step.Id);
+
+                    stepsResult.Add(result);
                 }
 
                 scenarioResult = ComparsionAnalysis(scenarioResult, stepsResult);

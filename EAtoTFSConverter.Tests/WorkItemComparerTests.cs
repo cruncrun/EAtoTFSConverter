@@ -28,7 +28,7 @@ namespace EAtoTFSConverter.Tests
 
             WorkItemComparer wic = new WorkItemComparer(activeScenario, previouScenario, WorkItemType.TestCase);
 
-            ComparisionResult receivedResult = wic.GetComparsionResult();
+            ComparisionResult receivedResult = wic.GetComparisionResult();
             ComparisionResult expectedResult = new ComparisionResult();
             expectedResult.OperationType = OperationType.Update;
             expectedResult.Result = false;
@@ -61,7 +61,7 @@ namespace EAtoTFSConverter.Tests
 
             WorkItemComparer wic = new WorkItemComparer(activeScenario, previouScenario, WorkItemType.TestCase);
 
-            ComparisionResult receivedResult = wic.GetComparsionResult();
+            ComparisionResult receivedResult = wic.GetComparisionResult();
             ComparisionResult expectedResult = new ComparisionResult();
             expectedResult.OperationType = OperationType.UseExisting;
             expectedResult.Result = true;
@@ -87,7 +87,7 @@ namespace EAtoTFSConverter.Tests
 
             WorkItemComparer wic = new WorkItemComparer(activeScenario, previouScenario, WorkItemType.TestCase);
 
-            ComparisionResult receivedResult = wic.GetComparsionResult();
+            ComparisionResult receivedResult = wic.GetComparisionResult();
             ComparisionResult expectedResult = new ComparisionResult();
             expectedResult.OperationType = OperationType.Delete;
             expectedResult.Result = false;
@@ -113,7 +113,7 @@ namespace EAtoTFSConverter.Tests
 
             WorkItemComparer wic = new WorkItemComparer(activeScenario, previouScenario, WorkItemType.TestCase);
 
-            ComparisionResult receivedResult = wic.GetComparsionResult();
+            ComparisionResult receivedResult = wic.GetComparisionResult();
             ComparisionResult expectedResult = new ComparisionResult();
             expectedResult.OperationType = OperationType.CreateNew;
             expectedResult.Result = false;

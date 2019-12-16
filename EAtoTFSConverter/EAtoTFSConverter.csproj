@@ -168,6 +168,8 @@
     <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionResult.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionScenario.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionStep.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\IComparisionResult.cs" />
+    <Compile Include="Data\Logic\WorkItems\Comparer\WorkItemComparisionResult.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\ICreatable.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\TestCaseCreation.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\TestCaseCreationData.cs" />

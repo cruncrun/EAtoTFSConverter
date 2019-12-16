@@ -22,15 +22,14 @@ namespace EAtoTFSConverter.Data
             BaseAddress = GetUriAddress(Project);
         }
 
-        internal async Task SendAsync(IWorkItemBase message)
+        internal async Task SendMessage(IWorkItemBase message)
         {
             using (var client = GetConnection())
             {
                 var response = await client.PostAsync(message.ApiAddress, message.Content);
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseBody = response.Content.ReadAsStringAsync();
-                    StoreResponse(responseBody);
+                    StoreResponse(response.Content.ReadAsStringAsync());
                 }
                 // send and store response to database
             }
