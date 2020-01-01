@@ -1,4 +1,5 @@
-﻿using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+﻿using System;
+using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,10 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         private Project Project { get; }
         private ComparerItemsFactory ComparerItemsFactory { get; set; }
         private DatabaseOperations DbOperations { get; set; }
+        private WorkItemDataSet WorkItemDataSet { get; set; } = new WorkItemDataSet();
 
         private readonly IEnumerable<active_EAscenario> _activeEAscenarios;
         private readonly IEnumerable<active_Step> _activeSteps;
-        private readonly List<ComparisionResult> _newWorkItems = new List<ComparisionResult>();
-        private readonly List<IWorkItemBase> _messages = new List<IWorkItemBase>();
 
         public WorkItemLogic(Project selectedProject)
         {
@@ -27,73 +27,101 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         internal void PrepareData()
         {
-            Compare();
-            CreateMessageDrafts();
-            SendMessages();
-
-
-            WorkItemDataSet workItemDataSet = new WorkItemDataSet
-            {
-                Project = Project,
-                TestPlan = new WorkItemCreationLogic(Project, WorkItemType.TestPlan),
-                TestCases = null
-            };
-
-            workItemDataSet.TestPlan.Prepare();
+            GenerateTestPlan();
+            GenerateTestCases();
+            GenerateTestSuites();
         }
 
-        private async void SendMessages()
+        private void GenerateTestPlan()
+        {
+            if (!DbOperations.CheckWorkItem(Project.Id, WorkItemType.TestPlan))
+            {
+                CreateTestPlanMessageDraft();
+                SendMessages(WorkItemDataSet.TestPlan);
+            }
+            else
+            {
+
+            }
+        }
+
+        private void CreateTestPlanMessageDraft()
+        {
+            
+        }
+
+        private void GenerateTestSuites()
+        {
+            CreateTestSuiteMessageDrafts();
+            SendMessages(WorkItemDataSet.TestSuite);
+        }
+
+        private void GenerateTestCases()
+        {
+            Compare();
+            CreateTestCaseMessageDrafts();
+            SendMessages(WorkItemDataSet.TestCases);
+        }
+        private void CreateTestSuiteMessageDrafts()
+        {
+            
+        }
+
+        private void CreateTestCaseMessageDrafts()
+        {
+            if (WorkItemDataSet.TestComparisionResults != null)
+                foreach (var item in WorkItemDataSet.TestComparisionResults)
+                {
+                    WorkItemDataSet.TestCases.Add(MessageFactory.BuildMessage(item));
+                }
+        }
+        private async void SendMessages(IEnumerable<IWorkItemBase> messages)
         {
             APICommunication api = new APICommunication(Project);
-            foreach (var message in _messages)
-            {
-                await api.SendMessage(message);
-            }
-        }
-
-        private void CreateMessageDrafts()
-        {
-            foreach (var item in _newWorkItems)
-            {
-                _messages.Add(MessageFactory.BuildMessage(item));
-            }
+            if (messages != null)
+                foreach (var message in messages)
+                {
+                    await api.SendMessage(message);
+                }
         }
 
         private void Compare()
         {
-            var workItemsComparisionResults = new List<WorkItemComparisionResult>();
-
-            foreach (var scenario in _activeEAscenarios)
-            {
-                var stepsResult = new List<ComparisionResult>();
-                WorkItemComparer comparer = new WorkItemComparer();
-                
-                var scenarioResult = comparer.GetComparisionResult(
-                    ComparerItemsFactory.MapToComparsionEntity(scenario),
-                    ComparerItemsFactory.MapToComparsionEntity(DbOperations.getEAscenario(scenario.PreviousVersionId)),
-                    WorkItemType.TestCase,
-                    scenario.Id);
-
-                var scenarioSteps = GetStepsForScenario(scenario);
-
-                foreach (var step in scenarioSteps)
+            if (_activeEAscenarios != null)
+                foreach (var scenario in _activeEAscenarios)
                 {
-                    var result = comparer.GetComparisionResult(
-                        ComparerItemsFactory.MapToComparsionEntity(step),
-                        ComparerItemsFactory.MapToComparsionEntity(DbOperations.getStep(step.PreviousVersionId)),
-                        WorkItemType.TestStep,
-                        step.Id);
+                    var stepsResult = new List<ComparisionResult>();
+                    WorkItemComparer comparer = new WorkItemComparer();
 
-                    stepsResult.Add(result);
+                    var scenarioData = new ComparisionDataSet(
+                        ComparerItemsFactory.MapToComparsionEntity(scenario),
+                        ComparerItemsFactory.MapToComparsionEntity(
+                            DbOperations.getEAscenario(scenario.PreviousVersionId)),
+                        WorkItemType.TestCase,
+                        scenario.Id);
+
+                    var scenarioResult = comparer.GetComparisionResult(scenarioData);
+
+                    var scenarioSteps = GetStepsForScenario(scenario);
+
+                    if (scenarioSteps != null)
+                        foreach (var step in scenarioSteps)
+                        {
+                            var stepData = new ComparisionDataSet(
+                                ComparerItemsFactory.MapToComparsionEntity(step),
+                                ComparerItemsFactory.MapToComparsionEntity(
+                                    DbOperations.getStep(step.PreviousVersionId)),
+                                WorkItemType.TestStep,
+                                step.Id);
+
+                            var result = comparer.GetComparisionResult(stepData);
+
+                            stepsResult.Add(result);
+                        }
+
+                    scenarioResult = AnalizeComparision(scenarioResult, stepsResult);
+                    WorkItemDataSet.TestComparisionResults.Add(scenarioResult);
                 }
-
-                scenarioResult = ComparsionAnalysis(scenarioResult, stepsResult);
-
-                if (!scenarioResult.Result)
-                {
-                    _newWorkItems.Add(scenarioResult);
-                }
-            }
         }
 
         private IOrderedEnumerable<active_Step> GetStepsForScenario(active_EAscenario scenario)
@@ -104,7 +132,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                 .OrderBy(o => o.Level);
         }
 
-        private ComparisionResult ComparsionAnalysis(ComparisionResult scenarioResult, List<ComparisionResult> stepsResult)
+        private static ComparisionResult AnalizeComparision(ComparisionResult scenarioResult, List<ComparisionResult> stepsResult)
         {
             if (scenarioResult.Result && stepsResult.All(s => s.Result))
             {

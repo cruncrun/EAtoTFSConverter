@@ -1,59 +1,24 @@
 ﻿using System;
-using System.Threading.Tasks;
-using IComparable = EAtoTFSConverter.Data.Logic.WorkItems.Comparer.IComparable;
+using System.Net.Http;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
-    class TestCaseCreation : ICreatable
+    class TestCaseCreation : IWorkItemBase
     {
-        public bool Exists { get; set; }
-        public Project Project { get; set; }
-        public WorkItemType WorkItemType { get; set; }
-        public OperationType OperationType { get; set; }
-        public IWorkItemBase CreationData { get; set; }
-        public Task Prepare()
+        public TestCaseCreation(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        void ICreatable.Prepare()
+        public TestCaseCreation()
         {
-            throw new NotImplementedException();
+            
         }
 
-        public bool CheckIfExists()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Compare()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Send()
-        {
-            throw new NotImplementedException();
-        }
-
-        public OperationType GetOperationType()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string CreateMessage(OperationType operationType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string CreateMessage()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IComparable GetLocalData()
-        {
-            throw new NotImplementedException();
-        }
+        public WorkItemBaseData WorkItemBaseData { get; set; }
+        public string ApiAddress { get; set; }
+        public int WorkItemId { get; set; }
+        public Guid Guid { get; set; }
+        public HttpContent Content { get; set; }
     }
 }

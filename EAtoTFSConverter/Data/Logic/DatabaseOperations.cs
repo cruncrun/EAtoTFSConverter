@@ -86,6 +86,11 @@ namespace EAtoTFSConverter.Data.Logic
             return result;
         }
 
+        internal WorkItem GetWorkItem(Guid id)
+        {
+            return _dataContext.WorkItems.FirstOrDefault(w => w.Id == id);
+        }
+
         internal bool Insert(List<EAScenario> scenarios)
         {
             bool result;

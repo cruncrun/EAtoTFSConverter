@@ -6,6 +6,8 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
     public static class MessageFactory
     {
+        private static DatabaseOperations DbOperations { get; set; }
+
         public static IWorkItemBase BuildMessage(ComparisionResult result)
         {
             switch (result.WorkItemType)
@@ -29,27 +31,46 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             switch (result.OperationType)
             {
                 case OperationType.UseExisting:
-                    // pobranie workItema (IWorkItemBase) z odpowiednim ID
-                    // przekazanie do wykorzystania
-                    return new TestCaseCreationData();
+                    var existingData = GetExistingData(result);
+                    var creationData = new WorkItemCreationData
+                    {
+                        Guid = result.Guid,
+                        WorkItemId = existingData.WorkItemId
+                    };
+                    creationData.WorkItemBaseData.Json = existingData.Value; // sprawdzić, czy to dobra kolumna :)
+                    return creationData;
+
                 case OperationType.CreateNew:
+                    var json = GenerateNewJson(result);
                     // wygenerowanie IWorkItemBase z active_scenario i powiązanych active_steps
                     // wysyłka komunikatu i zapis danych
                     // pobranie workItema (IWorkItemBase) z odpowiednim ID
                     // przekazanie do wykorzystania
-                    return new TestCaseCreationData();
+                    return new TestCaseCreation();
                 case OperationType.Update:
                     // wygenerowanie IWorkItemBase z active_scenario i powiązanych active_steps
                     // wysyłka komunikatu i zapis danych
                     // pobranie workItema (IWorkItemBase) z odpowiednim ID
                     // przekazanie do wykorzystania
-                    return new TestCaseCreationData();
+                    return new TestCaseCreation();
                 case OperationType.Delete:
                     // wygenerowanie IWorkItemBase z active_scenario i powiązanych active_steps
-                    return new TestCaseCreationData();
+                    return new TestCaseCreation();
                 default:
                     return null;
             }
+        }
+
+        private static string GenerateNewJson(ComparisionResult result)
+        {
+            string json = "json";
+
+            return json;
+        }
+
+        private static WorkItem GetExistingData(ComparisionResult result)
+        {
+            return DbOperations.GetWorkItem(result.Guid);
         }
 
         private static IWorkItemBase BuildTestSuiteMessage(ComparisionResult result)
@@ -57,7 +78,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             switch (result.OperationType)
             {
                 case OperationType.CreateNew:
-                    return new TestSuiteCreationData();
+                    return new TestSuiteCreation();
                 case OperationType.Update:
                 case OperationType.UseExisting:
                 case OperationType.Delete:
@@ -72,9 +93,9 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             switch (result.OperationType)
             {
                 case OperationType.UseExisting:
-                    return new TestPlanCreationData();
+                    return new TestPlanCreation();
                 case OperationType.CreateNew:
-                    return new TestPlanCreationData();
+                    return new TestPlanCreation();
                 case OperationType.Update:
                 case OperationType.Delete:
                     throw new InvalidOperationException();

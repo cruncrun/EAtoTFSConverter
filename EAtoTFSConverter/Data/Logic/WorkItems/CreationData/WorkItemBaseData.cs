@@ -8,10 +8,11 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
     public class WorkItemBaseData
     {
-        string Name { get; set; }
-        string AreaPath { get; set; }
-        string Iteration { get; set; }
-        string Owner { get; set; }
-        string Value { get; set; }
+        public string Name { get; set; }
+        public string AreaPath { get; set; }
+        public string Iteration { get; set; }
+        public string Owner { get; set; }
+        public string Value { get; set; }
+        public string Json { get; set; }
     }
 }

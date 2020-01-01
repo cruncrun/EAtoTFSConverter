@@ -1,18 +1,24 @@
 ﻿using System;
+using System.Deployment.Application;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
     public class WorkItemComparer
     {
+        private readonly IComparable _activeEntity;
+        private readonly IComparable _previousEntity;
         private ComparerItemsFactory ComparerItemsFactory { get; set; }
-        private IComparable ActiveEntity { get; set; }
-        private IComparable PreviousEntity { get; set; }
+
+        private IComparable ActiveEntity => _activeEntity;
+
+        private IComparable PreviousEntity => _previousEntity;
+
         public ComparisionResult Result { get; set; }
 
         public WorkItemComparer(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
         {
-            ActiveEntity = activeEntity;
-            PreviousEntity = previousEntity;
+            _activeEntity = activeEntity;
+            _previousEntity = previousEntity;
             Result = new ComparisionResult(workItemType);
         }
 
@@ -27,30 +33,30 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
             return Result;
         }
 
-        public ComparisionResult GetComparisionResult(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType, Guid id)
+        public ComparisionResult GetComparisionResult(ComparisionDataSet data)
         {
-            return Compare(activeEntity, previousEntity, workItemType, id);
+            return Compare(data);
         }
 
-        private ComparisionResult Compare(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType, Guid id)
+        private ComparisionResult Compare(ComparisionDataSet data)
         {
-            var comparisionResult = new ComparisionResult(workItemType, id);
+            var comparisionResult = new ComparisionResult(data.WorkItemType, data.Guid);
 
-            if (activeEntity == null && previousEntity != null)
+            if (CheckForDelete(data))
             {
                 comparisionResult.OperationType = OperationType.Delete;
                 comparisionResult.Result = false;
                 return comparisionResult;
             }
 
-            if (activeEntity != null && previousEntity == null)
+            if (CheckForCreate(data))
             {
                 comparisionResult.OperationType = OperationType.CreateNew;
                 comparisionResult.Result = false;
                 return comparisionResult;
             }
 
-            if (CompareData(activeEntity, previousEntity))
+            if (CompareData(data.ActiveEntity, data.PreviousEntity))
             {
                 comparisionResult.OperationType = OperationType.UseExisting;
                 comparisionResult.Result = true;
@@ -59,11 +65,21 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 
             return new ComparisionResult
             {
-                WorkItemType = workItemType,
+                WorkItemType = data.WorkItemType,
                 OperationType = OperationType.Update,
-                Result = false, 
-                Guid = id
+                Result = false,
+                Guid = data.Guid
             };
+        }
+
+        private static bool CheckForDelete(ComparisionDataSet data)
+        {
+            return data.ActiveEntity == null && data.PreviousEntity != null;
+        }
+
+        public bool CheckForCreate(ComparisionDataSet data)
+        {
+            return data.ActiveEntity != null && data.PreviousEntity == null;
         }
 
         private bool CompareData(IComparable activeEntity, IComparable previousEntity)
