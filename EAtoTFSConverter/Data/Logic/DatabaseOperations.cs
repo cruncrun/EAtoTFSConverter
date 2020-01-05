@@ -21,13 +21,13 @@ namespace EAtoTFSConverter.Data.Logic
             return active_EAscenarios;
         }
 
-        internal IEnumerable<active_Step> GetActive_Steps(active_EAscenario eaScenario)
+        internal IEnumerable<active_Step> GetActive_Steps(Guid id)
         {
             IEnumerable<active_Step> active_Steps = new List<active_Step>();
             using (DataClassesDataContext dataContext = new DataClassesDataContext())
             {
                 active_Steps = dataContext.active_Steps
-                    .Where(s => s.EAScenarioId == eaScenario.Id)
+                    .Where(s => s.EAScenarioId == id)
                     .ToList();
             }
             return active_Steps;

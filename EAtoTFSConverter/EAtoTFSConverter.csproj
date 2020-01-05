@@ -171,10 +171,7 @@
     <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionStep.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\IComparisionResult.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\WorkItemComparisionResult.cs" />
-    <Compile Include="Data\Logic\WorkItems\CreationData\TestCaseCreation.cs" />
-    <Compile Include="Data\Logic\WorkItems\CreationData\TestPlanCreation.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\IWorkItemBase.cs" />
-    <Compile Include="Data\Logic\WorkItems\CreationData\TestSuiteCreation.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\WorkItemBaseData.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\WorkItemCreationData.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\IComparable.cs" />

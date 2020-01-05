@@ -14,12 +14,19 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
         private IComparable PreviousEntity => _previousEntity;
 
         public ComparisionResult Result { get; set; }
+        public ComparisionDataSet DataSet { get; set; }
 
         public WorkItemComparer(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
         {
             _activeEntity = activeEntity;
             _previousEntity = previousEntity;
             Result = new ComparisionResult(workItemType);
+        }
+
+        public WorkItemComparer(ComparisionDataSet data)
+        {
+            DataSet = data;
+            Result = Compare(DataSet);
         }
 
         public WorkItemComparer()

@@ -40,7 +40,7 @@ namespace EAtoTFSConverter
             foreach (var scenario in queryScenarios)
             {
                 DatabaseOperations db = new DatabaseOperations();
-                var steps = db.GetActive_Steps(scenario);
+                var steps = db.GetActive_Steps(scenario.Id);
                 TreeNode[] stepsArray = GenerateStepTreeNodes(steps);
                 TreeNode scenarioTreeNode = new TreeNode(scenario.Name, stepsArray);
                 treeView_scenarios.Nodes.Add(scenarioTreeNode);
