@@ -6,20 +6,24 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace EAtoTFSConverter.Data
 {
-    public class APICommunication
+    internal class APICommunication
     {
-        public Project Project { get; set; }
-        private string AuthorizationToken { get; set; }
-        private Uri BaseAddress { get; set; }
+        private DatabaseOperations DatabaseOperations { get; }
+        private Project Project { get; }
+        private string AuthorizationToken { get; }
+        private Uri BaseAddress { get; }
 
         public APICommunication(Project project)
         {
             Project = project;
-            AuthorizationToken = GetPersonalToken(Project);
-            BaseAddress = GetUriAddress(Project);
+            DatabaseOperations = new DatabaseOperations();
+            AuthorizationToken = DatabaseOperations.GetPersonalToken(Project);
+            BaseAddress = GetUriAddress();
+            
         }
 
         internal async Task SendMessage(IWorkItemBase message)
@@ -31,7 +35,12 @@ namespace EAtoTFSConverter.Data
                 {
                     StoreResponse(response.Content.ReadAsStringAsync());
                 }
-                // send and store response to database
+                else
+                {
+                    MessageBox.Show(
+                        "Wystąpił bład podczas wysyłki danych do API DevOps!\n" + response.StatusCode, "Błąd!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 
@@ -54,32 +63,10 @@ namespace EAtoTFSConverter.Data
             client.DefaultRequestHeaders.Add("X-TFS-FedAuthRedirect", "Suppress");
             return client;
         }
-
-        private static string GetPersonalToken(Project project)
+        
+        private Uri GetUriAddress()
         {
-            string authToken = null;
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                authToken = dataContext.Projects
-                    .Where(p => p.Id == project.Id)
-                    .Select(t => t.AuthorizationToken)
-                    .FirstOrDefault()?
-                    .ToString();
-            }
-            return authToken;
-        }
-        private Uri GetUriAddress(Project project)
-        {
-            string address = null;
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                address = dataContext.Projects
-                    .Where(p => p.Id == project.Id)
-                    .Select(t => t.Address)
-                    .FirstOrDefault()?
-                    .ToString();
-            }
-            return new Uri(address);
+            return new Uri(DatabaseOperations.GetUriAddress(Project));
         }
     }
 }

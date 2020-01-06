@@ -160,7 +160,7 @@
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Data\APICommunication.cs" />
-    <Compile Include="Data\DataController.cs" />
+    <Compile Include="Data\ParsedDataController.cs" />
     <Compile Include="Data\Logic\DatabaseOperations.cs" />
     <Compile Include="Data\Logic\DataMapper.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\ComparerItemsFactory.cs" />
@@ -170,7 +170,6 @@
     <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionScenario.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\ComparisionStep.cs" />
     <Compile Include="Data\Logic\WorkItems\Comparer\IComparisionResult.cs" />
-    <Compile Include="Data\Logic\WorkItems\Comparer\WorkItemComparisionResult.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\IWorkItemBase.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\WorkItemBaseData.cs" />
     <Compile Include="Data\Logic\WorkItems\CreationData\WorkItemCreationData.cs" />

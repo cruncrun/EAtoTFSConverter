@@ -4,7 +4,7 @@ using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
-    class WorkItemDataSet
+    internal class WorkItemDataSet
     {
         public Project Project { get; set; }
         public List<IWorkItemBase> TestPlan { get; set; }

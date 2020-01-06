@@ -2,7 +2,7 @@
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
-    public class ComparisionResult : IComparisionResult
+    internal class ComparisionResult : IComparisionResult
     {
         public bool Result { get; set; }
         public OperationType OperationType { get; set; }

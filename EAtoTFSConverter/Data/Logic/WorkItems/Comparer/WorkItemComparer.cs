@@ -3,7 +3,7 @@ using System.Deployment.Application;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
-    public class WorkItemComparer
+    internal class WorkItemComparer
     {
         private readonly IComparable _activeEntity;
         private readonly IComparable _previousEntity;

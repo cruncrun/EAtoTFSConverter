@@ -6,14 +6,14 @@ using System.Windows.Forms;
 
 namespace EAtoTFSConverter.Data
 {
-    public class DataController
+    internal class ParsedDataController
     {
-        public List<EAScenario> Scenarios { get; set; } = new List<EAScenario>();
-        public List<UseCase> UseCases { get; set; } = new List<UseCase>();
-        public List<Step> Steps { get; set; } = new List<Step>();
+        private List<EAScenario> Scenarios { get; set; } = new List<EAScenario>();
+        private List<UseCase> UseCases { get; set; } = new List<UseCase>();
+        private List<Step> Steps { get; set; } = new List<Step>();
         public Project Project { get; set; }
 
-        public DataController(Project project)
+        public ParsedDataController(Project project)
         {
             Project = project;
         }
@@ -58,24 +58,22 @@ namespace EAtoTFSConverter.Data
 
         private void InsertEAData()
         {
-            bool operation = true;
+            bool operationSuccess = true;
 
+            DatabaseOperations db = new DatabaseOperations();
             if (Scenarios.Any())
             {
-                DatabaseOperations db = new DatabaseOperations();
-                operation &= db.Insert(Scenarios);
+                operationSuccess &= db.Insert(Scenarios);
             }
             if (UseCases.Any())
-            {
-                DatabaseOperations db = new DatabaseOperations();
-                operation &= db.Insert(UseCases);
+            {                
+                operationSuccess &= db.Insert(UseCases);
             }
             if (Steps.Any())
             {
-                DatabaseOperations db = new DatabaseOperations();
-                operation &= db.Insert(Steps);
+                operationSuccess &= db.Insert(Steps);
             }
-            if (operation)
+            if (operationSuccess)
             {
                 MessageBox.Show(
                    "Import danych z Enterprise Architect przebiegł pomyślnie!", "OK!",

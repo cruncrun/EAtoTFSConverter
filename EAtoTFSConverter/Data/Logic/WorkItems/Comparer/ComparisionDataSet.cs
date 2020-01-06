@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
-    public class ComparisionDataSet
+    internal class ComparisionDataSet
     {
         public ComparisionDataSet(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType, Guid id)
         {

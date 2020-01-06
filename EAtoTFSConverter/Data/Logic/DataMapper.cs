@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic
 {
-    static class DataMapper
+    internal static class DataMapper
     {
         public static EAScenario MapEAScenario(XMLParse.EAScenario source)
         {

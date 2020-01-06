@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace EAtoTFSConverter.Data.XMLParse
 {
-    static class XMLParse
+    internal static class XMLParse
     {
         public static void Parse(XDocument source, Project project)
         {
@@ -45,7 +45,7 @@ namespace EAtoTFSConverter.Data.XMLParse
             }
             else
             {
-                DataController dc = new DataController(project);
+                ParsedDataController dc = new ParsedDataController(project);
                 dc.PrepareData(result);
             }
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
-    public class WorkItemBaseData
+    internal class WorkItemBaseData
     {
         public string Name { get; set; }
         public string AreaPath { get; set; }

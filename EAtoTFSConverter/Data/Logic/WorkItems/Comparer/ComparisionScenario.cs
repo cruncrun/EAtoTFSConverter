@@ -2,7 +2,7 @@
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
-    public class ComparisionScenario : ComparisionEntity
+    internal class ComparisionScenario : ComparisionEntity
     {
         public Guid? Guid { get; set; }
     }

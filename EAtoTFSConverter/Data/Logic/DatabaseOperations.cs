@@ -6,101 +6,77 @@ using System.Windows.Forms;
 
 namespace EAtoTFSConverter.Data.Logic
 {
-    public class DatabaseOperations
+    internal class DatabaseOperations
     {
-        private static readonly DataClassesDataContext _dataContext = new DataClassesDataContext();
+        private static readonly DataClassesDataContext DataContext = new DataClassesDataContext();
         internal IEnumerable<active_EAscenario> GetActive_EAscenarios(Project selectedProject)
         {
-            IEnumerable<active_EAscenario> active_EAscenarios = new List<active_EAscenario>();
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                active_EAscenarios = dataContext.active_EAscenarios
-                    .Where(s => s.ProjectId == selectedProject.Id)
-                    .ToList();
-            }
-            return active_EAscenarios;
+            return DataContext.active_EAscenarios.Where(s => s.ProjectId == selectedProject.Id).ToList();
         }
 
         internal IEnumerable<active_Step> GetActive_Steps(Guid id)
         {
-            IEnumerable<active_Step> active_Steps = new List<active_Step>();
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                active_Steps = dataContext.active_Steps
-                    .Where(s => s.EAScenarioId == id)
-                    .ToList();
-            }
-            return active_Steps;
+            return DataContext.active_Steps.Where(s => s.EAScenarioId == id).ToList();
         }
 
         internal IEnumerable<active_Step> GetActive_Steps()
         {
-            IEnumerable<active_Step> active_Steps = new List<active_Step>();
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                active_Steps = dataContext.active_Steps
-                    .ToList();
-            }
-            return active_Steps;
+            return DataContext.active_Steps.ToList();
         }
 
         internal EAScenario getEAscenario(Guid? guid)
         {
-            EAScenario eaScenario = null;
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                eaScenario = _dataContext.EAScenarios
-                    .FirstOrDefault(s => s.Id == guid);
-            }
-            return eaScenario;
+            return DataContext.EAScenarios.FirstOrDefault(s => s.Id == guid);
         }
 
         internal Step getStep(Guid? guid)
         {
-            Step eaScenario = null;
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                eaScenario = _dataContext.Steps
-                    .FirstOrDefault(s => s.Id == guid);
-            }
-            return eaScenario;
+            return DataContext.Steps.FirstOrDefault(s => s.Id == guid);
         }
 
         internal bool CheckWorkItem(Guid projectId, WorkItemType workItemType)
         {
-            bool result;
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
-            {
-                result = dataContext.WorkItems
-                    .Count(w => w.ProjectId == projectId && w.WorkItemType == (int)workItemType) > 0;
-            }
-            return result;
+            return DataContext.WorkItems.Count(w => w.ProjectId == projectId && w.WorkItemType == (int)workItemType) > 0;
         }
 
         internal int GetWorkItem(Guid projectId, WorkItemType workItemType)
         {
-            var result = _dataContext.WorkItems
+            return DataContext.WorkItems
                 .Where(w => w.ProjectId == projectId && w.WorkItemType == (int)workItemType)
                 .Select(i => i.WorkItemId)
                 .FirstOrDefault();
-            return result;
+        }
+
+        internal string GetPersonalToken(Project project)
+        {
+            return DataContext.Projects
+                .Where(p => p.Id == project.Id)
+                .Select(t => t.AuthorizationToken)
+                .FirstOrDefault()?
+                .ToString();
+        }
+
+        internal string GetUriAddress(Project project)
+        {
+            return DataContext.Projects
+                .Where(p => p.Id == project.Id)
+                .Select(t => t.Address)
+                .FirstOrDefault()?
+                .ToString();
         }
 
         internal WorkItem GetWorkItem(Guid id)
         {
-            return _dataContext.WorkItems.FirstOrDefault(w => w.Id == id);
+            return DataContext.WorkItems.FirstOrDefault(w => w.Id == id);
         }
 
         internal bool Insert(List<EAScenario> scenarios)
         {
             bool result;
-            try
-            {
-                using (DataClassesDataContext dataContext = new DataClassesDataContext())
-                {
-                    dataContext.EAScenarios.InsertAllOnSubmit(scenarios);
-                    dataContext.SubmitChanges();
-                }
+            try 
+            { 
+                DataContext.EAScenarios.InsertAllOnSubmit(scenarios);
+                DataContext.SubmitChanges();
                 result = true;
             }
             catch (Exception e)
@@ -118,11 +94,8 @@ namespace EAtoTFSConverter.Data.Logic
             bool result;
             try
             {
-                using (DataClassesDataContext dataContext = new DataClassesDataContext())
-                {
-                    dataContext.UseCases.InsertAllOnSubmit(useCases);
-                    dataContext.SubmitChanges();
-                }
+                DataContext.UseCases.InsertAllOnSubmit(useCases);
+                DataContext.SubmitChanges();
                 result = true;
             }
             catch (Exception e)
@@ -140,11 +113,8 @@ namespace EAtoTFSConverter.Data.Logic
             bool result;
             try
             {
-                using (DataClassesDataContext dataContext = new DataClassesDataContext())
-                {
-                    dataContext.Steps.InsertAllOnSubmit(steps);
-                    dataContext.SubmitChanges();
-                }
+                DataContext.Steps.InsertAllOnSubmit(steps);
+                DataContext.SubmitChanges();
                 result = true;
             }
             catch (Exception e)

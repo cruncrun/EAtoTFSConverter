@@ -3,10 +3,11 @@ using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
-    class WorkItemLogic
+    internal class WorkItemLogic
     {
         private Project Project { get; }
         private ComparerItemsFactory ComparerItemsFactory { get; set; }
@@ -32,39 +33,46 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             GenerateTestSuites();
         }
 
+        #region TestPlan
+
         private void GenerateTestPlan()
         {
-            if (!DbOperations.CheckWorkItem(Project.Id, WorkItemType.TestPlan))
+            try
             {
-                CreateTestPlanMessageDraft();
-                SendMessages(WorkItemDataSet.TestPlan);
-            }
-            else
-            {
+                if (!DbOperations.CheckWorkItem(Project.Id, WorkItemType.TestPlan))
+                {
+                    CreateTestPlanMessageDraft();
+                    SendMessages(WorkItemDataSet.TestPlan);
+                }
+                else
+                {
 
+                }
             }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
+
         }
 
         private void CreateTestPlanMessageDraft()
         {
-            
+
         }
 
-        private void GenerateTestSuites()
-        {
-            CreateTestSuiteMessageDrafts();
-            SendMessages(WorkItemDataSet.TestSuite);
-        }
+        #endregion
+
+        #region TestCases
 
         private void GenerateTestCases()
         {
             Compare();
             CreateTestCaseMessageDrafts();
             SendMessages(WorkItemDataSet.TestCases);
-        }
-        private void CreateTestSuiteMessageDrafts()
-        {
-            
         }
 
         private void CreateTestCaseMessageDrafts()
@@ -73,15 +81,6 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                 foreach (var item in WorkItemDataSet.TestComparisionResults)
                 {
                     WorkItemDataSet.TestCases.Add(MessageFactory.BuildMessage(item));
-                }
-        }
-        private async void SendMessages(IEnumerable<IWorkItemBase> messages)
-        {
-            APICommunication api = new APICommunication(Project);
-            if (messages != null)
-                foreach (var message in messages)
-                {
-                    await api.SendMessage(message);
                 }
         }
 
@@ -154,6 +153,32 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             }
 
             return scenarioResult;
+        }
+
+        #endregion
+
+        #region TestSuite
+
+        private void GenerateTestSuites()
+        {
+            CreateTestSuiteMessageDrafts();
+            SendMessages(WorkItemDataSet.TestSuite);
+        }
+        private void CreateTestSuiteMessageDrafts()
+        {
+
+        }
+
+        #endregion
+        
+        private async void SendMessages(IEnumerable<IWorkItemBase> messages)
+        {
+            APICommunication api = new APICommunication(Project);
+            if (messages != null)
+                foreach (var message in messages)
+                {
+                    await api.SendMessage(message);
+                }
         }
     }
 }

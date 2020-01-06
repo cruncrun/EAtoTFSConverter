@@ -4,7 +4,7 @@ using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
-    public static class MessageFactory
+    internal static class MessageFactory
     {
         private static DatabaseOperations DbOperations { get; set; }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EAtoTFSConverter.Data.XMLParse
 {
-    public class EAScenario
+    internal class EAScenario
     {
         public Guid Id { get; set; }
         public string SubjectId { get; set; }

@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
-    public interface IWorkItemBase
+    internal interface IWorkItemBase
     {
         WorkItemBaseData WorkItemBaseData { get; set; }
         string ApiAddress { get; set; }

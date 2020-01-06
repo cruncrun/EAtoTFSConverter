@@ -1,6 +1,6 @@
 ﻿namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
-    class ComparerItemsFactory
+    internal class ComparerItemsFactory
     {
         internal ComparisionStep MapToComparsionEntity(active_Step source)
         {

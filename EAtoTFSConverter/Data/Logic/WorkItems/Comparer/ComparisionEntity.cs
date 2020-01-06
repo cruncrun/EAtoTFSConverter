@@ -1,6 +1,6 @@
 ﻿namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
-    public class ComparisionEntity : IComparable
+    internal class ComparisionEntity : IComparable
     {
         public string Name { get; set; }
         public string Description { get; set; }
