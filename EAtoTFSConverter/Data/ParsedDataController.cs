@@ -66,7 +66,7 @@ namespace EAtoTFSConverter.Data
                 operationSuccess &= db.Insert(Scenarios);
             }
             if (UseCases.Any())
-            {                
+            {
                 operationSuccess &= db.Insert(UseCases);
             }
             if (Steps.Any())

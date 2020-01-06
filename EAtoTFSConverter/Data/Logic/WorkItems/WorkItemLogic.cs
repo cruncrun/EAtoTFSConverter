@@ -1,6 +1,6 @@
-﻿using System;
-using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+﻿using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -170,7 +170,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         }
 
         #endregion
-        
+
         private async void SendMessages(IEnumerable<IWorkItemBase> messages)
         {
             APICommunication api = new APICommunication(Project);

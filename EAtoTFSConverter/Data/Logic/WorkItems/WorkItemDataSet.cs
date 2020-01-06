@@ -1,6 +1,6 @@
-﻿using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
+﻿using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using System.Collections.Generic;
-using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {

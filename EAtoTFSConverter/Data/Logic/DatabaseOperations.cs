@@ -73,8 +73,8 @@ namespace EAtoTFSConverter.Data.Logic
         internal bool Insert(List<EAScenario> scenarios)
         {
             bool result;
-            try 
-            { 
+            try
+            {
                 DataContext.EAScenarios.InsertAllOnSubmit(scenarios);
                 DataContext.SubmitChanges();
                 result = true;

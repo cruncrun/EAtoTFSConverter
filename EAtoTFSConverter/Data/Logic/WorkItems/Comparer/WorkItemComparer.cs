@@ -1,7 +1,4 @@
-﻿using System;
-using System.Deployment.Application;
-
-namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
+﻿namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
     internal class WorkItemComparer
     {

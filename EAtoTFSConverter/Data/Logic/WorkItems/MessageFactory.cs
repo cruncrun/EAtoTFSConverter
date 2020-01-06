@@ -1,6 +1,6 @@
-﻿using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
+﻿using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using System;
-using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
@@ -55,7 +55,10 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             // wysyłka komunikatu i zapis danych
             // pobranie workItema (IWorkItemBase) z odpowiednim ID
             // przekazanie do wykorzystania
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            return new WorkItemCreationData();
+            
         }
 
         private static IWorkItemBase CreateNewTestCaseData(ComparisionResult result)
@@ -160,8 +163,8 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             return DbOperations.GetWorkItem(result.Guid);
         }
 
-       
 
-        
+
+
     }
 }

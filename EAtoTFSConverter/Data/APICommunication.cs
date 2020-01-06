@@ -1,7 +1,6 @@
 ﻿using EAtoTFSConverter.Data.Logic;
 using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -23,7 +22,7 @@ namespace EAtoTFSConverter.Data
             DatabaseOperations = new DatabaseOperations();
             AuthorizationToken = DatabaseOperations.GetPersonalToken(Project);
             BaseAddress = GetUriAddress();
-            
+
         }
 
         internal async Task SendMessage(IWorkItemBase message)
@@ -63,7 +62,7 @@ namespace EAtoTFSConverter.Data
             client.DefaultRequestHeaders.Add("X-TFS-FedAuthRedirect", "Suppress");
             return client;
         }
-        
+
         private Uri GetUriAddress()
         {
             return new Uri(DatabaseOperations.GetUriAddress(Project));
