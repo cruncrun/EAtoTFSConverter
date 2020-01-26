@@ -28,9 +28,20 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         internal void PrepareData()
         {
-            GenerateTestPlan();
-            GenerateTestCases();
-            GenerateTestSuites();
+            try
+            {
+                GenerateTestPlan();
+                GenerateTestCases();
+                GenerateTestSuites();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
+            
         }
 
         #region TestPlan
@@ -61,7 +72,17 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private void CreateTestPlanMessageDraft()
         {
+            try
+            {
 
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
         }
 
         #endregion
@@ -77,49 +98,70 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private void CreateTestCaseMessageDrafts()
         {
-            if (WorkItemDataSet.TestComparisionResults != null)
-                foreach (var item in WorkItemDataSet.TestComparisionResults)
-                {
-                    WorkItemDataSet.TestCases.Add(MessageFactory.BuildMessage(item));
-                }
+            try
+            {
+                if (WorkItemDataSet.TestComparisionResults != null)
+                    foreach (var item in WorkItemDataSet.TestComparisionResults)
+                    {
+                        WorkItemDataSet.TestCases.Add(MessageFactory.BuildMessage(item));
+                    }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
+            
         }
 
         private void Compare()
         {
             if (_activeEAscenarios != null)
-                foreach (var scenario in _activeEAscenarios)
+                try
                 {
-                    var stepsResult = new List<ComparisionResult>();
-                    WorkItemComparer comparer = new WorkItemComparer();
+                    foreach (var scenario in _activeEAscenarios)
+                    {
+                        var stepsResult = new List<ComparisionResult>();
+                        WorkItemComparer comparer = new WorkItemComparer();
 
-                    var scenarioData = new ComparisionDataSet(
-                        ComparerItemsFactory.MapToComparsionEntity(scenario),
-                        ComparerItemsFactory.MapToComparsionEntity(
-                            DbOperations.getEAscenario(scenario.PreviousVersionId)),
-                        WorkItemType.TestCase,
-                        scenario.Id);
+                        var scenarioData = new ComparisionDataSet(
+                            ComparerItemsFactory.MapToComparsionEntity(scenario),
+                            ComparerItemsFactory.MapToComparsionEntity(
+                                DbOperations.getEAscenario(scenario.PreviousVersionId)),
+                            WorkItemType.TestCase,
+                            scenario.Id);
 
-                    var scenarioResult = comparer.GetComparisionResult(scenarioData);
+                        var scenarioResult = comparer.GetComparisionResult(scenarioData);
 
-                    var scenarioSteps = GetStepsForScenario(scenario);
+                        var scenarioSteps = GetStepsForScenario(scenario);
 
-                    if (scenarioSteps != null)
-                        foreach (var step in scenarioSteps)
-                        {
-                            var stepData = new ComparisionDataSet(
-                                ComparerItemsFactory.MapToComparsionEntity(step),
-                                ComparerItemsFactory.MapToComparsionEntity(
-                                    DbOperations.getStep(step.PreviousVersionId)),
-                                WorkItemType.TestStep,
-                                step.Id);
+                        if (scenarioSteps != null)
+                            foreach (var step in scenarioSteps)
+                            {
+                                var stepData = new ComparisionDataSet(
+                                    ComparerItemsFactory.MapToComparsionEntity(step),
+                                    ComparerItemsFactory.MapToComparsionEntity(
+                                        DbOperations.getStep(step.PreviousVersionId)),
+                                    WorkItemType.TestStep,
+                                    step.Id);
 
-                            var result = comparer.GetComparisionResult(stepData);
+                                var result = comparer.GetComparisionResult(stepData);
 
-                            stepsResult.Add(result);
-                        }
+                                stepsResult.Add(result);
+                            }
 
-                    scenarioResult = AnalizeComparision(scenarioResult, stepsResult);
-                    WorkItemDataSet.TestComparisionResults.Add(scenarioResult);
+                        scenarioResult = AnalizeComparision(scenarioResult, stepsResult);
+                        WorkItemDataSet.TestComparisionResults.Add(scenarioResult);
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(
+                        "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    throw;
                 }
         }
 
@@ -133,26 +175,36 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private static ComparisionResult AnalizeComparision(ComparisionResult scenarioResult, List<ComparisionResult> stepsResult)
         {
-            if (scenarioResult.Result && stepsResult.All(s => s.Result))
+            try
             {
+                if (scenarioResult.Result && stepsResult.All(s => s.Result))
+                {
+                    return scenarioResult;
+                }
+
+                if (scenarioResult.Result && stepsResult.Any(s => !s.Result))
+                {
+                    scenarioResult.Result = false;
+                    scenarioResult.OperationType = OperationType.Update;
+                    return scenarioResult;
+                }
+
+                if (!scenarioResult.Result && stepsResult.Any(s => s.Result))
+                {
+                    scenarioResult.Result = false;
+                    scenarioResult.OperationType = OperationType.Update;
+                    return scenarioResult;
+                }
+
                 return scenarioResult;
             }
-
-            if (scenarioResult.Result && stepsResult.Any(s => !s.Result))
+            catch (Exception e)
             {
-                scenarioResult.Result = false;
-                scenarioResult.OperationType = OperationType.Update;
-                return scenarioResult;
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
             }
-
-            if (!scenarioResult.Result && stepsResult.Any(s => s.Result))
-            {
-                scenarioResult.Result = false;
-                scenarioResult.OperationType = OperationType.Update;
-                return scenarioResult;
-            }
-
-            return scenarioResult;
         }
 
         #endregion
@@ -166,19 +218,40 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         }
         private void CreateTestSuiteMessageDrafts()
         {
+            try
+            {
 
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
         }
 
         #endregion
 
         private async void SendMessages(IEnumerable<IWorkItemBase> messages)
         {
-            APICommunication api = new APICommunication(Project);
-            if (messages != null)
-                foreach (var message in messages)
-                {
-                    await api.SendMessage(message);
-                }
+            try
+            {
+                APICommunication api = new APICommunication(Project);
+                if (messages != null)
+                    foreach (var message in messages)
+                    {
+                        await api.SendMessage(message);
+                    }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
+            
         }
     }
 }

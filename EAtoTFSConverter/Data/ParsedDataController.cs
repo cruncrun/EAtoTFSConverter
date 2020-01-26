@@ -22,62 +22,82 @@ namespace EAtoTFSConverter.Data
         {
             DateTime currentDate = DateTime.Now;
 
-            foreach (XMLParse.EAScenario scenario in result)
+            try
             {
-                DatabaseOperations db = new DatabaseOperations();
-
-                scenario.Timestamp = currentDate;
-                scenario.PreviousVersionId = db.GetActive_EAscenarios(Project)
-                    .Where(s => s.ProjectId == scenario.ProjectId && s.XmiId == scenario.XmiId)
-                    .Select(s => s.Id)
-                    .FirstOrDefault();
-
-                Scenarios.Add(DataMapper.MapEAScenario(scenario));
-
-                foreach (UseCase useCase in scenario.UseCase)
+                foreach (XMLParse.EAScenario scenario in result)
                 {
-                    useCase.Id = Guid.NewGuid();
-                    useCase.Timestamp = currentDate;
-                    useCase.EAScenarioId = scenario.Id;
-                    UseCases.Add(useCase);
-                }
-                foreach (Step step in scenario.Steps)
-                {
-                    step.Id = Guid.NewGuid();
-                    step.Timestamp = currentDate;
-                    step.EAScenarioId = scenario.Id;
-                    step.PreviousVersionId = db.GetActive_Steps()
-                        .Where(s => s.EAScenarioId == scenario.Id && s.Guid == step.Id)
+                    DatabaseOperations db = new DatabaseOperations();
+
+                    scenario.Timestamp = currentDate;
+                    scenario.PreviousVersionId = db.GetActive_EAscenarios(Project)
+                        .Where(s => s.ProjectId == scenario.ProjectId && s.XmiId == scenario.XmiId)
                         .Select(s => s.Id)
                         .FirstOrDefault();
-                    Steps.Add(step);
+
+                    Scenarios.Add(DataMapper.MapEAScenario(scenario));
+
+                    foreach (UseCase useCase in scenario.UseCase)
+                    {
+                        useCase.Id = Guid.NewGuid();
+                        useCase.Timestamp = currentDate;
+                        useCase.EAScenarioId = scenario.Id;
+                        UseCases.Add(useCase);
+                    }
+                    foreach (Step step in scenario.Steps)
+                    {
+                        step.Id = Guid.NewGuid();
+                        step.Timestamp = currentDate;
+                        step.EAScenarioId = scenario.Id;
+                        step.PreviousVersionId = db.GetActive_Steps()
+                            .Where(s => s.EAScenarioId == scenario.Id && s.Guid == step.Id)
+                            .Select(s => s.Id)
+                            .FirstOrDefault();
+                        Steps.Add(step);
+                    }
                 }
+                InsertEAData();
             }
-            InsertEAData();
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
         }
 
         private void InsertEAData()
         {
             bool operationSuccess = true;
 
-            DatabaseOperations db = new DatabaseOperations();
-            if (Scenarios.Any())
+            try
             {
-                operationSuccess &= db.Insert(Scenarios);
+                DatabaseOperations db = new DatabaseOperations();
+                if (Scenarios.Any())
+                {
+                    operationSuccess &= db.Insert(Scenarios);
+                }
+                if (UseCases.Any())
+                {
+                    operationSuccess &= db.Insert(UseCases);
+                }
+                if (Steps.Any())
+                {
+                    operationSuccess &= db.Insert(Steps);
+                }
+                if (operationSuccess)
+                {
+                    MessageBox.Show(
+                        "Import danych z Enterprise Architect przebiegł pomyślnie!", "OK!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            if (UseCases.Any())
-            {
-                operationSuccess &= db.Insert(UseCases);
-            }
-            if (Steps.Any())
-            {
-                operationSuccess &= db.Insert(Steps);
-            }
-            if (operationSuccess)
+            catch (Exception e)
             {
                 MessageBox.Show(
-                   "Import danych z Enterprise Architect przebiegł pomyślnie!", "OK!",
-                   MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
             }
         }
     }

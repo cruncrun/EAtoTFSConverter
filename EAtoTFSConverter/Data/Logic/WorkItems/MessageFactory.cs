@@ -1,6 +1,9 @@
 ﻿using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
@@ -68,6 +71,8 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                 Guid = result.Guid,
                 WorkItemBaseData =
                 {
+                    Op = "add",
+                    Path = "/fields/Microsoft.VSTS.TCM.Steps",
                     Json = GenerateNewTestCaseJson(result)
                 }
             };
@@ -99,10 +104,25 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         private static string GenerateNewTestCaseJson(ComparisionResult result)
         {
             var steps = DbOperations.GetActive_Steps(result.Guid);
-            //  przygotowanie jsona w oparciu o kroki
-            string json = "json";
+            return GenerateStepsXml(steps);
+        }
 
-            return json;
+        private static string GenerateStepsXml(IEnumerable<active_Step> steps)
+        {
+            var xml = new StringBuilder();
+            var activeSteps = steps.ToList();
+            xml.Append($"<steps id=\"0\" last=\"{activeSteps.Count()}\">");
+            foreach (var step in activeSteps)
+            {
+                xml.Append($"<step id=\"{step.Level}\" type=\"ValidateStep\">" +
+                           $"<parameterizedString isformatted=\"true\">" +
+                           $"<P>{step.Name}</P></parameterizedString>" +
+                           $"<parameterizedString isformatted=\"true\">" +
+                           $"<P>{step.Name}</P></parameterizedString>" +
+                           $"<description/></step >");
+            }
+            xml.Append($"</steps>");
+            return xml.ToString();
         }
 
         #endregion
@@ -162,9 +182,5 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             return DbOperations.GetWorkItem(result.Guid);
         }
-
-
-
-
     }
 }

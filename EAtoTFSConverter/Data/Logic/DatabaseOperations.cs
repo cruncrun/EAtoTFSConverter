@@ -128,7 +128,17 @@ namespace EAtoTFSConverter.Data.Logic
         }
         internal bool Insert(WorkItem workItem)
         {
-            throw new NotImplementedException();
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
         }
     }
 }

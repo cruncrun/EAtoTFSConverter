@@ -7,6 +7,8 @@
         public string Iteration { get; set; }
         public string Owner { get; set; }
         public string Value { get; set; }
+        public string Op { get; set; }
+        public string Path { get; set; }
         public string Json { get; set; }
     }
 }
