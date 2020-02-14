@@ -3,7 +3,9 @@ using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
@@ -54,33 +56,23 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private static IWorkItemBase CreateUpdatedTestCaseData(ComparisionResult result)
         {
-            // wygenerowanie IWorkItemBase z active_scenario i powiązanych active_steps
-            // wysyłka komunikatu i zapis danych
-            // pobranie workItema (IWorkItemBase) z odpowiednim ID
-            // przekazanie do wykorzystania
-            //throw new NotImplementedException();
-
             return new WorkItemCreationData();
-            
         }
 
         private static IWorkItemBase CreateNewTestCaseData(ComparisionResult result)
         {
+            var bd = new WorkItemBaseDataTestCase()
+            {
+                Op = "add",
+                Path = "/fields/Microsoft.VSTS.TCM.Steps",
+                Value = GenerateNewTestCaseJson(result)
+            };
+
             var creationData = new WorkItemCreationData
             {
                 Guid = result.Guid,
-                WorkItemBaseData =
-                {
-                    Op = "add",
-                    Path = "/fields/Microsoft.VSTS.TCM.Steps",
-                    Json = GenerateNewTestCaseJson(result)
-                }
+                Content = new StringContent(JsonConvert.SerializeObject(bd))
             };
-            // wygenerowanie IWorkItemBase z active_scenario i powiązanych active_steps
-            // wysyłka komunikatu i zapis danych
-            // pobranie workItema (IWorkItemBase) z odpowiednim ID
-            // przekazanie do wykorzystania
-
 
             return creationData;
         }
@@ -92,9 +84,9 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             {
                 Guid = result.Guid,
                 WorkItemId = existingData.WorkItemId,
-                WorkItemBaseData =
+                WorkItemBaseData = new WorkItemBaseDataTestCase
                 {
-                    Json = existingData.Value // sprawdzić, czy to dobra kolumna :)
+                    Value = existingData.Value
                 }
             };
 
@@ -115,13 +107,13 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             foreach (var step in activeSteps)
             {
                 xml.Append($"<step id=\"{step.Level}\" type=\"ValidateStep\">" +
-                           $"<parameterizedString isformatted=\"true\">" +
+                           "<parameterizedString isformatted=\"true\">" +
                            $"<P>{step.Name}</P></parameterizedString>" +
-                           $"<parameterizedString isformatted=\"true\">" +
+                           "<parameterizedString isformatted=\"true\">" +
                            $"<P>{step.Name}</P></parameterizedString>" +
-                           $"<description/></step >");
+                           "<description/></step >");
             }
-            xml.Append($"</steps>");
+            xml.Append("</steps>");
             return xml.ToString();
         }
 
@@ -149,7 +141,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             var creationData = new WorkItemCreationData
             {
-
+                
             };
 
             return creationData;
@@ -163,16 +155,32 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             switch (result.OperationType)
             {
-                case OperationType.UseExisting:
-                    return new WorkItemCreationData();
                 case OperationType.CreateNew:
-                    return new WorkItemCreationData();
+                    return CreateNewTestPlanData(result); 
+                case OperationType.UseExisting:
                 case OperationType.Update:
                 case OperationType.Delete:
                     throw new InvalidOperationException();
                 default:
                     return null;
             }
+        }
+
+        private static IWorkItemBase CreateNewTestPlanData(ComparisionResult result)
+        {
+            var bd = new WorkItemBaseDataTestPlan()
+            {
+                Name = "Plan testów dodany przez aplikację",
+                Description = "Opis planu testów sdawsdas"
+            };
+
+            var wic = new WorkItemCreationData
+            {
+                Guid = result.Guid,
+                Content = new StringContent(JsonConvert.SerializeObject(bd))
+            };
+
+            return wic;
         }
 
         #endregion

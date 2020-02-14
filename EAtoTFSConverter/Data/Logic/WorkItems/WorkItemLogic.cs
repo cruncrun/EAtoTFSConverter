@@ -5,14 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
+using static System.String;
+
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
     internal class WorkItemLogic
     {
         private Project Project { get; }
-        private ComparerItemsFactory ComparerItemsFactory { get; set; }
-        private DatabaseOperations DbOperations { get; set; }
-        private WorkItemDataSet WorkItemDataSet { get; set; } = new WorkItemDataSet();
+        private ComparerItemsFactory ComparerItemsFactory { get; }
+        private DatabaseOperations DbOperations { get; }
+        private WorkItemDataSet WorkItemDataSet { get; } = new WorkItemDataSet();
 
         private readonly IEnumerable<active_EAscenario> _activeEAscenarios;
         private readonly IEnumerable<active_Step> _activeSteps;
@@ -28,36 +30,27 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         internal void PrepareData()
         {
-            try
-            {
-                GenerateTestPlan();
-                GenerateTestCases();
-                GenerateTestSuites();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(
-                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                throw;
-            }
-            
+            GenerateTestPlan();
+            GenerateTestCases();
+            GenerateTestSuites();
         }
 
         #region TestPlan
 
         private void GenerateTestPlan()
         {
+            var testPlan = new ComparisionResult(WorkItemType.TestPlan)
+            {
+                Result = DbOperations.CheckWorkItem(Project.Id, WorkItemType.TestPlan)
+            };
+
             try
             {
-                if (!DbOperations.CheckWorkItem(Project.Id, WorkItemType.TestPlan))
+                if (!testPlan.Result)
                 {
-                    CreateTestPlanMessageDraft();
+                    testPlan.OperationType = OperationType.CreateNew;
+                    CreateTestPlanMessageDraft(testPlan);
                     SendMessages(WorkItemDataSet.TestPlan);
-                }
-                else
-                {
-
                 }
             }
             catch (Exception e)
@@ -70,11 +63,15 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         }
 
-        private void CreateTestPlanMessageDraft()
+        private void CreateTestPlanMessageDraft(ComparisionResult testPlan)
         {
             try
             {
+                var message = MessageFactory.BuildMessage(testPlan);
+                message.ApiAddress = Project.Address + "_apis/test/plans?api-version=5.1";
 
+                
+                WorkItemDataSet.TestPlan.Add(message);
             }
             catch (Exception e)
             {
@@ -143,7 +140,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                                 var stepData = new ComparisionDataSet(
                                     ComparerItemsFactory.MapToComparsionEntity(step),
                                     ComparerItemsFactory.MapToComparsionEntity(
-                                        DbOperations.getStep(step.PreviousVersionId)),
+                                        DbOperations.GetStep(step.PreviousVersionId)),
                                     WorkItemType.TestStep,
                                     step.Id);
 
@@ -220,7 +217,11 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             try
             {
+                var testSuite = new ComparisionResult(WorkItemType.TestSuite) { OperationType = OperationType.CreateNew };
+                var message = MessageFactory.BuildMessage(testSuite);
+                message.ApiAddress = PrepareTestSuiteAddress();
 
+                WorkItemDataSet.TestSuite.Add(message);
             }
             catch (Exception e)
             {
@@ -231,13 +232,25 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             }
         }
 
+        private string PrepareTestSuiteAddress()
+        {
+            var baseAddress = DbOperations.GetUriAddress(Project);
+            var testCaseIds = DbOperations.GetWorkItems(Project.Id, WorkItemType.TestCase).ToString().ToArray();
+            var testCases = Join(",", testCaseIds);
+            var fullAddress = baseAddress + "_apis/test/Plans/"
+                                          + DbOperations.GetWorkItem(Project.Id, WorkItemType.TestPlan)
+                                          + "suites/1/testcases/"
+                                          + testCases + "?api-version=5.1";
+            return fullAddress;
+        }
+
         #endregion
 
         private async void SendMessages(IEnumerable<IWorkItemBase> messages)
         {
             try
             {
-                APICommunication api = new APICommunication(Project);
+                ApiCommunication api = new ApiCommunication(Project);
                 if (messages != null)
                     foreach (var message in messages)
                     {

@@ -1,5 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EATFSConverter" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=KAMIL\SQLEXPRESS;Initial Catalog=EATFSConverter;Integrated Security=True" SettingsObjectName="EAtoTFSConverter.Properties.Settings" SettingsPropertyName="EATFSConverterConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Database Name="EATFSConverter" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings"
+              ConnectionString="Data Source=KAMIL\SQLEXPRESS;Initial Catalog=EATFSConverter;Integrated Security=True"
+              SettingsObjectName="EAtoTFSConverter.Properties.Settings"
+              SettingsPropertyName="EATFSConverterConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.WorkItem" Member="WorkItems">
     <Type Name="WorkItem">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />

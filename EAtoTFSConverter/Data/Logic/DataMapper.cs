@@ -1,7 +1,7 @@
 ﻿using System;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace EAtoTFSConverter.Data.Logic
 {
@@ -49,7 +49,6 @@ namespace EAtoTFSConverter.Data.Logic
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 throw;
             }
-            
         }
 
         internal static WorkItem MapResponse(Task<string> responseBody)

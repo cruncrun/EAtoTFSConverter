@@ -1,32 +1,32 @@
-﻿using EAtoTFSConverter.Data.Logic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using EAtoTFSConverter.Data.Logic;
 
 namespace EAtoTFSConverter.Data
 {
     internal class ParsedDataController
     {
-        private List<EAScenario> Scenarios { get; set; } = new List<EAScenario>();
-        private List<UseCase> UseCases { get; set; } = new List<UseCase>();
-        private List<Step> Steps { get; set; } = new List<Step>();
-        public Project Project { get; set; }
-
         public ParsedDataController(Project project)
         {
             Project = project;
         }
 
+        private List<EAScenario> Scenarios { get; } = new List<EAScenario>();
+        private List<UseCase> UseCases { get; } = new List<UseCase>();
+        private List<Step> Steps { get; } = new List<Step>();
+        public Project Project { get; set; }
+
         public void PrepareData(IEnumerable<XMLParse.EAScenario> result)
         {
-            DateTime currentDate = DateTime.Now;
+            var currentDate = DateTime.Now;
 
             try
             {
-                foreach (XMLParse.EAScenario scenario in result)
+                foreach (var scenario in result)
                 {
-                    DatabaseOperations db = new DatabaseOperations();
+                    var db = new DatabaseOperations();
 
                     scenario.Timestamp = currentDate;
                     scenario.PreviousVersionId = db.GetActive_EAscenarios(Project)
@@ -36,14 +36,15 @@ namespace EAtoTFSConverter.Data
 
                     Scenarios.Add(DataMapper.MapEAScenario(scenario));
 
-                    foreach (UseCase useCase in scenario.UseCase)
+                    foreach (var useCase in scenario.UseCase)
                     {
                         useCase.Id = Guid.NewGuid();
                         useCase.Timestamp = currentDate;
                         useCase.EAScenarioId = scenario.Id;
                         UseCases.Add(useCase);
                     }
-                    foreach (Step step in scenario.Steps)
+
+                    foreach (var step in scenario.Steps)
                     {
                         step.Id = Guid.NewGuid();
                         step.Timestamp = currentDate;
@@ -55,6 +56,7 @@ namespace EAtoTFSConverter.Data
                         Steps.Add(step);
                     }
                 }
+
                 InsertEAData();
             }
             catch (Exception e)
@@ -68,29 +70,18 @@ namespace EAtoTFSConverter.Data
 
         private void InsertEAData()
         {
-            bool operationSuccess = true;
+            var operationSuccess = true;
 
             try
             {
-                DatabaseOperations db = new DatabaseOperations();
-                if (Scenarios.Any())
-                {
-                    operationSuccess &= db.Insert(Scenarios);
-                }
-                if (UseCases.Any())
-                {
-                    operationSuccess &= db.Insert(UseCases);
-                }
-                if (Steps.Any())
-                {
-                    operationSuccess &= db.Insert(Steps);
-                }
+                var db = new DatabaseOperations();
+                if (Scenarios.Any()) operationSuccess &= db.Insert(Scenarios);
+                if (UseCases.Any()) operationSuccess &= db.Insert(UseCases);
+                if (Steps.Any()) operationSuccess &= db.Insert(Steps);
                 if (operationSuccess)
-                {
                     MessageBox.Show(
                         "Import danych z Enterprise Architect przebiegł pomyślnie!", "OK!",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
             }
             catch (Exception e)
             {

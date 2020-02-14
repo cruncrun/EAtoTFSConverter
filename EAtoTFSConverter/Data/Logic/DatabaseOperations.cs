@@ -29,7 +29,7 @@ namespace EAtoTFSConverter.Data.Logic
             return DataContext.EAScenarios.FirstOrDefault(s => s.Id == guid);
         }
 
-        internal Step getStep(Guid? guid)
+        internal Step GetStep(Guid? guid)
         {
             return DataContext.Steps.FirstOrDefault(s => s.Id == guid);
         }
@@ -45,6 +45,13 @@ namespace EAtoTFSConverter.Data.Logic
                 .Where(w => w.ProjectId == projectId && w.WorkItemType == (int)workItemType)
                 .Select(i => i.WorkItemId)
                 .FirstOrDefault();
+        }
+
+        internal IEnumerable<int> GetWorkItems(Guid projectId, WorkItemType workItemType)
+        {
+            return DataContext.WorkItems
+                .Where(w => w.ProjectId == projectId && w.WorkItemType == (int) workItemType)
+                .Select(i => i.WorkItemId);
         }
 
         internal string GetPersonalToken(Project project)

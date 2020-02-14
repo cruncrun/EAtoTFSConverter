@@ -4,11 +4,6 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
     internal class ComparisionResult : IComparisionResult
     {
-        public bool Result { get; set; }
-        public OperationType OperationType { get; set; }
-        public WorkItemType WorkItemType { get; set; }
-        public Guid Guid { get; set; }
-
         public ComparisionResult(WorkItemType workItemType, Guid id)
         {
             WorkItemType = workItemType;
@@ -22,7 +17,11 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 
         public ComparisionResult()
         {
-
         }
+
+        public bool Result { get; set; }
+        public OperationType OperationType { get; set; }
+        public WorkItemType WorkItemType { get; set; }
+        public Guid Guid { get; set; }
     }
 }

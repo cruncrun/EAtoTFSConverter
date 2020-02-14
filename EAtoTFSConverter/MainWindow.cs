@@ -1,13 +1,11 @@
-﻿using EAtoTFSConverter.Data.Logic;
-using EAtoTFSConverter.Data.Logic.WorkItems;
-using EAtoTFSConverter.Data.XMLParse;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using TreeNode = System.Windows.Forms.TreeNode;
+using EAtoTFSConverter.Data.Logic;
+using EAtoTFSConverter.Data.Logic.WorkItems;
+using EAtoTFSConverter.Data.XMLParse;
 
 namespace EAtoTFSConverter
 {
@@ -29,7 +27,7 @@ namespace EAtoTFSConverter
 
         private void PopulateScenariosTree()
         {
-            DatabaseOperations db = new DatabaseOperations();
+            var db = new DatabaseOperations();
             var queryScenarios = db.GetActive_EAscenarios(_selectedProject);
             InitializeTreeView(queryScenarios);
         }
@@ -39,12 +37,13 @@ namespace EAtoTFSConverter
             treeView_scenarios.BeginUpdate();
             foreach (var scenario in queryScenarios)
             {
-                DatabaseOperations db = new DatabaseOperations();
+                var db = new DatabaseOperations();
                 var steps = db.GetActive_Steps(scenario.Id);
-                TreeNode[] stepsArray = GenerateStepTreeNodes(steps);
-                TreeNode scenarioTreeNode = new TreeNode(scenario.Name, stepsArray);
+                var stepsArray = GenerateStepTreeNodes(steps);
+                var scenarioTreeNode = new TreeNode(scenario.Name, stepsArray);
                 treeView_scenarios.Nodes.Add(scenarioTreeNode);
             }
+
             treeView_scenarios.EndUpdate();
         }
 
@@ -57,10 +56,10 @@ namespace EAtoTFSConverter
 
         private void PopulateProjectsList()
         {
-            using (DataClassesDataContext dataContext = new DataClassesDataContext())
+            using (var dataContext = new DataClassesDataContext())
             {
                 var queryAllProjects = from projects in dataContext.Projects
-                                       select projects;
+                    select projects;
                 cb_chooseProject.DisplayMember = "Name";
                 cb_chooseProject.DataSource = queryAllProjects;
             }
@@ -68,7 +67,7 @@ namespace EAtoTFSConverter
 
         private void Btn_load_EA_XML_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            var openFileDialog = new OpenFileDialog
             {
                 InitialDirectory = "C:\\",
                 Filter = "XML Files (*.xml)|*.xml|All files (*.*)|*.*"
@@ -76,22 +75,23 @@ namespace EAtoTFSConverter
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 _filePath = openFileDialog.FileName;
-                XDocument source = XDocument.Load(_filePath);
+                var source = XDocument.Load(_filePath);
                 XMLParse.Parse(source, DataMapper.MapProject(_selectedProject));
             }
+
             openFileDialog.Dispose();
         }
 
         private void Cb_chooseProject_OnChanged(object sender, EventArgs e)
         {
-            _selectedProject = (Project)cb_chooseProject.SelectedItem;
+            _selectedProject = (Project) cb_chooseProject.SelectedItem;
             treeView_scenarios.Nodes.Clear();
             PopulateScenariosTree();
         }
 
         private void Btn_sendToTFS_Click(object sender, EventArgs e)
         {
-            WorkItemLogic workItemLogic = new WorkItemLogic(_selectedProject);
+            var workItemLogic = new WorkItemLogic(_selectedProject);
             workItemLogic.PrepareData();
         }
     }

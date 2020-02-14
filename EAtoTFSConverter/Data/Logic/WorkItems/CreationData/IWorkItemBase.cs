@@ -5,9 +5,10 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
     internal interface IWorkItemBase
     {
-        WorkItemBaseData WorkItemBaseData { get; set; }
+        IWorkItemBaseData WorkItemBaseData { get; set; }
         string ApiAddress { get; set; }
         HttpContent Content { get; set; }
+        WorkItemType WorkItemType { get; set; }
         int WorkItemId { get; set; }
         Guid Guid { get; set; }
     }
