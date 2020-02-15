@@ -30,9 +30,9 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         internal void PrepareData()
         {
-            GenerateTestPlan();
+            //GenerateTestPlan();
             GenerateTestCases();
-            GenerateTestSuites();
+            //GenerateTestSuites();
         }
 
         #region TestPlan
@@ -69,8 +69,6 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             {
                 var message = MessageFactory.BuildMessage(testPlan);
                 message.ApiAddress = Project.Address + "_apis/test/plans?api-version=5.1";
-
-                
                 WorkItemDataSet.TestPlan.Add(message);
             }
             catch (Exception e)
@@ -100,7 +98,10 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                 if (WorkItemDataSet.TestComparisionResults != null)
                     foreach (var item in WorkItemDataSet.TestComparisionResults)
                     {
-                        WorkItemDataSet.TestCases.Add(MessageFactory.BuildMessage(item));
+                        var message = MessageFactory.BuildMessage(item);
+                        message.ApiAddress =
+                            "https://dev.azure.com/crunchips/EA-TFS_Conversion/_apis/wit/workitems/$Test%20Case?api-version=5.1";
+                        WorkItemDataSet.TestCases.Add(message);
                     }
             }
             catch (Exception e)
@@ -235,12 +236,14 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         private string PrepareTestSuiteAddress()
         {
             var baseAddress = DbOperations.GetUriAddress(Project);
-            var testCaseIds = DbOperations.GetWorkItems(Project.Id, WorkItemType.TestCase).ToString().ToArray();
+            var testCaseIds = DbOperations.GetWorkItems(Project.Id, WorkItemType.TestCase);
             var testCases = Join(",", testCaseIds);
             var fullAddress = baseAddress + "_apis/test/Plans/"
                                           + DbOperations.GetWorkItem(Project.Id, WorkItemType.TestPlan)
-                                          + "suites/1/testcases/"
-                                          + testCases + "?api-version=5.1";
+                                          + "/suites/" 
+                                          + DbOperations.GetWorkItem(Project.Id, WorkItemType.TestSuite)
+                                          + "/testcases/"
+                                          + testCases + "?api-version=5.0";
             return fullAddress;
         }
 

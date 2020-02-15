@@ -13,7 +13,6 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             TestCases = new List<IWorkItemBase>();
         }
 
-        public Project Project { get; set; }
         public List<IWorkItemBase> TestPlan { get; set; }
         public List<IWorkItemBase> TestSuite { get; set; }
         public List<IWorkItemBase> TestCases { get; set; }

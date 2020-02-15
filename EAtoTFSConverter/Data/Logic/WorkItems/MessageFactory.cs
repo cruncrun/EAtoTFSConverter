@@ -11,7 +11,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
     internal static class MessageFactory
     {
-        private static DatabaseOperations DbOperations { get; set; }
+        private static DatabaseOperations DbOperations { get; set; } = new DatabaseOperations();
 
         public static IWorkItemBase BuildMessage(ComparisionResult result)
         {
@@ -56,22 +56,25 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private static IWorkItemBase CreateUpdatedTestCaseData(ComparisionResult result)
         {
-            return new WorkItemCreationData();
+            return CreateNewTestCaseData(result);
         }
 
         private static IWorkItemBase CreateNewTestCaseData(ComparisionResult result)
         {
-            var bd = new WorkItemBaseDataTestCase()
+            var data = new[]
             {
+                new WorkItemBaseDataTestCase()
+                {
                 Op = "add",
                 Path = "/fields/Microsoft.VSTS.TCM.Steps",
                 Value = GenerateNewTestCaseJson(result)
-            };
+                }
+            }; 
 
             var creationData = new WorkItemCreationData
             {
                 Guid = result.Guid,
-                Content = new StringContent(JsonConvert.SerializeObject(bd))
+                Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json-patch+json")
             };
 
             return creationData;
@@ -139,12 +142,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private static IWorkItemBase CreateNewTestSuiteData()
         {
-            var creationData = new WorkItemCreationData
-            {
-                
-            };
-
-            return creationData;
+            return new WorkItemCreationData();
         }
 
         #endregion
@@ -168,19 +166,19 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private static IWorkItemBase CreateNewTestPlanData(ComparisionResult result)
         {
-            var bd = new WorkItemBaseDataTestPlan()
+            var data = new WorkItemBaseDataTestPlan()
             {
-                Name = "Plan testów dodany przez aplikację",
-                Description = "Opis planu testów sdawsdas"
+                Name = "Plan testów z aplikacji desktopowej",
+                Description = "Opis planu testów z apki"
             };
 
-            var wic = new WorkItemCreationData
+            return new WorkItemCreationData
             {
-                Guid = result.Guid,
-                Content = new StringContent(JsonConvert.SerializeObject(bd))
+                WorkItemType = WorkItemType.TestPlan,
+                Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json"),
+                ApiAddress =
+                    "https://dev.azure.com/crunchips/EA-TFS_Conversion/_apis/test/plans?api-version=5.0"
             };
-
-            return wic;
         }
 
         #endregion

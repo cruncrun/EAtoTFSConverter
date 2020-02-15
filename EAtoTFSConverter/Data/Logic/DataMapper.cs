@@ -51,7 +51,7 @@ namespace EAtoTFSConverter.Data.Logic
             }
         }
 
-        internal static WorkItem MapResponse(Task<string> responseBody)
+        internal static WorkItem MapResponse(string responseBody)
         {
             try
             {

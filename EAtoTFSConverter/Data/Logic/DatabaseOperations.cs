@@ -51,7 +51,8 @@ namespace EAtoTFSConverter.Data.Logic
         {
             return DataContext.WorkItems
                 .Where(w => w.ProjectId == projectId && w.WorkItemType == (int) workItemType)
-                .Select(i => i.WorkItemId);
+                .Select(i => i.WorkItemId)
+                .Distinct();
         }
 
         internal string GetPersonalToken(Project project)

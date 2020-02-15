@@ -27,30 +27,27 @@ namespace EAtoTFSConverter.Data
 
         internal async Task SendMessage(IWorkItemBase message)
         {
-            using (var client = GetConnection())
+            using (var client = GetConnection(message.WorkItemType))
             {
-                client.DefaultRequestHeaders.Accept.Add(GetHeaders(message));
-
                 var response = await client.PostAsync(message.ApiAddress, message.Content);
                 if (response.IsSuccessStatusCode)
-                    StoreResponse(response.Content.ReadAsStringAsync());
+                    StoreResponse(response.Content.ReadAsStringAsync().Result);
                 else
                     MessageBox.Show(
-                        "Wystąpił bład podczas wysyłki danych do API DevOps!\n" + response.StatusCode,
+                        "Wystąpił bład podczas wysyłki danych do API DevOps!\n" + 
+                        response.StatusCode + "\n" +
+                        response.Content.ReadAsStringAsync().Result,
                         "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
-        private MediaTypeWithQualityHeaderValue GetHeaders(IWorkItemBase message) =>
-            new MediaTypeWithQualityHeaderValue(message.WorkItemType == WorkItemType.TestPlan ? "application/json" : "application/json-patch+json");
-
-        private void StoreResponse(Task<string> responseBody)
+        private void StoreResponse(string responseBody)
         {
             var db = new DatabaseOperations();
             db.Insert(DataMapper.MapResponse(responseBody));
         }
 
-        private HttpClient GetConnection()
+        private HttpClient GetConnection(WorkItemType workItemType)
         {
             var client = new HttpClient(new HttpClientHandler {UseDefaultCredentials = true});
             client.DefaultRequestHeaders.Accept.Clear();
@@ -59,9 +56,9 @@ namespace EAtoTFSConverter.Data
                 "Basic",
                 Convert.ToBase64String(Encoding.ASCII.GetBytes($"{""}:{AuthorizationToken}")));
             client.BaseAddress = BaseAddress;
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //client.DefaultRequestHeaders.Add("User-Agent", "EAToTFSConverter");
-            //client.DefaultRequestHeaders.Add("X-TFS-FedAuthRedirect", "Suppress");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(workItemType == WorkItemType.TestCase
+                ? "application/json-patch+json"
+                : "application/json"));
             return client;
         }
 
