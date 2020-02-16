@@ -31,7 +31,7 @@ namespace EAtoTFSConverter.Data
             {
                 var response = await client.PostAsync(message.ApiAddress, message.Content);
                 if (response.IsSuccessStatusCode)
-                    StoreResponse(response.Content.ReadAsStringAsync().Result);
+                    StoreResponse(message, response.Content.ReadAsStringAsync().Result);
                 else
                     MessageBox.Show(
                         "Wystąpił bład podczas wysyłki danych do API DevOps!\n" + 
@@ -41,10 +41,11 @@ namespace EAtoTFSConverter.Data
             }
         }
 
-        private void StoreResponse(string responseBody)
+        private void StoreResponse(IWorkItemBase message, string responseBody)
         {
             var db = new DatabaseOperations();
-            db.Insert(DataMapper.MapResponse(responseBody));
+
+            db.Insert(DataMapper.MapResponse(message, responseBody));
         }
 
         private HttpClient GetConnection(WorkItemType workItemType)

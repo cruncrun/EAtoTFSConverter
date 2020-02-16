@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using Newtonsoft.Json;
 
 namespace EAtoTFSConverter.Data.Logic
@@ -51,12 +52,24 @@ namespace EAtoTFSConverter.Data.Logic
             }
         }
 
-        internal static WorkItem MapResponse(string responseBody)
+        internal static WorkItem MapResponse(IWorkItemBase message, string responseBody)
         {
+            var definition = new { Id = "", Title = "", Description = "", Value = "" };
+            var deserializedResponse = JsonConvert.DeserializeAnonymousType(responseBody, definition);
+
             try
             {
-                // TODO: Mapowanie response na workitem
-                return JsonConvert.DeserializeObject<WorkItem>(responseBody.ToString());
+                return new WorkItem()
+                {
+                    Id = Guid.NewGuid(),
+                    EAId = message.Guid,
+                    ProjectId = message.Project.Id,
+                    WorkItemId = Convert.ToInt32(deserializedResponse.Id),
+                    WorkItemType = (short)message.WorkItemType,
+                    Name = deserializedResponse.Title,
+                    Description = deserializedResponse.Description,
+                    Value = null
+                };
             }
             catch (Exception e)
             {

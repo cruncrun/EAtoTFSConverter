@@ -69,6 +69,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             {
                 var message = MessageFactory.BuildMessage(testPlan);
                 message.ApiAddress = Project.Address + "_apis/test/plans?api-version=5.1";
+                message.Project = Project;
                 WorkItemDataSet.TestPlan.Add(message);
             }
             catch (Exception e)
@@ -101,6 +102,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                         var message = MessageFactory.BuildMessage(item);
                         message.ApiAddress =
                             "https://dev.azure.com/crunchips/EA-TFS_Conversion/_apis/wit/workitems/$Test%20Case?api-version=5.1";
+                        message.Project = Project;
                         WorkItemDataSet.TestCases.Add(message);
                     }
             }
@@ -221,7 +223,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                 var testSuite = new ComparisionResult(WorkItemType.TestSuite) { OperationType = OperationType.CreateNew };
                 var message = MessageFactory.BuildMessage(testSuite);
                 message.ApiAddress = PrepareTestSuiteAddress();
-
+                message.Project = Project;
                 WorkItemDataSet.TestSuite.Add(message);
             }
             catch (Exception e)
@@ -271,3 +273,4 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         }
     }
 }
+

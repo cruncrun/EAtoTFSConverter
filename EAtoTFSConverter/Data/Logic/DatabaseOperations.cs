@@ -134,11 +134,12 @@ namespace EAtoTFSConverter.Data.Logic
             }
             return result;
         }
-        internal bool Insert(WorkItem workItem)
+        internal void Insert(WorkItem workItem)
         {
             try
             {
-                throw new NotImplementedException();
+                DataContext.WorkItems.InsertOnSubmit(workItem);
+                DataContext.SubmitChanges();
             }
             catch (Exception e)
             {

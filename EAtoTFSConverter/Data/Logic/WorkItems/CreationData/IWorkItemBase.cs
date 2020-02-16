@@ -7,6 +7,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
     {
         IWorkItemBaseData WorkItemBaseData { get; set; }
         string ApiAddress { get; set; }
+        Project Project { get; set; }
         HttpContent Content { get; set; }
         WorkItemType WorkItemType { get; set; }
         int WorkItemId { get; set; }

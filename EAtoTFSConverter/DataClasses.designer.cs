@@ -39,6 +39,9 @@ namespace EAtoTFSConverter
     partial void InsertStep(Step instance);
     partial void UpdateStep(Step instance);
     partial void DeleteStep(Step instance);
+    partial void InsertWorkItem(WorkItem instance);
+    partial void UpdateWorkItem(WorkItem instance);
+    partial void DeleteWorkItem(WorkItem instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -69,14 +72,6 @@ namespace EAtoTFSConverter
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<WorkItem> WorkItems
-		{
-			get
-			{
-				return this.GetTable<WorkItem>();
-			}
 		}
 		
 		public System.Data.Linq.Table<EAScenario> EAScenarios
@@ -126,157 +121,12 @@ namespace EAtoTFSConverter
 				return this.GetTable<Project>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WorkItem")]
-	public partial class WorkItem
-	{
 		
-		private System.Guid _Id;
-		
-		private System.Nullable<System.Guid> _EAId;
-		
-		private System.Guid _ProjectId;
-		
-		private int _WorkItemId;
-		
-		private short _WorkItemType;
-		
-		private string _Name;
-		
-		private string _Description;
-		
-		private string _Value;
-		
-		public WorkItem()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Id
+		public System.Data.Linq.Table<WorkItem> WorkItems
 		{
 			get
 			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EAId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> EAId
-		{
-			get
-			{
-				return this._EAId;
-			}
-			set
-			{
-				if ((this._EAId != value))
-				{
-					this._EAId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ProjectId
-		{
-			get
-			{
-				return this._ProjectId;
-			}
-			set
-			{
-				if ((this._ProjectId != value))
-				{
-					this._ProjectId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkItemId", DbType="Int NOT NULL")]
-		public int WorkItemId
-		{
-			get
-			{
-				return this._WorkItemId;
-			}
-			set
-			{
-				if ((this._WorkItemId != value))
-				{
-					this._WorkItemId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkItemType", DbType="SmallInt NOT NULL")]
-		public short WorkItemType
-		{
-			get
-			{
-				return this._WorkItemType;
-			}
-			set
-			{
-				if ((this._WorkItemType != value))
-				{
-					this._WorkItemType = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this._Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Value
-		{
-			get
-			{
-				return this._Value;
-			}
-			set
-			{
-				if ((this._Value != value))
-				{
-					this._Value = value;
-				}
+				return this.GetTable<WorkItem>();
 			}
 		}
 	}
@@ -305,6 +155,8 @@ namespace EAtoTFSConverter
 		
 		private System.Guid _ProjectId;
 		
+		private EntitySet<WorkItem> _WorkItems;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -331,6 +183,7 @@ namespace EAtoTFSConverter
 		
 		public EAScenario()
 		{
+			this._WorkItems = new EntitySet<WorkItem>(new Action<WorkItem>(this.attach_WorkItems), new Action<WorkItem>(this.detach_WorkItems));
 			OnCreated();
 		}
 		
@@ -514,6 +367,19 @@ namespace EAtoTFSConverter
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EAScenario_WorkItem", Storage="_WorkItems", ThisKey="Id", OtherKey="EAId")]
+		public EntitySet<WorkItem> WorkItems
+		{
+			get
+			{
+				return this._WorkItems;
+			}
+			set
+			{
+				this._WorkItems.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -532,6 +398,18 @@ namespace EAtoTFSConverter
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_WorkItems(WorkItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.EAScenario = this;
+		}
+		
+		private void detach_WorkItems(WorkItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.EAScenario = null;
 		}
 	}
 	
@@ -1450,6 +1328,277 @@ namespace EAtoTFSConverter
 				{
 					this._AuthorizationToken = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WorkItem")]
+	public partial class WorkItem : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Nullable<System.Guid> _EAId;
+		
+		private System.Nullable<System.Guid> _ProjectId;
+		
+		private int _WorkItemId;
+		
+		private short _WorkItemType;
+		
+		private string _Name;
+		
+		private string _Description;
+		
+		private string _Value;
+		
+		private EntityRef<EAScenario> _EAScenario;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnEAIdChanging(System.Nullable<System.Guid> value);
+    partial void OnEAIdChanged();
+    partial void OnProjectIdChanging(System.Nullable<System.Guid> value);
+    partial void OnProjectIdChanged();
+    partial void OnWorkItemIdChanging(int value);
+    partial void OnWorkItemIdChanged();
+    partial void OnWorkItemTypeChanging(short value);
+    partial void OnWorkItemTypeChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnValueChanging(string value);
+    partial void OnValueChanged();
+    #endregion
+		
+		public WorkItem()
+		{
+			this._EAScenario = default(EntityRef<EAScenario>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EAId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> EAId
+		{
+			get
+			{
+				return this._EAId;
+			}
+			set
+			{
+				if ((this._EAId != value))
+				{
+					if (this._EAScenario.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnEAIdChanging(value);
+					this.SendPropertyChanging();
+					this._EAId = value;
+					this.SendPropertyChanged("EAId");
+					this.OnEAIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> ProjectId
+		{
+			get
+			{
+				return this._ProjectId;
+			}
+			set
+			{
+				if ((this._ProjectId != value))
+				{
+					this.OnProjectIdChanging(value);
+					this.SendPropertyChanging();
+					this._ProjectId = value;
+					this.SendPropertyChanged("ProjectId");
+					this.OnProjectIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkItemId", DbType="Int NOT NULL")]
+		public int WorkItemId
+		{
+			get
+			{
+				return this._WorkItemId;
+			}
+			set
+			{
+				if ((this._WorkItemId != value))
+				{
+					this.OnWorkItemIdChanging(value);
+					this.SendPropertyChanging();
+					this._WorkItemId = value;
+					this.SendPropertyChanged("WorkItemId");
+					this.OnWorkItemIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkItemType", DbType="SmallInt NOT NULL")]
+		public short WorkItemType
+		{
+			get
+			{
+				return this._WorkItemType;
+			}
+			set
+			{
+				if ((this._WorkItemType != value))
+				{
+					this.OnWorkItemTypeChanging(value);
+					this.SendPropertyChanging();
+					this._WorkItemType = value;
+					this.SendPropertyChanged("WorkItemType");
+					this.OnWorkItemTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="NVarChar(MAX)")]
+		public string Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EAScenario_WorkItem", Storage="_EAScenario", ThisKey="EAId", OtherKey="Id", IsForeignKey=true)]
+		public EAScenario EAScenario
+		{
+			get
+			{
+				return this._EAScenario.Entity;
+			}
+			set
+			{
+				EAScenario previousValue = this._EAScenario.Entity;
+				if (((previousValue != value) 
+							|| (this._EAScenario.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._EAScenario.Entity = null;
+						previousValue.WorkItems.Remove(this);
+					}
+					this._EAScenario.Entity = value;
+					if ((value != null))
+					{
+						value.WorkItems.Add(this);
+						this._EAId = value.Id;
+					}
+					else
+					{
+						this._EAId = default(Nullable<System.Guid>);
+					}
+					this.SendPropertyChanged("EAScenario");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

@@ -61,8 +61,15 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private static IWorkItemBase CreateNewTestCaseData(ComparisionResult result)
         {
-            var data = new[]
-            {
+            var scenarioData = DbOperations.getEAscenario(result.Guid);
+
+            var data = new[] {
+                new WorkItemBaseDataTestCase
+                {
+                Op = "add",
+                Path = "/fields/System.Title",
+                Value = scenarioData.Name
+                },
                 new WorkItemBaseDataTestCase()
                 {
                 Op = "add",
@@ -106,14 +113,14 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             var xml = new StringBuilder();
             var activeSteps = steps.ToList();
-            xml.Append($"<steps id=\"0\" last=\"{activeSteps.Count()}\">");
+            xml.Append($"<steps id=\"0\">");
             foreach (var step in activeSteps)
             {
                 xml.Append($"<step id=\"{step.Level}\" type=\"ValidateStep\">" +
                            "<parameterizedString isformatted=\"true\">" +
-                           $"<P>{step.Name}</P></parameterizedString>" +
+                           $"{step.Name}</parameterizedString>" +
                            "<parameterizedString isformatted=\"true\">" +
-                           $"<P>{step.Name}</P></parameterizedString>" +
+                           $"{step.Name}></parameterizedString>" +
                            "<description/></step >");
             }
             xml.Append("</steps>");
