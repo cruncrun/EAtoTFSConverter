@@ -29,7 +29,7 @@ namespace EAtoTFSConverter.Data.Logic
             return DataContext.EAScenarios.FirstOrDefault(s => s.Id == guid);
         }
 
-        internal Step getStep(Guid? guid)
+        internal Step GetStep(Guid? guid)
         {
             return DataContext.Steps.FirstOrDefault(s => s.Id == guid);
         }
@@ -45,6 +45,14 @@ namespace EAtoTFSConverter.Data.Logic
                 .Where(w => w.ProjectId == projectId && w.WorkItemType == (int)workItemType)
                 .Select(i => i.WorkItemId)
                 .FirstOrDefault();
+        }
+
+        internal IEnumerable<int> GetWorkItems(Guid projectId, WorkItemType workItemType)
+        {
+            return DataContext.WorkItems
+                .Where(w => w.ProjectId == projectId && w.WorkItemType == (int) workItemType)
+                .Select(i => i.WorkItemId)
+                .Distinct();
         }
 
         internal string GetPersonalToken(Project project)
@@ -73,8 +81,8 @@ namespace EAtoTFSConverter.Data.Logic
         internal bool Insert(List<EAScenario> scenarios)
         {
             bool result;
-            try 
-            { 
+            try
+            {
                 DataContext.EAScenarios.InsertAllOnSubmit(scenarios);
                 DataContext.SubmitChanges();
                 result = true;
@@ -126,9 +134,20 @@ namespace EAtoTFSConverter.Data.Logic
             }
             return result;
         }
-        internal bool Insert(WorkItem workItem)
+        internal void Insert(WorkItem workItem)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DataContext.WorkItems.InsertOnSubmit(workItem);
+                DataContext.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    "W aplikacji wystąpił błąd!\n" + e, "Błąd!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                throw;
+            }
         }
     }
 }

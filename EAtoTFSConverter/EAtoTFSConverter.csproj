@@ -241,5 +241,15 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Database\active_EAScenarios.sql" />
+    <Content Include="Database\active_EASteps.sql" />
+    <Content Include="Database\active_UseCases.sql" />
+    <Content Include="Database\dbo.EAScenario.sql" />
+    <Content Include="Database\dbo.Project.sql" />
+    <Content Include="Database\dbo.Step.sql" />
+    <Content Include="Database\dbo.UseCase.sql" />
+    <Content Include="Database\dbo.WorkItem.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

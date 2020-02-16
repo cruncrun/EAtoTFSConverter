@@ -84,7 +84,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(930, 641);
+            this.ClientSize = new System.Drawing.Size(434, 535);
             this.Controls.Add(this.btn_sendToTFS);
             this.Controls.Add(this.treeView_scenarios);
             this.Controls.Add(this.label_chooseProject);

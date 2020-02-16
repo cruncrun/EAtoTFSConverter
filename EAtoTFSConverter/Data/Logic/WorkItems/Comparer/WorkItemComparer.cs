@@ -1,25 +1,20 @@
-﻿using System;
-using System.Deployment.Application;
-
-namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
+﻿namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
 {
     internal class WorkItemComparer
     {
-        private readonly IComparable _activeEntity;
-        private readonly IComparable _previousEntity;
         private ComparerItemsFactory ComparerItemsFactory { get; set; }
 
-        private IComparable ActiveEntity => _activeEntity;
+        private IComparable ActiveEntity { get; }
 
-        private IComparable PreviousEntity => _previousEntity;
+        private IComparable PreviousEntity { get; }
 
         public ComparisionResult Result { get; set; }
         public ComparisionDataSet DataSet { get; set; }
 
         public WorkItemComparer(IComparable activeEntity, IComparable previousEntity, WorkItemType workItemType)
         {
-            _activeEntity = activeEntity;
-            _previousEntity = previousEntity;
+            ActiveEntity = activeEntity;
+            PreviousEntity = previousEntity;
             Result = new ComparisionResult(workItemType);
         }
 
@@ -32,12 +27,6 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
         public WorkItemComparer()
         {
 
-        }
-
-        public ComparisionResult GetComparisionResult()
-        {
-            //Compare(ActiveEntity, PreviousEntity);
-            return Result;
         }
 
         public ComparisionResult GetComparisionResult(ComparisionDataSet data)

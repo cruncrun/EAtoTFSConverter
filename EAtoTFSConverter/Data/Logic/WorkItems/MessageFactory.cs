@@ -1,12 +1,17 @@
-﻿using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
+﻿using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+using EAtoTFSConverter.Data.Logic.WorkItems.CreationData;
 using System;
-using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems
 {
     internal static class MessageFactory
     {
-        private static DatabaseOperations DbOperations { get; set; }
+        private static DatabaseOperations DbOperations { get; set; } = new DatabaseOperations();
 
         public static IWorkItemBase BuildMessage(ComparisionResult result)
         {
@@ -51,28 +56,33 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private static IWorkItemBase CreateUpdatedTestCaseData(ComparisionResult result)
         {
-            // wygenerowanie IWorkItemBase z active_scenario i powiązanych active_steps
-            // wysyłka komunikatu i zapis danych
-            // pobranie workItema (IWorkItemBase) z odpowiednim ID
-            // przekazanie do wykorzystania
-            throw new NotImplementedException();
+            return CreateNewTestCaseData(result);
         }
 
         private static IWorkItemBase CreateNewTestCaseData(ComparisionResult result)
         {
+            var scenarioData = DbOperations.getEAscenario(result.Guid);
+
+            var data = new[] {
+                new WorkItemBaseDataTestCase
+                {
+                Op = "add",
+                Path = "/fields/System.Title",
+                Value = scenarioData.Name
+                },
+                new WorkItemBaseDataTestCase()
+                {
+                Op = "add",
+                Path = "/fields/Microsoft.VSTS.TCM.Steps",
+                Value = GenerateNewTestCaseJson(result)
+                }
+            }; 
+
             var creationData = new WorkItemCreationData
             {
                 Guid = result.Guid,
-                WorkItemBaseData =
-                {
-                    Json = GenerateNewTestCaseJson(result)
-                }
+                Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json-patch+json")
             };
-            // wygenerowanie IWorkItemBase z active_scenario i powiązanych active_steps
-            // wysyłka komunikatu i zapis danych
-            // pobranie workItema (IWorkItemBase) z odpowiednim ID
-            // przekazanie do wykorzystania
-
 
             return creationData;
         }
@@ -84,9 +94,9 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             {
                 Guid = result.Guid,
                 WorkItemId = existingData.WorkItemId,
-                WorkItemBaseData =
+                WorkItemBaseData = new WorkItemBaseDataTestCase
                 {
-                    Json = existingData.Value // sprawdzić, czy to dobra kolumna :)
+                    Value = existingData.Value
                 }
             };
 
@@ -96,10 +106,25 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         private static string GenerateNewTestCaseJson(ComparisionResult result)
         {
             var steps = DbOperations.GetActive_Steps(result.Guid);
-            //  przygotowanie jsona w oparciu o kroki
-            string json = "json";
+            return GenerateStepsXml(steps);
+        }
 
-            return json;
+        private static string GenerateStepsXml(IEnumerable<active_Step> steps)
+        {
+            var xml = new StringBuilder();
+            var activeSteps = steps.ToList();
+            xml.Append($"<steps id=\"0\">");
+            foreach (var step in activeSteps)
+            {
+                xml.Append($"<step id=\"{step.Level}\" type=\"ValidateStep\">" +
+                           "<parameterizedString isformatted=\"true\">" +
+                           $"{step.Name}</parameterizedString>" +
+                           "<parameterizedString isformatted=\"true\">" +
+                           $"{step.Name}></parameterizedString>" +
+                           "<description/></step >");
+            }
+            xml.Append("</steps>");
+            return xml.ToString();
         }
 
         #endregion
@@ -124,12 +149,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private static IWorkItemBase CreateNewTestSuiteData()
         {
-            var creationData = new WorkItemCreationData
-            {
-
-            };
-
-            return creationData;
+            return new WorkItemCreationData();
         }
 
         #endregion
@@ -140,16 +160,32 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             switch (result.OperationType)
             {
-                case OperationType.UseExisting:
-                    return new WorkItemCreationData();
                 case OperationType.CreateNew:
-                    return new WorkItemCreationData();
+                    return CreateNewTestPlanData(result); 
+                case OperationType.UseExisting:
                 case OperationType.Update:
                 case OperationType.Delete:
                     throw new InvalidOperationException();
                 default:
                     return null;
             }
+        }
+
+        private static IWorkItemBase CreateNewTestPlanData(ComparisionResult result)
+        {
+            var data = new WorkItemBaseDataTestPlan()
+            {
+                Name = "Plan testów z aplikacji desktopowej",
+                Description = "Opis planu testów z apki"
+            };
+
+            return new WorkItemCreationData
+            {
+                WorkItemType = WorkItemType.TestPlan,
+                Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json"),
+                ApiAddress =
+                    "https://dev.azure.com/crunchips/EA-TFS_Conversion/_apis/test/plans?api-version=5.0"
+            };
         }
 
         #endregion
@@ -159,9 +195,5 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
         {
             return DbOperations.GetWorkItem(result.Guid);
         }
-
-       
-
-        
     }
 }

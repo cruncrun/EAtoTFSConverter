@@ -1,5 +1,4 @@
 using EAtoTFSConverter.Data.Logic.WorkItems;
-using EAtoTFSConverter.Data.Logic.WorkItems.Comparer;
 using Xunit;
 
 namespace EAtoTFSConverter.Tests

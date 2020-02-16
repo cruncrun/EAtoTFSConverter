@@ -29,7 +29,7 @@
 
         internal ComparisionScenario MapToComparsionEntity(EAScenario source)
         {
-            return new ComparisionScenario()
+            return new ComparisionScenario
             {
                 Name = source?.Name,
                 Description = source?.Description,
@@ -41,7 +41,7 @@
 
         internal ComparisionStep MapToComparsionEntity(Step source)
         {
-            return new ComparisionStep()
+            return new ComparisionStep
             {
                 Name = source?.Name,
                 Level = source?.Level,
@@ -51,7 +51,5 @@
                 Description = null
             };
         }
-
-
     }
 }

@@ -1,18 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace EAtoTFSConverter.Data.Logic.WorkItems.CreationData
 {
-    internal class WorkItemBaseData
+    public interface IWorkItemBaseData
     {
+    }
+
+    internal class WorkItemBaseDataTestPlan : IWorkItemBaseData
+    {
+        [JsonProperty("name")]
         public string Name { get; set; }
-        public string AreaPath { get; set; }
-        public string Iteration { get; set; }
-        public string Owner { get; set; }
+        [JsonProperty("description")]
+        public string Description { get; set; }
+    }
+
+    internal class WorkItemBaseDataTestCase : IWorkItemBaseData
+    {
+        [JsonProperty("op")]
+        public string Op { get; set; }
+        [JsonProperty("path")]
+        public string Path { get; set; }
+        [JsonProperty("value")]
         public string Value { get; set; }
-        public string Json { get; set; }
+    }
+
+    internal class WorkItemBaseDataTestSuite : IWorkItemBaseData
+    {
+
     }
 }

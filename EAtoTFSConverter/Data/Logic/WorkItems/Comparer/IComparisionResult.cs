@@ -8,5 +8,6 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems.Comparer
         OperationType OperationType { get; set; }
         WorkItemType WorkItemType { get; set; }
         Guid Guid { get; set; }
+        Project Project { get; set; }
     }
 }
