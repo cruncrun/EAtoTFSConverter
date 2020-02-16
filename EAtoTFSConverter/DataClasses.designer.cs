@@ -155,8 +155,6 @@ namespace EAtoTFSConverter
 		
 		private System.Guid _ProjectId;
 		
-		private EntitySet<WorkItem> _WorkItems;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -183,7 +181,6 @@ namespace EAtoTFSConverter
 		
 		public EAScenario()
 		{
-			this._WorkItems = new EntitySet<WorkItem>(new Action<WorkItem>(this.attach_WorkItems), new Action<WorkItem>(this.detach_WorkItems));
 			OnCreated();
 		}
 		
@@ -367,19 +364,6 @@ namespace EAtoTFSConverter
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EAScenario_WorkItem", Storage="_WorkItems", ThisKey="Id", OtherKey="EAId")]
-		public EntitySet<WorkItem> WorkItems
-		{
-			get
-			{
-				return this._WorkItems;
-			}
-			set
-			{
-				this._WorkItems.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -398,18 +382,6 @@ namespace EAtoTFSConverter
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_WorkItems(WorkItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.EAScenario = this;
-		}
-		
-		private void detach_WorkItems(WorkItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.EAScenario = null;
 		}
 	}
 	
@@ -1354,8 +1326,6 @@ namespace EAtoTFSConverter
 		
 		private string _Value;
 		
-		private EntityRef<EAScenario> _EAScenario;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1380,7 +1350,6 @@ namespace EAtoTFSConverter
 		
 		public WorkItem()
 		{
-			this._EAScenario = default(EntityRef<EAScenario>);
 			OnCreated();
 		}
 		
@@ -1415,10 +1384,6 @@ namespace EAtoTFSConverter
 			{
 				if ((this._EAId != value))
 				{
-					if (this._EAScenario.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnEAIdChanging(value);
 					this.SendPropertyChanging();
 					this._EAId = value;
@@ -1544,40 +1509,6 @@ namespace EAtoTFSConverter
 					this._Value = value;
 					this.SendPropertyChanged("Value");
 					this.OnValueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EAScenario_WorkItem", Storage="_EAScenario", ThisKey="EAId", OtherKey="Id", IsForeignKey=true)]
-		public EAScenario EAScenario
-		{
-			get
-			{
-				return this._EAScenario.Entity;
-			}
-			set
-			{
-				EAScenario previousValue = this._EAScenario.Entity;
-				if (((previousValue != value) 
-							|| (this._EAScenario.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EAScenario.Entity = null;
-						previousValue.WorkItems.Remove(this);
-					}
-					this._EAScenario.Entity = value;
-					if ((value != null))
-					{
-						value.WorkItems.Add(this);
-						this._EAId = value.Id;
-					}
-					else
-					{
-						this._EAId = default(Nullable<System.Guid>);
-					}
-					this.SendPropertyChanged("EAScenario");
 				}
 			}
 		}

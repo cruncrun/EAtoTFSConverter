@@ -47,8 +47,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                     return CreateUpdatedTestCaseData(result);
 
                 case OperationType.Delete:
-                    // wygenerowanie IWorkItemBase z active_scenario i powiązanych active_steps
-                    return new WorkItemCreationData();
+                    throw new InvalidOperationException();
                 default:
                     return null;
             }
@@ -81,6 +80,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             var creationData = new WorkItemCreationData
             {
                 Guid = result.Guid,
+                WorkItemType = WorkItemType.TestCase,
                 Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json-patch+json")
             };
 
@@ -149,7 +149,11 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         private static IWorkItemBase CreateNewTestSuiteData()
         {
-            return new WorkItemCreationData();
+            return new WorkItemCreationData()
+            {
+                WorkItemType = WorkItemType.TestSuite,
+                Guid = Guid.NewGuid()
+            };
         }
 
         #endregion
@@ -183,6 +187,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             {
                 WorkItemType = WorkItemType.TestPlan,
                 Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json"),
+                Guid = Guid.NewGuid(),
                 ApiAddress =
                     "https://dev.azure.com/crunchips/EA-TFS_Conversion/_apis/test/plans?api-version=5.0"
             };

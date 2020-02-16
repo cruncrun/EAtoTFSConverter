@@ -30,7 +30,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
 
         internal void PrepareData()
         {
-            //GenerateTestPlan();
+            GenerateTestPlan();
             GenerateTestCases();
             //GenerateTestSuites();
         }
@@ -68,7 +68,7 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
             try
             {
                 var message = MessageFactory.BuildMessage(testPlan);
-                message.ApiAddress = Project.Address + "_apis/test/plans?api-version=5.1";
+               // message.ApiAddress = Project.Address + "_apis/test/plans?api-version=5.0";
                 message.Project = Project;
                 WorkItemDataSet.TestPlan.Add(message);
             }
@@ -100,9 +100,8 @@ namespace EAtoTFSConverter.Data.Logic.WorkItems
                     foreach (var item in WorkItemDataSet.TestComparisionResults)
                     {
                         var message = MessageFactory.BuildMessage(item);
-                        message.ApiAddress =
-                            "https://dev.azure.com/crunchips/EA-TFS_Conversion/_apis/wit/workitems/$Test%20Case?api-version=5.1";
                         message.Project = Project;
+                        message.ApiAddress = Project.Address + "_apis/wit/workitems/$Test%20Case?api-version=5.1";
                         WorkItemDataSet.TestCases.Add(message);
                     }
             }
